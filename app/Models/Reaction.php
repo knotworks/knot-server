@@ -1,0 +1,39 @@
+<?php
+
+namespace FamJam\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Reaction extends Model
+{
+    protected $fillable = ['user_id', 'post_id', 'type'];
+    
+    const REACTIONS = [
+        'smile'    => 'smile',
+        'love'     => 'love',
+        'frown'    => 'frown',
+        'surprise' => 'surprise',
+        'laugh'    => 'laugh',
+    ];
+    
+    
+    /**
+     * Fetch the associated post for the reaction.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    /**
+     * Fetch the associated user for the reaction.
+     *
+     * @return \FamJam\Models\User
+     */
+    public function user()
+    {
+      return $this->belongsTo(User::class);
+    }
+}
