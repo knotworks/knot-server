@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Activity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 

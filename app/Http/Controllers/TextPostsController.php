@@ -5,7 +5,7 @@ namespace FamJam\Http\Controllers;
 use Illuminate\Http\Request;
 use FamJam\Models\TextPost;
 
-class TextPostsController extends Controller
+class TextPostsController extends PostsController
 {
     public function __construct()
     {
@@ -20,11 +20,14 @@ class TextPostsController extends Controller
      */
     public function store(Request $request)
     {
+        $post = new TextPost();
         $post = TextPost::create([
             'body' => $request->input('body'),
             'user_id' => auth()->id(),
         ]);
+        
+        $this->attachPostExtras($request, $post->post);
 
-        return $post;
+        return $post->load('post.location', 'post.accompaniments');
     }
 }

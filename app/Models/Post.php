@@ -11,7 +11,6 @@ class Post extends Model
     
     protected $guarded = [];
 
-
     protected static function boot() 
     {
         parent::boot();
@@ -55,6 +54,16 @@ class Post extends Model
     }
 
     /**
+     * Fetch the associated comments for the post.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments() 
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * Attach accompaniments to a post.
      *
      * @param  $accompaniments
@@ -72,6 +81,16 @@ class Post extends Model
     public function addReaction($reaction)
     {
         $this->reactions()->create($reaction);
+    }
+
+    /**
+     * Attach accompaniments to a post.
+     *
+     * @param  $reaction
+     */
+    public function addComment($comment)
+    {
+        $this->comments()->create($comment);
     }
 
     /**

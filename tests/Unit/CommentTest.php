@@ -1,0 +1,36 @@
+<?php
+
+namespace Tests\Unit;
+
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
+
+class CommentTest extends TestCase
+{
+  use DatabaseMigrations;
+
+  protected $comment;
+
+  public function setup()
+  {
+      parent::setUp();
+      
+      $this->comment = create('FamJam\Models\Comment');
+  }
+
+  /** @test */
+  function a_comment_belongs_to_a_post()
+  {
+    $this->assertInstanceOf(
+        'FamJam\Models\Post', $this->comment->post
+    );
+  }
+
+  /** @test */
+  function a_comment_belongs_to_a_user()
+  {
+    $this->assertInstanceOf(
+        'FamJam\Models\User', $this->comment->user
+    );
+  }
+}

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Activity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Laravel\Passport\Passport;
@@ -14,7 +13,7 @@ class FetchesUserTest extends TestCase
 
     
     /** @test */
-    function it_can_register_a_new_user()
+    function can_register_a_new_user()
     {
         $userData =  [
             'name' => 'Jane Doe',
@@ -29,7 +28,7 @@ class FetchesUserTest extends TestCase
     }
     
     /** @test */
-    function it_can_fetch_an_authenticated_user()
+    function can_fetch_an_authenticated_user()
     {
         $this->authenticate();
         

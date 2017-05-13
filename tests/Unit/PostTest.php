@@ -7,6 +7,7 @@ use Tests\TestCase;
 use FamJam\Models\Accompaniment;
 use FamJam\Models\Location;
 use FamJam\Models\Reaction;
+use Faker\Factory as Faker;
 
 class PostTest extends TestCase
 {
@@ -17,6 +18,7 @@ class PostTest extends TestCase
   public function setup()
   {
       parent::setUp();
+      
       
       $this->authenticate();
       $this->post = create('FamJam\Models\TextPost', ['user_id' => auth()->id()])->post;
@@ -36,7 +38,7 @@ class PostTest extends TestCase
     $this->post->addAccompaniments([
       [
         'user_id' => 2,
-        'name' => 'Jeff Henderson'
+        'name' => 'Jane Doe'
       ],
       [
         'user_id' => null,
@@ -58,16 +60,14 @@ class PostTest extends TestCase
   /** @test */
   function a_post_can_add_reactions()
   { 
-    $this->post->addReaction([
-      'user_id' => 2,
-      'type' => Reaction::REACTIONS['smile'],
-    ]);
+    $reaction = make('FamJam\Models\Reaction')->toArray();
+    $this->post->addReaction($reaction);
 
     $this->assertCount(1, $this->post->reactions);
     
     $this->assertDatabaseHas('reactions', [
-        'type' => Reaction::REACTIONS['smile'],
-        'user_id' => 2,
+        'type' => $reaction['type'],
+        'user_id' => $reaction['user_id'],
         'post_id' => $this->post->id,
     ]);
   }
