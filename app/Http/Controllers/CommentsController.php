@@ -20,7 +20,8 @@ class CommentsController extends Controller
      */
     public function index(Post $post)
     {
-        //TODO: Add authorization
+        $this->authorize('can_view_comments', $post);
+        
         return $post->comments;
     }
 

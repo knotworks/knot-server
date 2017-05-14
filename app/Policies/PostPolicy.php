@@ -19,4 +19,9 @@ class PostPolicy
     {
         return $user->isFriendWith($post->postable->user) || $user->id == $post->postable->user_id;
     }
+
+    public function can_view_comments(User $user, Post $post)
+    {
+        return $user->isFriendWith($post->postable->user) || $user->id == $post->postable->user_id;
+    }
 }
