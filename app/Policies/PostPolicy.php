@@ -10,18 +10,13 @@ class PostPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     public function can_react(User $user, Post $post)
     {
-        return $user->isFriendWith($post->postable->user) || $user->id == $post->postable->user->id;
+        return $user->isFriendWith($post->postable->user) || $user->id == $post->postable->user_id;
+    }
+
+    public function can_comment(User $user, Post $post)
+    {
+        return $user->isFriendWith($post->postable->user) || $user->id == $post->postable->user_id;
     }
 }

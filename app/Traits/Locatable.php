@@ -6,7 +6,9 @@ trait Locatable {
 
     protected static function bootLocatable() {
         static::deleting(function ($model) {
-            $model->location->delete();
+            if ($model->location()->exists()) {
+                $model->location->delete();
+            }
         });
     }
     

@@ -14,8 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'FamJam\Model' => 'FamJam\Policies\ModelPolicy',
         'FamJam\Models\Post' => 'FamJam\Policies\PostPolicy',
+        'FamJam\Models\Comment' => 'FamJam\Policies\CommentPolicy',
     ];
 
     /**

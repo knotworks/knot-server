@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\models;
+namespace FamJam\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use FamJam\Traits\Locatable;

@@ -70,7 +70,7 @@ class Post extends Model
      */
     public function addAccompaniments($accompaniments) 
     {
-      $this->accompaniments()->createMany($accompaniments);
+      return $this->accompaniments()->createMany($accompaniments);
     }
 
     /**
@@ -80,7 +80,7 @@ class Post extends Model
      */
     public function addReaction($reaction)
     {
-        $this->reactions()->create($reaction);
+        return $this->reactions()->create($reaction);
     }
 
     /**
@@ -90,7 +90,7 @@ class Post extends Model
      */
     public function addComment($comment)
     {
-        $this->comments()->create($comment);
+        return $this->comments()->create($comment);
     }
 
     /**
