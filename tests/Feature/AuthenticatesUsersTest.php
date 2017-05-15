@@ -6,8 +6,9 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Laravel\Passport\Passport;
 use FamJam\Models\User;
+use Doorman;
 
-class FetchesUserTest extends TestCase
+class AuthenticatesUserTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -15,10 +16,13 @@ class FetchesUserTest extends TestCase
     /** @test */
     function can_register_a_new_user()
     {
+        $this->withExceptionHandling();
+        
         $userData =  [
             'name' => 'Jane Doe',
             'email' => 'jane@janedoe.com',
-            'password' => 'foobar'
+            'password' => 'foobar',
+            'code' => Doorman::generate()->for('jane@janedoe.com')->make()->first()->code
         ];
         $response = $this->json('POST', 'api/auth/user', $userData);
 

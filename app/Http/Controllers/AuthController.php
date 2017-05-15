@@ -4,6 +4,7 @@ namespace FamJam\Http\Controllers;
 
 use Illuminate\Http\Request;
 use FamJam\Models\User;
+use Doorman;
 
 class AuthController extends Controller
 {
@@ -25,12 +26,18 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
+            'code' => 'required|doorman:email',
         ]);
-
-        return User::create($request->only([
-            'name', 
-            'email', 
-            'password',
-        ]));
+        try {
+            Doorman::redeem($request->input('code'), $request->input('email'));
+            
+            return User::create($request->only([
+                'name', 
+                'email', 
+                'password',
+            ]));
+        } catch (\DoormanException $e) {
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
     }
 }

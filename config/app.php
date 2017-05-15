@@ -180,6 +180,7 @@ return [
         Hpolthof\Backblaze\BackblazeServiceProvider::class,
         Hootlex\Friendships\FriendshipsServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Clarkeash\Doorman\Providers\DoormanServiceProvider::class,
 
     ],
 
@@ -229,6 +230,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Doorman' => Clarkeash\Doorman\Facades\Doorman::class,
 
     ],
 

@@ -65,6 +65,45 @@
             "time": "2017-03-22T08:40:10+00:00"
         },
         {
+            "name": "clarkeash/doorman",
+            "version": "v1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clarkeash/doorman.git",
+                "reference": "472c4a17a5d967dcfd8200ba37c0bd9de4ff2dd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/clarkeash/doorman/zipball/472c4a17a5d967dcfd8200ba37c0bd9de4ff2dd5",
+                "reference": "472c4a17a5d967dcfd8200ba37c0bd9de4ff2dd5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.4",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Clarkeash\\Doorman\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ashley Clarke",
+                    "email": "me@ashleyclarke.me"
+                }
+            ],
+            "time": "2017-05-03T19:06:03+00:00"
+        },
+        {
             "name": "cwhite92/b2-sdk-php",
             "version": "v1.2.1",
             "source": {
