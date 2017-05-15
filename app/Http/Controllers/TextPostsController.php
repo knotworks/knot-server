@@ -20,7 +20,8 @@ class TextPostsController extends PostsController
      */
     public function store(Request $request)
     {
-        $post = new TextPost();
+        $this->validate($request, ['body' => 'required']);
+        
         $post = TextPost::create([
             'body' => $request->input('body'),
             'user_id' => auth()->id(),
