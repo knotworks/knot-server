@@ -17,7 +17,6 @@ class CreateTextPostsTable extends Migration
             $table->increments('id');
             $table->text('body');
             $table->unsignedInteger('user_id')->index();
-            $table->unsignedInteger('location_id')->nullable();
             $table->timestamps();
         });
     }
