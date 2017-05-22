@@ -14,6 +14,7 @@ class Reaction extends Model
         'frown'    => 'frown',
         'surprise' => 'surprise',
         'laugh'    => 'laugh',
+        'angry'    => 'angry',
     ];
     
     

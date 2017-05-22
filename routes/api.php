@@ -23,3 +23,4 @@ Route::get('/posts/{post}/comments', 'CommentsController@index');
 Route::post('/posts/{post}/comments', 'CommentsController@store');
 Route::put('/comments/{comment}', 'CommentsController@update');
 Route::delete('/comments/{comment}', 'CommentsController@destroy');
+Route::get('/feed', 'PostsController@feed');

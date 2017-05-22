@@ -68,6 +68,7 @@ return [
             'accountId'      => env('B2_ACCOUNT_ID'),
             'applicationKey' => env('B2_APPLICATION_KEY'),
             'bucketName'     => env('B2_BUCKET_NAME'),
+            'basePath'       => 'https://f001.backblazeb2.com/file/'
         ],
 
     ],

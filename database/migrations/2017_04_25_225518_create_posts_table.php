@@ -19,6 +19,10 @@ class CreatePostsTable extends Migration
             $table->unsignedInteger('postable_id')->index();
             $table->string('postable_type');
             $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

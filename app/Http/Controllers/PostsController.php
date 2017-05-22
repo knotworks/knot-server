@@ -19,7 +19,7 @@ class PostsController extends Controller
      */
     public function feed()
     {
-        return Post::feed(auth()->user());
+        return auth()->user()->feed();
     }
 
     protected function attachPostExtras(Request $request, Post $post)

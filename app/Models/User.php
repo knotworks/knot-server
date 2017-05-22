@@ -39,4 +39,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Fetch an activity feed for the given user.
+     *
+     * @param  User $user
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function feed() 
+    {
+        $ids = $this->getFriends()->map->id->prepend($this->id);
+        
+        return Post::with(['postable', 'user', 'comments.user', 'reactions.user'])
+            ->latest()
+            ->whereIn('user_id', $ids)
+            ->get();
+            
+    }
 }

@@ -19,6 +19,7 @@ class Post extends Model
             $model->postable->delete();
             $model->accompaniments->each->delete();
             $model->reactions->each->delete();
+            $model->comments->each->delete();
         });
     }
     
@@ -32,7 +33,16 @@ class Post extends Model
         return $this->morphTo();
     }
 
-
+    /**
+     * Fetch the associated user for the post.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user() 
+    {
+        return $this->belongsTo(User::class);
+    }
+    
     /**
      * Fetch the associated accompaniments for the post.
      *
@@ -93,21 +103,4 @@ class Post extends Model
         return $this->comments()->create($comment);
     }
 
-    /**
-     * Fetch an activity feed for the given user.
-     *
-     * @param  User $user
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public static function feed($user) 
-    {
-        $ids = $user->getFriends()->map->id->prepend($user->id);
-        
-        return static::with('postable')
-            ->latest()
-            ->whereIn('user_id', $ids)
-            ->get();
-            
-    }
-    
 }

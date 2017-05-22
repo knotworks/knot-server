@@ -10,7 +10,6 @@ class TextPost extends Model
     use Postable;
 
     protected $table = 'text_posts';
-    protected $with = ['post'];
 
     protected $fillable = ['user_id', 'body'];
 

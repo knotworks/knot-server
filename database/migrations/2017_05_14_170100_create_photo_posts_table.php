@@ -16,9 +16,13 @@ class CreatePhotoPostsTable extends Migration
         Schema::create('photo_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->text('body');
-            $table->string('image_url');
+            $table->string('image_path');
             $table->unsignedInteger('user_id')->index();
             $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

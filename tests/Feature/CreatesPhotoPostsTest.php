@@ -26,10 +26,10 @@ class CreatesPhotoPostsTest extends TestCase
         
         $response = $this->json('POST', 'api/posts/new/photo', [
           'body' => 'My fancy photo post',
-          'image' => UploadedFile::fake()->image('french-river.jpg'),
+          'image' => UploadedFile::fake()->image('french-river.jpg', 1200, 900),
         ]);
-        $imageUrl = $response->getOriginalContent()->first()->image_url;
+        $imagePath = $response->getOriginalContent()->first()->image_path;
 
-        Storage::disk('b2')->assertExists($imageUrl);
+        Storage::disk('b2')->assertExists($imagePath);
     }
 }

@@ -18,6 +18,10 @@ class CreateTextPostsTable extends Migration
             $table->text('body');
             $table->unsignedInteger('user_id')->index();
             $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

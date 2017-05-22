@@ -10,17 +10,19 @@ class PhotoPost extends Model
     use Postable;
 
     protected $table = 'photo_posts';
-    protected $with = ['post'];
 
-    protected $fillable = ['user_id', 'body', 'image_url'];
+    protected $fillable = ['user_id', 'body', 'image_path', 'width', 'height'];
+
+    protected $appends = ['imageUrl'];
 
     public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function fullImageUrl()
+    public function getImageUrlAttribute() 
     {
+        $path = config('filesystems.disks.b2.basePath');
         $bucket = config('filesystems.disks.b2.bucketName');
-        return "https://f001.backblazeb2.com/file/{$bucket}/{$this->image_url}";
+        return "{$path}{$bucket}/{$this->attributes['image_path']}";
     }
 }

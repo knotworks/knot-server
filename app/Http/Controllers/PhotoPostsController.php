@@ -34,6 +34,9 @@ class PhotoPostsController extends PostsController
             $constraint->upsize();
         });
 
+        $imageWidth = $image->width();
+        $imageHeight = $image->height();
+
         // Move it to the public folder
         $thumbName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$file->getClientOriginalExtension();
         $image->save(public_path('images/tmp/'.$thumbName));
@@ -43,17 +46,18 @@ class PhotoPostsController extends PostsController
         $cloudFile = new File($tmpImageUrl);
         $cloudUrl = Storage::disk('b2')->putFile('photo-posts', $cloudFile);
 
+        $post = PhotoPost::create([
+            'body' => $request->input('body'),
+            'image_path' => $cloudUrl,
+            'width' => $imageWidth,
+            'height' => $imageHeight,
+            'user_id' => auth()->id(),
+        ]);
+        $this->attachPostExtras($request, $post->post);
+        
         // Destroy the image instance, and remove it from the public folder
         $image->destroy();
         unlink($tmpImageUrl);
-                
-        $post = PhotoPost::create([
-            'body' => $request->input('body'),
-            'image_url' => $cloudUrl,
-            'user_id' => auth()->id(),
-        ]);
-        
-        $this->attachPostExtras($request, $post->post);
 
         return $post->load('post.location', 'post.accompaniments');
     }

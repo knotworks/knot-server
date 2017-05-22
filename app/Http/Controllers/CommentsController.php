@@ -42,7 +42,7 @@ class CommentsController extends Controller
             'body' => $request->input('body'),
         ]);
 
-        return $comment;
+        return $comment->load('user');
     }
 
 
