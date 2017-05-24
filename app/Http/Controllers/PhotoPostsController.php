@@ -53,11 +53,13 @@ class PhotoPostsController extends PostsController
             'height' => $imageHeight,
             'user_id' => auth()->id(),
         ]);
-        $this->attachPostExtras($request, $post->post);
         
         // Destroy the image instance, and remove it from the public folder
         $image->destroy();
         unlink($tmpImageUrl);
+        
+        $this->attachPostExtras($request, $post->post);
+        
 
         return $post->load('post.location', 'post.accompaniments');
     }
