@@ -11,7 +11,7 @@ class PostsController extends Controller
     {
         $this->middleware('auth:api');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +25,6 @@ class PostsController extends Controller
     protected function attachPostExtras(Request $request, Post $post)
     {
         if ($request->has('location')) {
-            
             $this->validate($request, [
                 'location.lat' => [
                     'required',
@@ -35,14 +34,14 @@ class PostsController extends Controller
                     'required',
                     'regex:/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/'
                 ],
-                'location.name' => 'required',
             ]);
-            
+
             $post->addLocation([
                 'user_id' => auth()->id(),
                 'lat' => $request->input('location.lat'),
                 'long' => $request->input('location.long'),
-                'name' => $request->input('location.name'),
+                'name' => $request->input('location.name', null),
+                'city' => $request->input('location.city', null),
             ]);
         }
 
