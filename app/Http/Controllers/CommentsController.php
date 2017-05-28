@@ -5,9 +5,12 @@ namespace FamJam\Http\Controllers;
 use Illuminate\Http\Request;
 use FamJam\Models\Comment;
 use FamJam\Models\Post;
+use FamJam\Traits\AddsLocation;
 
 class CommentsController extends Controller
 {
+    use AddsLocation;
+    
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -42,7 +45,11 @@ class CommentsController extends Controller
             'body' => $request->input('body'),
         ]);
 
-        return $comment->load('user');
+        if ($request->has('location')) {
+            $this->setLocation($request, $comment);
+        }
+
+        return $comment->load('user', 'location');
     }
 
 

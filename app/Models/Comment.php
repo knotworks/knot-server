@@ -10,6 +10,7 @@ class Comment extends Model
     use Locatable;
     
     protected $guarded = [];
+    protected $with = ['user', 'location'];
 
     /**
      * Fetch the associated post for the reaction.

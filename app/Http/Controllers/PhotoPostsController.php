@@ -5,11 +5,15 @@ namespace FamJam\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use FamJam\Models\PhotoPost;
+use FamJam\Traits\AddsLocation;
+use FamJam\Traits\AddsAccompaniments;
 use Illuminate\Http\File;
 use Image;
 
 class PhotoPostsController extends PostsController
 {
+    use AddsLocation, AddsAccompaniments;
+    
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -28,7 +32,8 @@ class PhotoPostsController extends PostsController
         $file = $request->file('image');
 
         // Resize the image, while constraining aspect ratio, and ensuring it does not upsize
-        $image = Image::make($file);
+        $image = Image::make($file)->encode('jpg', 75);
+        
         $image->resize(1200, 1600, function ($constraint){
             $constraint->aspectRatio();
             $constraint->upsize();
@@ -58,7 +63,12 @@ class PhotoPostsController extends PostsController
         $image->destroy();
         unlink($tmpImageUrl);
         
-        $this->attachPostExtras($request, $post->post);
+        if ($request->has('location')) {
+            $this->setLocation($request, $post->post);
+        }
+        if ($request->has('accompaniments')) {
+            $this->setAccompaniments($request, $post->post);
+        }
         
 
         return $post->load('post.location', 'post.accompaniments');

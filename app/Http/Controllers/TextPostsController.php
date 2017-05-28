@@ -4,9 +4,13 @@ namespace FamJam\Http\Controllers;
 
 use Illuminate\Http\Request;
 use FamJam\Models\TextPost;
+use FamJam\Traits\AddsLocation;
+use FamJam\Traits\AddsAccompaniments;
 
 class TextPostsController extends PostsController
 {
+    use AddsLocation, AddsAccompaniments;
+    
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -27,7 +31,12 @@ class TextPostsController extends PostsController
             'user_id' => auth()->id(),
         ]);
         
-        $this->attachPostExtras($request, $post->post);
+        if ($request->has('location')) {
+            $this->setLocation($request, $post->post);
+        }
+        if ($request->has('accompaniments')) {
+            $this->setAccompaniments($request, $post->post);
+        }
 
         return $post->load('post.location', 'post.accompaniments');
     }

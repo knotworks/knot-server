@@ -50,7 +50,7 @@ class User extends Authenticatable
     {
         $ids = $this->getFriends()->map->id->prepend($this->id);
         
-        return Post::with(['postable', 'user', 'comments.user', 'reactions.user'])
+        return Post::with(['location', 'postable', 'user', 'comments', 'reactions.user'])
             ->latest()
             ->whereIn('user_id', $ids)
             ->get();

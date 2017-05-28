@@ -39,6 +39,6 @@ class ReactionsController extends Controller
             ]);
         }
 
-        return $post;
+        return $post->load('reactions.user');
     }
 }
