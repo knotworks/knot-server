@@ -17,8 +17,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password',
     ];
+
+    protected $appends = ['full_name'];
 
     /**
      * Hash the user's password.
@@ -39,6 +41,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getFullNameAttribute($value) {
+        return "{$this->first_name} {$this->last_name}";
+    }
 
     /**
      * Fetch an activity feed for the given user.

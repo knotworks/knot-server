@@ -16,7 +16,7 @@ $factory->define(FamJam\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'first_name' => $faker->firstNameFemale,
+        'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = '$2y$10$OHNan9XSwgp.rxdAUYpGqurUfVptcdP6qO0yCQuF7eTTOouNO528u',

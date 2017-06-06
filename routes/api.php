@@ -21,6 +21,12 @@ Route::post('/posts/new/photo', 'PhotoPostsController@store');
 Route::post('/posts/{post}/reactions', 'ReactionsController@store');
 Route::get('/posts/{post}/comments', 'CommentsController@index');
 Route::post('/posts/{post}/comments', 'CommentsController@store');
+
 Route::put('/comments/{comment}', 'CommentsController@update');
 Route::delete('/comments/{comment}', 'CommentsController@destroy');
+
 Route::get('/feed', 'PostsController@feed');
+
+Route::get('/friendships', 'FriendshipsController@index');
+Route::get('/friendships/accept/{sender}', 'FriendshipsController@acceptFriendship');
+Route::get('/friendships/deny/{sender}', 'FriendshipsController@acceptFriendship');
