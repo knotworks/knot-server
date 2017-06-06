@@ -17,6 +17,7 @@ class CreateLocationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('locatable_id')->index();
+            $table->string('source_id')->nullable();
             $table->string('locatable_type');
             $table->decimal('lat', 10, 7);
             $table->decimal('long', 10, 7);

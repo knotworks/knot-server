@@ -18,6 +18,8 @@ class CreatePhotoPostsTable extends Migration
             $table->text('body');
             $table->string('image_path');
             $table->unsignedInteger('user_id')->index();
+            $table->float('width')->nullable();
+            $table->float('height')->nullable();
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')

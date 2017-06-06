@@ -19,7 +19,8 @@ class AuthenticatesUserTest extends TestCase
         $this->withExceptionHandling();
         
         $userData =  [
-            'name' => 'Jane Doe',
+            'first_name' => 'Jane',
+            'last_name' => 'Doe',
             'email' => 'jane@janedoe.com',
             'password' => 'foobar',
             'code' => Doorman::generate()->for('jane@janedoe.com')->make()->first()->code
