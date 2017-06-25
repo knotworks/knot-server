@@ -15,7 +15,8 @@
         "jrm2k6/cloudder": "0.4.*",
         "laravel/framework": "5.4.*",
         "laravel/passport": "^2.0",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "spatie/laravel-tinker-tools": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
