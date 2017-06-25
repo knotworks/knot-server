@@ -21,5 +21,4 @@ class PostsController extends Controller
     {
         return auth()->user()->feed();
     }
-
 }

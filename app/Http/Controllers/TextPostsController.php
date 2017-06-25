@@ -7,7 +7,7 @@ use FamJam\Models\TextPost;
 use FamJam\Traits\AddsLocation;
 use FamJam\Traits\AddsAccompaniments;
 
-class TextPostsController extends PostsController
+class TextPostsController extends Controller
 {
     use AddsLocation, AddsAccompaniments;
     

@@ -10,7 +10,7 @@ use FamJam\Traits\AddsAccompaniments;
 use Illuminate\Http\File;
 use Image;
 
-class PhotoPostsController extends PostsController
+class PhotoPostsController extends Controller
 {
     use AddsLocation, AddsAccompaniments;
     
