@@ -15,20 +15,20 @@ class FriendshipsController extends Controller
     
     public function index()
     {
-        return auth()->user()->getAllFriendships();
+        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
     }
 
     public function acceptFriendship(Request $request, User $sender)
     {
         auth()->user()->acceptFriendRequest($sender);
 
-        return auth()->user()->getAllFriendships();
+        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
     }
 
     public function denyFriendship(Request $request, User $sender)
     {
         auth()->user()->denyFriendRequest($sender);
 
-        return auth()->user()->getAllFriendships();
+        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
     }
 }
