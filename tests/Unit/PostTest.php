@@ -4,9 +4,9 @@ namespace Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use FamJam\Models\Accompaniment;
-use FamJam\Models\Location;
-use FamJam\Models\Reaction;
+use Knot\Models\Accompaniment;
+use Knot\Models\Location;
+use Knot\Models\Reaction;
 use Faker\Factory as Faker;
 
 class PostTest extends TestCase
@@ -21,7 +21,7 @@ class PostTest extends TestCase
       
       
       $this->authenticate();
-      $this->post = create('FamJam\Models\TextPost', ['user_id' => auth()->id()])->post;
+      $this->post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
   }
 
   /** @test */
@@ -60,7 +60,7 @@ class PostTest extends TestCase
   /** @test */
   function a_post_can_add_reactions()
   { 
-    $reaction = make('FamJam\Models\Reaction')->toArray();
+    $reaction = make('Knot\Models\Reaction')->toArray();
     $this->post->addReaction($reaction);
 
     $this->assertCount(1, $this->post->reactions);
@@ -76,7 +76,7 @@ class PostTest extends TestCase
   function a_post_will_delete_its_associations_if_it_is_deleted()
   {
     // Attach various relations to the post
-    $location = make('FamJam\Models\Location', [
+    $location = make('Knot\Models\Location', [
       'user_id' => auth()->id(),
       'locatable_id' => $this->post->id,
       'locatable_type' => get_class($this->post),

@@ -15,14 +15,14 @@ class CommentTest extends TestCase
   {
       parent::setUp();
       
-      $this->comment = create('FamJam\Models\Comment');
+      $this->comment = create('Knot\Models\Comment');
   }
 
   /** @test */
   function a_comment_belongs_to_a_post()
   {
     $this->assertInstanceOf(
-        'FamJam\Models\Post', $this->comment->post
+        'Knot\Models\Post', $this->comment->post
     );
   }
 
@@ -30,7 +30,7 @@ class CommentTest extends TestCase
   function a_comment_belongs_to_a_user()
   {
     $this->assertInstanceOf(
-        'FamJam\Models\User', $this->comment->user
+        'Knot\Models\User', $this->comment->user
     );
   }
 }

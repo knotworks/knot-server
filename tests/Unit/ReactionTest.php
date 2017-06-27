@@ -15,14 +15,14 @@ class ReactionTest extends TestCase
   {
       parent::setUp();
       
-      $this->reaction = create('FamJam\Models\Reaction');
+      $this->reaction = create('Knot\Models\Reaction');
   }
 
   /** @test */
   function a_reaction_belongs_to_a_post()
   {
     $this->assertInstanceOf(
-        'FamJam\Models\Post', $this->reaction->post
+        'Knot\Models\Post', $this->reaction->post
     );
   }
 
@@ -30,7 +30,7 @@ class ReactionTest extends TestCase
   function a_reaction_belongs_to_a_user()
   {
     $this->assertInstanceOf(
-        'FamJam\Models\User', $this->reaction->user
+        'Knot\Models\User', $this->reaction->user
     );
   }
 }

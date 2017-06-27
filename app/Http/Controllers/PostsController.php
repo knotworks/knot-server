@@ -1,9 +1,9 @@
 <?php
 
-namespace FamJam\Http\Controllers;
+namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
-use FamJam\Models\Post;
+use Knot\Models\Post;
 
 class PostsController extends Controller
 {

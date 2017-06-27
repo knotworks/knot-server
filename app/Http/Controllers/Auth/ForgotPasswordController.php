@@ -1,8 +1,8 @@
 <?php
 
-namespace FamJam\Http\Controllers\Auth;
+namespace Knot\Http\Controllers\Auth;
 
-use FamJam\Http\Controllers\Controller;
+use Knot\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller

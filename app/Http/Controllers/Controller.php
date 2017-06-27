@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Http\Controllers;
+namespace Knot\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

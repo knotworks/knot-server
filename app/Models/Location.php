@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Models;
+namespace Knot\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Http\Middleware;
+namespace Knot\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 

@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => FamJam\Models\User::class,
+            'model' => Knot\Models\User::class,
         ],
 
         // 'users' => [

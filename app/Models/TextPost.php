@@ -1,9 +1,9 @@
 <?php
 
-namespace FamJam\Models;
+namespace Knot\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use FamJam\Traits\Postable;
+use Knot\Traits\Postable;
 
 class TextPost extends Model
 {

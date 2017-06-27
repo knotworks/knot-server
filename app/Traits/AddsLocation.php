@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Traits;
+namespace Knot\Traits;
 
 use Illuminate\Http\Request;
 

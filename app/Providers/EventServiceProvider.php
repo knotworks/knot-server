@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Providers;
+namespace Knot\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'FamJam\Events\Event' => [
-            'FamJam\Listeners\EventListener',
+        'Knot\Events\Event' => [
+            'Knot\Listeners\EventListener',
         ],
     ];
 

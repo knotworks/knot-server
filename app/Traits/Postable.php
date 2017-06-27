@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Traits;
+namespace Knot\Traits;
 
 trait Postable {
 
@@ -15,7 +15,7 @@ trait Postable {
     }
     
     public function post() {
-        return $this->morphOne('FamJam\Models\Post', 'postable');
+        return $this->morphOne('Knot\Models\Post', 'postable');
     }
 
     protected function createPost($model) {

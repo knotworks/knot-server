@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Console;
+namespace Knot\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;

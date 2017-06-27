@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Models;
+namespace Knot\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,7 +21,7 @@ class Accompaniment extends Model
     /**
      * Fetch the associated user for the accompaniment.
      *
-     * @return \FamJam\Models\User
+     * @return \Knot\Models\User
      */
     public function user()
     {

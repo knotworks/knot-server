@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Traits;
+namespace Knot\Traits;
 
 trait Locatable {
 
@@ -13,7 +13,7 @@ trait Locatable {
     }
     
     public function location() {
-        return $this->morphOne('FamJam\Models\Location', 'locatable');
+        return $this->morphOne('Knot\Models\Location', 'locatable');
     }
 
     public function addLocation($location) {

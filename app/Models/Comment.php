@@ -1,9 +1,9 @@
 <?php
 
-namespace FamJam\Models;
+namespace Knot\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use FamJam\Traits\Locatable;
+use Knot\Traits\Locatable;
 
 class Comment extends Model
 {
@@ -25,7 +25,7 @@ class Comment extends Model
     /**
      * Fetch the associated user for the reaction.
      *
-     * @return \FamJam\Models\User
+     * @return \Knot\Models\User
      */
     public function user()
     {

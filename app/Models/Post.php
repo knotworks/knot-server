@@ -1,9 +1,9 @@
 <?php
 
-namespace FamJam\Models;
+namespace Knot\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use FamJam\Traits\Locatable;
+use Knot\Traits\Locatable;
 
 class Post extends Model
 {

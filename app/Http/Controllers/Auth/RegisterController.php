@@ -1,9 +1,9 @@
 <?php
 
-namespace FamJam\Http\Controllers\Auth;
+namespace Knot\Http\Controllers\Auth;
 
-use FamJam\User;
-use FamJam\Http\Controllers\Controller;
+use Knot\User;
+use Knot\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 

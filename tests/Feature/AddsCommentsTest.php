@@ -16,8 +16,8 @@ class AddsCommentsTest extends TestCase
     {
         parent::setup();
 
-        $this->user = create('FamJam\Models\User');
-        $this->post = create('FamJam\Models\TextPost', ['user_id' => $this->user->id])->post;
+        $this->user = create('Knot\Models\User');
+        $this->post = create('Knot\Models\TextPost', ['user_id' => $this->user->id])->post;
         $this->authenticate();
     }
 
@@ -65,7 +65,7 @@ class AddsCommentsTest extends TestCase
     function a_user_cannot_update_a_comment_that_does_not_belong_to_them()
     {
         $this->withExceptionHandling();
-        $comment = create('FamJam\Models\Comment');
+        $comment = create('Knot\Models\Comment');
         $response = $this->json('PUT', 'api/comments/'.$comment->id, ['body' => 'Updating comment']);
 
         $response->assertStatus(403);
@@ -74,7 +74,7 @@ class AddsCommentsTest extends TestCase
     /** @test */
     function a_user_can_update_their_own_comments()
     {
-        $comment = create('FamJam\Models\Comment', ['user_id' => auth()->id()]);
+        $comment = create('Knot\Models\Comment', ['user_id' => auth()->id()]);
         $response = $this->json('PUT', 'api/comments/'.$comment->id, ['body' => 'Updating comment']);
 
         $response->assertStatus(200);
@@ -84,7 +84,7 @@ class AddsCommentsTest extends TestCase
     function a_user_cannot_delete_a_comment_that_does_not_belong_to_them()
     {
         $this->withExceptionHandling();
-        $comment = create('FamJam\Models\Comment');
+        $comment = create('Knot\Models\Comment');
         $response = $this->json('DELETE', 'api/comments/'.$comment->id);
 
         $response->assertStatus(403);
@@ -93,7 +93,7 @@ class AddsCommentsTest extends TestCase
     /** @test */
     function a_user_can_delete_their_own_comments()
     {
-        $comment = create('FamJam\Models\Comment', ['user_id' => auth()->id()]);
+        $comment = create('Knot\Models\Comment', ['user_id' => auth()->id()]);
         $response = $this->json('DELETE', '/api/comments/'.$comment->id);
 
         $response->assertStatus(200);

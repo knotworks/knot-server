@@ -1,11 +1,11 @@
 <?php
 
-namespace FamJam\Http\Controllers;
+namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
-use FamJam\Models\TextPost;
-use FamJam\Traits\AddsLocation;
-use FamJam\Traits\AddsAccompaniments;
+use Knot\Models\TextPost;
+use Knot\Traits\AddsLocation;
+use Knot\Traits\AddsAccompaniments;
 
 class TextPostsController extends Controller
 {

@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(FamJam\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(Knot\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -25,25 +25,25 @@ $factory->define(FamJam\Models\User::class, function (Faker\Generator $faker) {
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(FamJam\Models\TextPost::class, function (Faker\Generator $faker) {
+$factory->define(Knot\Models\TextPost::class, function (Faker\Generator $faker) {
     return [
         'body' => $faker->sentence,
         'user_id' => function() {
-            return factory('FamJam\Models\User')->create()->id;
+            return factory('Knot\Models\User')->create()->id;
         },
     ];
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(FamJam\Models\Location::class, function (Faker\Generator $faker) {
+$factory->define(Knot\Models\Location::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function() {
-            return factory('FamJam\Models\User')->create()->id;
+            return factory('Knot\Models\User')->create()->id;
         },
         'locatable_id' => function() {
-            return factory('FamJam\Models\TextPost')->create()->post->id;
+            return factory('Knot\Models\TextPost')->create()->post->id;
         },
-        'locatable_type' => 'FamJam\Models\Post',
+        'locatable_type' => 'Knot\Models\Post',
         'lat' => $faker->latitude,
         'long' => $faker->longitude,
         'city' => $faker->city,
@@ -52,39 +52,39 @@ $factory->define(FamJam\Models\Location::class, function (Faker\Generator $faker
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(FamJam\Models\Reaction::class, function (Faker\Generator $faker) {
+$factory->define(Knot\Models\Reaction::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function() {
-            return factory('FamJam\Models\User')->create()->id;
+            return factory('Knot\Models\User')->create()->id;
         },
         'post_id' => function() {
-            return factory('FamJam\Models\TextPost')->create()->post->id;
+            return factory('Knot\Models\TextPost')->create()->post->id;
         },
-        'type' => FamJam\Models\Reaction::REACTIONS[array_rand(FamJam\Models\Reaction::REACTIONS)],
+        'type' => Knot\Models\Reaction::REACTIONS[array_rand(Knot\Models\Reaction::REACTIONS)],
     ];
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(FamJam\Models\Accompaniment::class, function (Faker\Generator $faker) {
+$factory->define(Knot\Models\Accompaniment::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function() {
-            return factory('FamJam\Models\User')->create()->id;
+            return factory('Knot\Models\User')->create()->id;
         },
         'post_id' => function() {
-            return factory('FamJam\Models\TextPost')->create()->post->id;
+            return factory('Knot\Models\TextPost')->create()->post->id;
         },
         'name' => $faker->name,
     ];
 });
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(FamJam\Models\Comment::class, function (Faker\Generator $faker) {
+$factory->define(Knot\Models\Comment::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function() {
-            return factory('FamJam\Models\User')->create()->id;
+            return factory('Knot\Models\User')->create()->id;
         },
         'post_id' => function() {
-            return factory('FamJam\Models\TextPost')->create()->post->id;
+            return factory('Knot\Models\TextPost')->create()->post->id;
         },
         'body' => $faker->sentence,
     ];

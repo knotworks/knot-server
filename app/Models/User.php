@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Models;
+namespace Knot\Models;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;

@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Providers;
+namespace Knot\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Broadcast;

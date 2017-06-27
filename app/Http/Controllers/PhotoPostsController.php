@@ -1,12 +1,12 @@
 <?php
 
-namespace FamJam\Http\Controllers;
+namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use FamJam\Models\PhotoPost;
-use FamJam\Traits\AddsLocation;
-use FamJam\Traits\AddsAccompaniments;
+use Knot\Models\PhotoPost;
+use Knot\Traits\AddsLocation;
+use Knot\Traits\AddsAccompaniments;
 use Illuminate\Http\File;
 use Image;
 

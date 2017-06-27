@@ -19,7 +19,7 @@ class HandlesFriendshipsTest extends TestCase
     /** @test */
     function the_authenticated_user_can_fetch_their_friendships()
     {
-      $sender = create('FamJam\Models\User');
+      $sender = create('Knot\Models\User');
       $sender->befriend(auth()->user());
 
       $response = $this->json('GET', 'api/friendships');
@@ -31,7 +31,7 @@ class HandlesFriendshipsTest extends TestCase
     /** @test */
     function the_authenticated_user_can_accept_a_friend_request()
     {
-      $sender = create('FamJam\Models\User');
+      $sender = create('Knot\Models\User');
       $sender->befriend(auth()->user());
 
       $response = $this->json('POST', 'api/friendships/accept/'.$sender->id);
@@ -43,7 +43,7 @@ class HandlesFriendshipsTest extends TestCase
     /** @test */
     function the_authenticated_user_can_deny_a_friend_request()
     {
-      $sender = create('FamJam\Models\User');
+      $sender = create('Knot\Models\User');
       $sender->befriend(auth()->user());
 
       $response = $this->json('POST', 'api/friendships/deny/'.$sender->id);

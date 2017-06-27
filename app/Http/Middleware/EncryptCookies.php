@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Http\Middleware;
+namespace Knot\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 

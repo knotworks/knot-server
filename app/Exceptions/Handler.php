@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Exceptions;
+namespace Knot\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

@@ -1,11 +1,11 @@
 <?php
 
-namespace FamJam\Http\Controllers;
+namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
-use FamJam\Models\Comment;
-use FamJam\Models\Post;
-use FamJam\Traits\AddsLocation;
+use Knot\Models\Comment;
+use Knot\Models\Post;
+use Knot\Traits\AddsLocation;
 
 class CommentsController extends Controller
 {
@@ -57,7 +57,7 @@ class CommentsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \FamJam\Models\Comment  $comment
+     * @param  \Knot\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Comment $comment)
@@ -74,7 +74,7 @@ class CommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \FamJam\Models\Comment  $comment
+     * @param  \Knot\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Comment $comment)

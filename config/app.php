@@ -171,11 +171,11 @@ return [
         /*
          * Application Service Providers...
          */
-        FamJam\Providers\AppServiceProvider::class,
-        FamJam\Providers\AuthServiceProvider::class,
-        // FamJam\Providers\BroadcastServiceProvider::class,
-        FamJam\Providers\EventServiceProvider::class,
-        FamJam\Providers\RouteServiceProvider::class,
+        Knot\Providers\AppServiceProvider::class,
+        Knot\Providers\AuthServiceProvider::class,
+        // Knot\Providers\BroadcastServiceProvider::class,
+        Knot\Providers\EventServiceProvider::class,
+        Knot\Providers\RouteServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Hpolthof\Backblaze\BackblazeServiceProvider::class,
         Hootlex\Friendships\FriendshipsServiceProvider::class,

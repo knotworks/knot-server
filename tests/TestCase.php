@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use FamJam\Exceptions\Handler;
+use Knot\Exceptions\Handler;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Passport\Passport;
@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function authenticate($user = null)
     {
-        $user = $user ?: create('FamJam\Models\User');
+        $user = $user ?: create('Knot\Models\User');
         Passport::actingAs($user);
 
         return $this;

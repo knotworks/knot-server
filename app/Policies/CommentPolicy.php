@@ -1,9 +1,9 @@
 <?php
 
-namespace FamJam\Policies;
+namespace Knot\Policies;
 
-use FamJam\Models\User;
-use FamJam\Models\Comment;
+use Knot\Models\User;
+use Knot\Models\Comment;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CommentPolicy

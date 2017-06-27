@@ -16,8 +16,8 @@ class AddsReactionsTest extends TestCase
     {
         parent::setup();
 
-        $this->user = create('FamJam\Models\User');
-        $this->post = create('FamJam\Models\TextPost', ['user_id' => $this->user->id])->post;
+        $this->user = create('Knot\Models\User');
+        $this->post = create('Knot\Models\TextPost', ['user_id' => $this->user->id])->post;
         $this->authenticate();
     }
 

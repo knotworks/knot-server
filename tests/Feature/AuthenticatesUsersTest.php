@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Laravel\Passport\Passport;
-use FamJam\Models\User;
+use Knot\Models\User;
 use Doorman;
 
 class AuthenticatesUserTest extends TestCase

@@ -1,11 +1,11 @@
 <?php
 
-namespace FamJam\Http\Controllers;
+namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use FamJam\Models\Post;
-use FamJam\Models\Reaction;
+use Knot\Models\Post;
+use Knot\Models\Reaction;
 
 class ReactionsController extends Controller
 {

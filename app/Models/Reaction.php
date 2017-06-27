@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Models;
+namespace Knot\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +31,7 @@ class Reaction extends Model
     /**
      * Fetch the associated user for the reaction.
      *
-     * @return \FamJam\Models\User
+     * @return \Knot\Models\User
      */
     public function user()
     {

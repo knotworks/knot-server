@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Providers;
+namespace Knot\Providers;
 
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
@@ -14,8 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'FamJam\Models\Post' => 'FamJam\Policies\PostPolicy',
-        'FamJam\Models\Comment' => 'FamJam\Policies\CommentPolicy',
+        'Knot\Models\Post' => 'Knot\Policies\PostPolicy',
+        'Knot\Models\Comment' => 'Knot\Policies\CommentPolicy',
     ];
 
     /**

@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => FamJam\User::class,
+        'model' => Knot\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

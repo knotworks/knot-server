@@ -1,6 +1,6 @@
 <?php
 
-namespace FamJam\Console\Commands;
+namespace Knot\Console\Commands;
 
 use Illuminate\Console\Command;
 use Doorman;

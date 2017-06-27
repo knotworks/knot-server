@@ -28,7 +28,7 @@
             "database"
         ],
         "psr-4": {
-            "FamJam\\": "app/"
+            "Knot\\": "app/"
         }
     },
     "autoload-dev": {

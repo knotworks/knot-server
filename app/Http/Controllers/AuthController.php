@@ -1,9 +1,9 @@
 <?php
 
-namespace FamJam\Http\Controllers;
+namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
-use FamJam\Models\User;
+use Knot\Models\User;
 use Doorman;
 
 class AuthController extends Controller
