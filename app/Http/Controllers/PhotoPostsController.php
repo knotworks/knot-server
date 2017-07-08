@@ -49,7 +49,7 @@ class PhotoPostsController extends Controller
 
         // Upload it to the cloud from the public folder
         $cloudFile = new File($tmpImageUrl);
-        $cloudUrl = Storage::disk('b2')->putFile('photo-posts', $cloudFile);
+        $cloudUrl = Storage::cloud()->putFile('photo-posts', $cloudFile);
 
         $post = PhotoPost::create([
             'body' => $request->input('body'),

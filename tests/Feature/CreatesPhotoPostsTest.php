@@ -21,15 +21,14 @@ class CreatesPhotoPostsTest extends TestCase
     /** @test */
     function a_photo_post_uploads_the_passed_in_file_to_the_storage_disk()
     {
-        // $this->withExceptionHandling();
-        Storage::fake('b2');
-        
+        Storage::fake(config('filesystems.cloud'));
+
         $response = $this->json('POST', 'api/posts/new/photo', [
           'body' => 'My fancy photo post',
           'image' => UploadedFile::fake()->image('french-river.jpg', 1200, 900),
         ]);
         $imagePath = $response->getOriginalContent()->first()->image_path;
 
-        Storage::disk('b2')->assertExists($imagePath);
+        Storage::cloud()->assertExists($imagePath);
     }
 }
