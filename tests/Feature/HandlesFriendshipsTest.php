@@ -51,4 +51,18 @@ class HandlesFriendshipsTest extends TestCase
       $response->assertStatus(200);
       $this->assertFalse(auth()->user()->isFriendWith($sender));
     }
+
+    /** @test */
+    function the_authenticated_user_can_unfriend_a_friend()
+    {
+      $sender = create('Knot\Models\User');
+      $sender->befriend(auth()->user());
+      auth()->user()->acceptFriendRequest($sender);
+      $this->assertTrue(auth()->user()->isFriendWith($sender));
+
+      $response = $this->json('POST', 'api/friendships/unfriend/'.$sender->id);
+
+      $response->assertStatus(200);
+      $this->assertFalse(auth()->user()->isFriendWith($sender));
+    }
 }

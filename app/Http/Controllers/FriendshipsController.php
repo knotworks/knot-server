@@ -50,4 +50,18 @@ class FriendshipsController extends Controller
 
         return auth()->user()->getAllFriendships()->load('sender', 'recipient');
     }
+
+    /**
+     * Unfriend a user
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Knot\Models\User $friend
+     * @return \Illuminate\Http\Response
+     */
+    public function unfriend(Request $request, User $friend)
+    {
+        auth()->user()->unfriend($friend);
+
+        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
+    }
 }
