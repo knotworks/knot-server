@@ -15,11 +15,22 @@ class AuthController extends Controller
         ]]);
     }
 
+    /**
+     * Return the authenticated user
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function user()
     {
         return auth()->user();
     }
 
+    /**
+     * Register a new user
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function register(Request $request)
     {
         $this->validate($request, [

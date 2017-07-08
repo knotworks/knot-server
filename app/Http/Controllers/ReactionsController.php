@@ -14,6 +14,13 @@ class ReactionsController extends Controller
         $this->middleware('auth:api');
     }
 
+    /**
+     * Add a new reaction to a post
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Knot\Models\Post $post
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request, Post $post)
     {
         $this->authorize('can_react', $post);

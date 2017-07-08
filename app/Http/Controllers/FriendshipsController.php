@@ -12,12 +12,24 @@ class FriendshipsController extends Controller
     {
         $this->middleware('auth:api');
     }
-    
+
+    /**
+     * Return a user's friendship data
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return auth()->user()->getAllFriendships()->load('sender', 'recipient');
     }
 
+    /**
+     * Accept a friend request from another user
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Knot\Models\User $sender
+     * @return \Illuminate\Http\Response
+     */
     public function acceptFriendship(Request $request, User $sender)
     {
         auth()->user()->acceptFriendRequest($sender);
@@ -25,6 +37,13 @@ class FriendshipsController extends Controller
         return auth()->user()->getAllFriendships()->load('sender', 'recipient');
     }
 
+    /**
+     * Deny a friend request from another user
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Knot\Models\User $sender
+     * @return \Illuminate\Http\Response
+     */
     public function denyFriendship(Request $request, User $sender)
     {
         auth()->user()->denyFriendRequest($sender);

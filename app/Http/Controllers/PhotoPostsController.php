@@ -32,7 +32,7 @@ class PhotoPostsController extends Controller
         $file = $request->file('image');
 
         // Resize the image, while constraining aspect ratio, and ensuring it does not upsize
-        $image = Image::make($file)->encode('jpg', 75);
+        $image = Image::make($file)->encode('jpg', 80);
         
         $image->resize(1200, 1600, function ($constraint){
             $constraint->aspectRatio();

@@ -19,6 +19,7 @@ class CommentsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Knot\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function index(Post $post)
@@ -32,6 +33,7 @@ class CommentsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param \Knot\Models\Post $post
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Post $post)
@@ -78,9 +80,9 @@ class CommentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Comment $comment)
-    {   
+    {
         $this->authorize('can_modify_or_delete', $comment);
-        
+
         $comment->delete();
         
         return response(['status' => 'Comment deleted'], 200);
