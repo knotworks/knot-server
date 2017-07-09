@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 Route::get('/auth/user', 'AuthController@user');
 Route::post('/auth/user', 'AuthController@register');
 
+Route::get('/notifications', 'NotificationsController@index');
+Route::delete('/notifications', 'NotificationsController@destroy');
+
 Route::post('/posts/new/text', 'TextPostsController@store');
 Route::post('/posts/new/photo', 'PhotoPostsController@store');
 Route::post('/posts/{post}/reactions', 'ReactionsController@store');

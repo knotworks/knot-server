@@ -28,7 +28,7 @@ $factory->define(Knot\Models\User::class, function (Faker\Generator $faker) {
 $factory->define(Knot\Models\TextPost::class, function (Faker\Generator $faker) {
     return [
         'body' => $faker->sentence,
-        'user_id' => function() {
+        'user_id' => function () {
             return factory('Knot\Models\User')->create()->id;
         },
     ];
@@ -37,10 +37,10 @@ $factory->define(Knot\Models\TextPost::class, function (Faker\Generator $faker) 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Knot\Models\Location::class, function (Faker\Generator $faker) {
     return [
-        'user_id' => function() {
+        'user_id' => function () {
             return factory('Knot\Models\User')->create()->id;
         },
-        'locatable_id' => function() {
+        'locatable_id' => function () {
             return factory('Knot\Models\TextPost')->create()->post->id;
         },
         'locatable_type' => 'Knot\Models\Post',
@@ -54,10 +54,10 @@ $factory->define(Knot\Models\Location::class, function (Faker\Generator $faker) 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Knot\Models\Reaction::class, function (Faker\Generator $faker) {
     return [
-        'user_id' => function() {
+        'user_id' => function () {
             return factory('Knot\Models\User')->create()->id;
         },
-        'post_id' => function() {
+        'post_id' => function () {
             return factory('Knot\Models\TextPost')->create()->post->id;
         },
         'type' => Knot\Models\Reaction::REACTIONS[array_rand(Knot\Models\Reaction::REACTIONS)],
@@ -67,10 +67,10 @@ $factory->define(Knot\Models\Reaction::class, function (Faker\Generator $faker) 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Knot\Models\Accompaniment::class, function (Faker\Generator $faker) {
     return [
-        'user_id' => function() {
+        'user_id' => function () {
             return factory('Knot\Models\User')->create()->id;
         },
-        'post_id' => function() {
+        'post_id' => function () {
             return factory('Knot\Models\TextPost')->create()->post->id;
         },
         'name' => $faker->name,
@@ -80,12 +80,24 @@ $factory->define(Knot\Models\Accompaniment::class, function (Faker\Generator $fa
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Knot\Models\Comment::class, function (Faker\Generator $faker) {
     return [
-        'user_id' => function() {
+        'user_id' => function () {
             return factory('Knot\Models\User')->create()->id;
         },
-        'post_id' => function() {
+        'post_id' => function () {
             return factory('Knot\Models\TextPost')->create()->post->id;
         },
         'body' => $faker->sentence,
+    ];
+});
+
+$factory->define(\Illuminate\Notifications\DatabaseNotification::class, function ($faker) {
+    return [
+        'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+        'type' => 'Knot\Notifications\PostCommentedOn',
+        'notifiable_id' => function () {
+            return auth()->id() ?: factory('Knot\Models\User')->create()->id;
+        },
+        'notifiable_type' => 'Knot\Models\User',
+        'data' => ['foo' => 'bar']
     ];
 });

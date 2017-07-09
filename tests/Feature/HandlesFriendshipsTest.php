@@ -19,50 +19,50 @@ class HandlesFriendshipsTest extends TestCase
     /** @test */
     function the_authenticated_user_can_fetch_their_friendships()
     {
-      $sender = create('Knot\Models\User');
-      $sender->befriend(auth()->user());
+        $sender = create('Knot\Models\User');
+        $sender->befriend(auth()->user());
 
-      $response = $this->json('GET', 'api/friendships');
+        $response = $this->json('GET', 'api/friendships');
 
-      $response->assertStatus(200);
-      $this->assertCount(1, $response->getOriginalContent());
+        $response->assertStatus(200);
+        $this->assertCount(1, $response->getOriginalContent());
     }
 
     /** @test */
     function the_authenticated_user_can_accept_a_friend_request()
     {
-      $sender = create('Knot\Models\User');
-      $sender->befriend(auth()->user());
+        $sender = create('Knot\Models\User');
+        $sender->befriend(auth()->user());
 
-      $response = $this->json('POST', 'api/friendships/accept/'.$sender->id);
+        $response = $this->json('POST', 'api/friendships/accept/'.$sender->id);
 
-      $response->assertStatus(200);
-      $this->assertTrue(auth()->user()->isFriendWith($sender));
+        $response->assertStatus(200);
+        $this->assertTrue(auth()->user()->isFriendWith($sender));
     }
 
     /** @test */
     function the_authenticated_user_can_deny_a_friend_request()
     {
-      $sender = create('Knot\Models\User');
-      $sender->befriend(auth()->user());
+        $sender = create('Knot\Models\User');
+        $sender->befriend(auth()->user());
 
-      $response = $this->json('POST', 'api/friendships/deny/'.$sender->id);
+        $response = $this->json('POST', 'api/friendships/deny/'.$sender->id);
 
-      $response->assertStatus(200);
-      $this->assertFalse(auth()->user()->isFriendWith($sender));
+        $response->assertStatus(200);
+        $this->assertFalse(auth()->user()->isFriendWith($sender));
     }
 
     /** @test */
     function the_authenticated_user_can_unfriend_a_friend()
     {
-      $sender = create('Knot\Models\User');
-      $sender->befriend(auth()->user());
-      auth()->user()->acceptFriendRequest($sender);
-      $this->assertTrue(auth()->user()->isFriendWith($sender));
+        $sender = create('Knot\Models\User');
+        $sender->befriend(auth()->user());
+        auth()->user()->acceptFriendRequest($sender);
+        $this->assertTrue(auth()->user()->isFriendWith($sender));
 
-      $response = $this->json('POST', 'api/friendships/unfriend/'.$sender->id);
+        $response = $this->json('POST', 'api/friendships/unfriend/'.$sender->id);
 
-      $response->assertStatus(200);
-      $this->assertFalse(auth()->user()->isFriendWith($sender));
+        $response->assertStatus(200);
+        $this->assertFalse(auth()->user()->isFriendWith($sender));
     }
 }

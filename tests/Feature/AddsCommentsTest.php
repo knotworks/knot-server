@@ -57,7 +57,8 @@ class AddsCommentsTest extends TestCase
         $response = $this->json('POST', 'api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
 
         $response->assertStatus(200);
-        
+
+        $this->assertCount(1, $this->user->notifications);
         $this->assertDatabaseHas('comments', ['post_id' => $this->post->id]);
     }
 

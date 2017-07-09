@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Knot\Models\Comment;
 use Knot\Models\Post;
 use Knot\Traits\AddsLocation;
+use Knot\Notifications\PostCommentedOn;
 
 class CommentsController extends Controller
 {
@@ -39,7 +40,7 @@ class CommentsController extends Controller
     public function store(Request $request, Post $post)
     {
         $this->authorize('can_comment', $post);
-        
+
         $this->validate($request, ['body' => 'required']);
 
         $comment = $post->addComment([
@@ -49,6 +50,10 @@ class CommentsController extends Controller
 
         if ($request->has('location')) {
             $this->setLocation($request, $comment);
+        }
+
+        if ($post->user->id !== auth()->id()) {
+            $post->user->notify(new PostCommentedOn($post, $comment));
         }
 
         return $comment->load('user', 'location');
@@ -65,9 +70,9 @@ class CommentsController extends Controller
     public function update(Request $request, Comment $comment)
     {
         $this->authorize('can_modify_or_delete', $comment);
-        
+
         $this->validate($request, ['body' => 'required']);
-        
+
         $comment->update($request->only('body'));
 
         return $comment;
@@ -84,7 +89,7 @@ class CommentsController extends Controller
         $this->authorize('can_modify_or_delete', $comment);
 
         $comment->delete();
-        
+
         return response(['status' => 'Comment deleted'], 200);
     }
 }
