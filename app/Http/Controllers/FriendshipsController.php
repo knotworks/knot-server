@@ -2,9 +2,11 @@
 
 namespace Knot\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Knot\Models\User;
+use Illuminate\Http\Request;
 use Hootlex\Friendships\Models\Friendship;
+use Knot\Notifications\AddedAsFriend;
+use Knot\Notifications\FriendRequestAccepted;
 
 class FriendshipsController extends Controller
 {
@@ -24,6 +26,21 @@ class FriendshipsController extends Controller
     }
 
     /**
+     * Send a friend request to another user
+     *
+     * @param Request $request
+     * @param User $recipient
+     * @return \Illuminate\Http\Response
+     */
+    public function addFriend(Request $request, User $recipient)
+    {
+        auth()->user()->befriend($recipient);
+        $recipient->notify(new AddedAsFriend(auth()->user()));
+
+        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
+    }
+
+    /**
      * Accept a friend request from another user
      *
      * @param \Illuminate\Http\Request $request
@@ -33,6 +50,7 @@ class FriendshipsController extends Controller
     public function acceptFriendship(Request $request, User $sender)
     {
         auth()->user()->acceptFriendRequest($sender);
+        $sender->notify(new FriendRequestAccepted(auth()->user()));
 
         return auth()->user()->getAllFriendships()->load('sender', 'recipient');
     }

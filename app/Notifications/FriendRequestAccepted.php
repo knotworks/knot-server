@@ -3,21 +3,20 @@
 namespace Knot\Notifications;
 
 use Illuminate\Notifications\Notification;
-use Knot\Models\Comment;
-use Knot\Models\Post;
+use Knot\Models\User;
 
-class PostCommentedOn extends Notification
+class FriendRequestAccepted extends Notification
 {
-    protected $comment;
+    protected $recipient;
     /**
      * Create a new notification instance.
      *
-     * @param  Comment  $comment
+     * @param  User  $recipient
      * @return void
      */
-    public function __construct(Comment $comment)
+    public function __construct(User $recipient)
     {
-        $this->comment = $comment;
+        $this->recipient = $recipient;
     }
 
     /**
@@ -39,7 +38,7 @@ class PostCommentedOn extends Notification
     public function toArray()
     {
         return [
-            'comment' => $this->comment->load('user', 'post'),
+            'recipient' => $this->recipient,
         ];
     }
 }

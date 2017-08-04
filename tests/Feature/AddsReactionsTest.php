@@ -34,7 +34,7 @@ class AddsReactionsTest extends TestCase
     /** @test */
     function a_user_can_react_to_a_post_if_it_does_belong_to_a_friend()
     {
-        $this->createMutualFriendship();
+        $this->createFriendship(auth()->user(), $this->user);
         $response = $this->json('POST', 'api/posts/'.$this->post->id.'/reactions', ['type' => 'smile']);
 
         $response->assertStatus(200);
@@ -47,16 +47,9 @@ class AddsReactionsTest extends TestCase
     {
         $this->withExceptionHandling();
         
-        $this->createMutualFriendship();
+        $this->createFriendship(auth()->user(), $this->user);
         $response = $this->json('POST', 'api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe']);
         
         $response->assertStatus(422);
     }
-
-    protected function createMutualFriendship()
-    {
-        auth()->user()->befriend($this->user);
-        $this->user->acceptFriendRequest(auth()->user());
-    }
-    
 }

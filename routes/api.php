@@ -30,6 +30,7 @@ Route::delete('/comments/{comment}', 'CommentsController@destroy');
 Route::get('/feed', 'PostsController@feed');
 
 Route::get('/friendships', 'FriendshipsController@index');
+Route::post('/friendships/add/{recipient}', 'FriendshipsController@addFriend');
 Route::post('/friendships/accept/{sender}', 'FriendshipsController@acceptFriendship');
 Route::post('/friendships/deny/{sender}', 'FriendshipsController@denyFriendship');
 Route::post('/friendships/unfriend/{friend}', 'FriendshipsController@unfriend');

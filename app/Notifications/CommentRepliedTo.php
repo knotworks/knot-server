@@ -4,9 +4,8 @@ namespace Knot\Notifications;
 
 use Illuminate\Notifications\Notification;
 use Knot\Models\Comment;
-use Knot\Models\Post;
 
-class PostCommentedOn extends Notification
+class CommentRepliedTo extends Notification
 {
     protected $comment;
     /**
@@ -39,7 +38,7 @@ class PostCommentedOn extends Notification
     public function toArray()
     {
         return [
-            'comment' => $this->comment->load('user', 'post'),
+            'comment' => $this->comment->load('user', 'post.user')
         ];
     }
 }

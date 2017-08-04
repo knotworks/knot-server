@@ -3,17 +3,19 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class NotificationsTest extends TestCase
 {
     use DatabaseMigrations;
 
+    protected $post;
+
     public function setup()
     {
         parent::setup();
-
+        $this->post = create('Knot\Models\TextPost')->post;
         $this->authenticate();
     }
 
@@ -29,7 +31,7 @@ class NotificationsTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_mark_their_notifications_as_reads()
+    function a_user_can_mark_their_notifications_as_read()
     {
         create(DatabaseNotification::class);
 

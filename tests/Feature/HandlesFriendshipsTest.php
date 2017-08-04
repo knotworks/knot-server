@@ -17,7 +17,7 @@ class HandlesFriendshipsTest extends TestCase
     }
 
     /** @test */
-    function the_authenticated_user_can_fetch_their_friendships()
+    function a_user_can_fetch_their_friendships()
     {
         $sender = create('Knot\Models\User');
         $sender->befriend(auth()->user());
@@ -29,7 +29,16 @@ class HandlesFriendshipsTest extends TestCase
     }
 
     /** @test */
-    function the_authenticated_user_can_accept_a_friend_request()
+    function a_user_can_add_a_new_friend()
+    {
+        $recipient = create('Knot\Models\User');
+        $response = $this->postJson('api/friendships/add/'.$recipient->id);
+        $this->assertTrue($recipient->hasFriendRequestFrom(auth()->user()));
+        $this->assertCount(1, $recipient->notifications);
+    }
+
+    /** @test */
+    function a_user_can_accept_a_friend_request()
     {
         $sender = create('Knot\Models\User');
         $sender->befriend(auth()->user());
@@ -41,7 +50,7 @@ class HandlesFriendshipsTest extends TestCase
     }
 
     /** @test */
-    function the_authenticated_user_can_deny_a_friend_request()
+    function a_user_can_deny_a_friend_request()
     {
         $sender = create('Knot\Models\User');
         $sender->befriend(auth()->user());
@@ -53,7 +62,7 @@ class HandlesFriendshipsTest extends TestCase
     }
 
     /** @test */
-    function the_authenticated_user_can_unfriend_a_friend()
+    function a_user_can_unfriend_a_friend()
     {
         $sender = create('Knot\Models\User');
         $sender->befriend(auth()->user());

@@ -7,6 +7,8 @@ use Knot\Models\Comment;
 use Knot\Models\Post;
 use Knot\Traits\AddsLocation;
 use Knot\Notifications\PostCommentedOn;
+use Knot\Notifications\CommentRepliedTo;
+use Notification;
 
 class CommentsController extends Controller
 {
@@ -52,11 +54,22 @@ class CommentsController extends Controller
             $this->setLocation($request, $comment);
         }
 
+        $comment->load('user', 'location');
+
         if ($post->user->id !== auth()->id()) {
-            $post->user->notify(new PostCommentedOn($post, $comment));
+            $post->user->notify(new PostCommentedOn($comment));
         }
 
-        return $comment->load('user', 'location');
+        $replyNotificationUsers = $post->comments->map(function ($item, $key) {
+            return $item->user;
+        })->reject(function ($user, $key) use ($post) {
+            return $user->id == $post->user->id || $user->id == auth()->id();
+        });
+        if (count($replyNotificationUsers)) {
+            Notification::send($replyNotificationUsers, new CommentRepliedTo($comment));
+        }
+
+        return $comment;
     }
 
 

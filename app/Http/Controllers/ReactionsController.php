@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Knot\Models\Post;
 use Knot\Models\Reaction;
+use Knot\Notifications\PostReactedTo;
 
 class ReactionsController extends Controller
 {
@@ -33,17 +34,19 @@ class ReactionsController extends Controller
         ]);
         
         $reaction = Reaction::where('post_id', $post->id)->where('user_id', auth()->id())->first();
-        
+
         if ($reaction) {
             $reaction->fill([
                 'type' => $request->input('type')
             ]);
             $reaction->save();
         } else {
-            $post->addReaction([
+            $reaction = $post->addReaction([
                 'user_id' => auth()->id(),
                 'type' => $request->input('type'),
             ]);
+
+            $post->user->notify(new PostReactedTo($reaction));
         }
 
         return $post->load('reactions.user');
