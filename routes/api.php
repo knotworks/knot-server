@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 Route::get('/auth/user', 'AuthController@user');
 Route::post('/auth/user', 'AuthController@register');
 
+Route::put('/profile/avatar', 'ProfileController@updateAvatar');
+Route::put('/profile/update', 'ProfileController@updateInfo');
+
 Route::get('/notifications', 'NotificationsController@index');
 Route::delete('/notifications', 'NotificationsController@destroy');
 
