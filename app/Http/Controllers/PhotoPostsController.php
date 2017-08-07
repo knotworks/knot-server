@@ -2,13 +2,12 @@
 
 namespace Knot\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Image;
 use Knot\Models\PhotoPost;
+use Illuminate\Http\Request;
 use Knot\Traits\AddsLocation;
 use Knot\Traits\AddsAccompaniments;
-use Illuminate\Http\File;
-use Image;
+use Knot\Jobs\UploadPhotoPostImageToCloud;
 
 class PhotoPostsController extends Controller
 {
@@ -28,13 +27,13 @@ class PhotoPostsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['image' => 'required|image|max:10000']);
-        
+
         $file = $request->file('image');
 
         // Resize the image, while constraining aspect ratio, and ensuring it does not upsize
         $image = Image::make($file)->encode('jpg', 80);
-        
-        $image->resize(1200, 1600, function ($constraint){
+
+        $image->resize(1200, 1600, function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         });
@@ -47,29 +46,27 @@ class PhotoPostsController extends Controller
         $image->save(public_path('images/tmp/'.$thumbName));
         $tmpImageUrl = $image->dirname.'/'.$image->basename;
 
-        // Upload it to the cloud from the public folder
-        $cloudFile = new File($tmpImageUrl);
-        $cloudUrl = Storage::cloud()->putFile('photo-posts', $cloudFile);
+        // Destroy the image instance
+        $image->destroy();
 
+        // Create the post, and queue the cloud upload
         $post = PhotoPost::create([
             'body' => $request->input('body'),
-            'image_path' => $cloudUrl,
+            'image_path' => $tmpImageUrl,
             'width' => $imageWidth,
             'height' => $imageHeight,
             'user_id' => auth()->id(),
         ]);
-        
-        // Destroy the image instance, and remove it from the public folder
-        $image->destroy();
-        unlink($tmpImageUrl);
-        
+
+        dispatch(new UploadPhotoPostImageToCloud($post));
+
         if ($request->has('location')) {
             $this->setLocation($request, $post->post);
         }
         if ($request->has('accompaniments')) {
             $this->setAccompaniments($request, $post->post);
         }
-        
+
 
         return $post->load('post.location', 'post.accompaniments');
     }

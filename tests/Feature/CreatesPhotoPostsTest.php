@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Storage;
+use Knot\Jobs\UploadPhotoPostImageToCloud;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CreatesPhotoPostsTest extends TestCase
 {
@@ -14,7 +16,7 @@ class CreatesPhotoPostsTest extends TestCase
     public function setup()
     {
           parent::setup();
-          
+
           $this->authenticate();
     }
 
@@ -22,13 +24,19 @@ class CreatesPhotoPostsTest extends TestCase
     function a_photo_post_uploads_the_passed_in_file_to_the_storage_disk()
     {
         Storage::fake(config('filesystems.cloud'));
+        Queue::fake();
 
         $response = $this->json('POST', 'api/posts/new/photo', [
           'body' => 'My fancy photo post',
           'image' => UploadedFile::fake()->image('french-river.jpg', 1200, 900),
         ]);
-        $imagePath = $response->getOriginalContent()->first()->image_path;
+        $post = $response->getOriginalContent();
+        $imagePath = $post->image_path;
 
-        Storage::cloud()->assertExists($imagePath);
+        Queue::assertPushed(UploadPhotoPostImageToCloud::class);
+
+        $this->assertDatabaseHas('photo_posts', [
+            'image_path' => $imagePath
+        ]);
     }
 }
