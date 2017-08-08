@@ -32,11 +32,12 @@ class CreatesPhotoPostsTest extends TestCase
         ]);
         $post = $response->getOriginalContent();
         $imagePath = $post->image_path;
-
         Queue::assertPushed(UploadPhotoPostImageToCloud::class);
 
         $this->assertDatabaseHas('photo_posts', [
             'image_path' => $imagePath
         ]);
+
+        unlink($imagePath);
     }
 }

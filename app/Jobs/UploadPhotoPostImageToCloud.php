@@ -17,6 +17,9 @@ class UploadPhotoPostImageToCloud implements ShouldQueue
 
     protected $post;
 
+    public $tries = 3;
+
+
     /**
      * Create a new job instance.
      *
@@ -37,7 +40,7 @@ class UploadPhotoPostImageToCloud implements ShouldQueue
         $tmpPath = $this->post->image_path;
         $file = new File($tmpPath);
         $url = Storage::cloud()->putFile('photo-posts', $file);
-        $post->fill(['image_path' => $url])->save();
+        $this->post->fill(['image_path' => $url])->save();
         unlink($tmpPath);
     }
 }

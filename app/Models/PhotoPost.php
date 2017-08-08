@@ -15,14 +15,20 @@ class PhotoPost extends Model
 
     protected $appends = ['imageUrl'];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function getImageUrlAttribute() 
+    public function getImageUrlAttribute()
     {
         $path = config('filesystems.disks.b2.basePath');
         $bucket = config('filesystems.disks.b2.bucketName');
-        return "{$path}{$bucket}/{$this->attributes['image_path']}";
+        $imagePath = $this->attributes['image_path'];
+        if (starts_with($imagePath, 'photo-posts')) {
+            return "{$path}{$bucket}/{$imagePath}";
+        } else {
+            return asset('images/tmp/'.pathinfo($imagePath, PATHINFO_BASENAME));
+        }
     }
 }
