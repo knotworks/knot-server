@@ -13,30 +13,32 @@ use Notification;
 class CommentsController extends Controller
 {
     use AddsLocation;
-    
+
     public function __construct()
     {
         $this->middleware('auth:api');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
      * @param Knot\Models\Post $post
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(Post $post)
     {
         $this->authorize('can_view_comments', $post);
-        
+
         return $post->comments;
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param \Knot\Models\Post $post
+     * @param \Illuminate\Http\Request $request
+     * @param \Knot\Models\Post        $post
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Post $post)
@@ -72,12 +74,12 @@ class CommentsController extends Controller
         return $comment;
     }
 
-
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Knot\Models\Comment  $comment
+     * @param \Illuminate\Http\Request $request
+     * @param \Knot\Models\Comment     $comment
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Comment $comment)
@@ -94,7 +96,8 @@ class CommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Knot\Models\Comment  $comment
+     * @param \Knot\Models\Comment $comment
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Comment $comment)

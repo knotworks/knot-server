@@ -2,21 +2,24 @@
 
 namespace Knot\Traits;
 
-trait Locatable {
-
-    protected static function bootLocatable() {
+trait Locatable
+{
+    protected static function bootLocatable()
+    {
         static::deleting(function ($model) {
             if ($model->location()->exists()) {
                 $model->location->delete();
             }
         });
     }
-    
-    public function location() {
+
+    public function location()
+    {
         return $this->morphOne('Knot\Models\Location', 'locatable');
     }
 
-    public function addLocation($location) {
+    public function addLocation($location)
+    {
         $this->location()->create($location);
     }
 }

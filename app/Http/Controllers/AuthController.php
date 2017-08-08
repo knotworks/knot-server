@@ -16,7 +16,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Return the authenticated user
+     * Return the authenticated user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -26,9 +26,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Register a new user
+     * Register a new user.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request)
@@ -43,7 +44,6 @@ class AuthController extends Controller
             Doorman::redeem($request->input('code'), $request->input('email'));
 
             return User::create($request->all());
-
         } catch (\DoormanException $e) {
             return response()->json(['error' => $e->getMessage()], 422);
         }

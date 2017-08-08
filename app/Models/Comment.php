@@ -8,7 +8,7 @@ use Knot\Traits\Locatable;
 class Comment extends Model
 {
     use Locatable;
-    
+
     protected $guarded = [];
     protected $with = ['user', 'location'];
 
@@ -29,6 +29,6 @@ class Comment extends Model
      */
     public function user()
     {
-      return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

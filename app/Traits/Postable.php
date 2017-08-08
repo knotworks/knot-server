@@ -2,9 +2,10 @@
 
 namespace Knot\Traits;
 
-trait Postable {
-
-    protected static function bootPostable() {
+trait Postable
+{
+    protected static function bootPostable()
+    {
         static::created(function ($model) {
             $model->createPost($model);
         });
@@ -13,12 +14,14 @@ trait Postable {
             $model->post()->delete();
         });
     }
-    
-    public function post() {
+
+    public function post()
+    {
         return $this->morphOne('Knot\Models\Post', 'postable');
     }
 
-    protected function createPost($model) {
+    protected function createPost($model)
+    {
         $this->post()->create(['user_id' => $model->user_id]);
     }
 }

@@ -11,8 +11,7 @@ class CommentRepliedTo extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param  Comment  $comment
-     * @return void
+     * @param Comment $comment
      */
     public function __construct(Comment $comment)
     {
@@ -22,7 +21,8 @@ class CommentRepliedTo extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -38,7 +38,7 @@ class CommentRepliedTo extends Notification
     public function toArray()
     {
         return [
-            'comment' => $this->comment->load('user', 'post.user')
+            'comment' => $this->comment->load('user', 'post.user'),
         ];
     }
 }

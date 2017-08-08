@@ -12,16 +12,17 @@ use Knot\Jobs\UploadPhotoPostImageToCloud;
 class PhotoPostsController extends Controller
 {
     use AddsLocation, AddsAccompaniments;
-    
+
     public function __construct()
     {
         $this->middleware('auth:api');
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -66,7 +67,6 @@ class PhotoPostsController extends Controller
         if ($request->has('accompaniments')) {
             $this->setAccompaniments($request, $post->post);
         }
-
 
         return $post->load('post.location', 'post.accompaniments');
     }

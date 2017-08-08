@@ -30,8 +30,7 @@ class User extends Authenticatable
     /**
      * Hash the user's password.
      *
-     * @param  string  $value
-     * @return void
+     * @param string $value
      */
     public function setPasswordAttribute($value)
     {
@@ -47,24 +46,25 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getFullNameAttribute($value) {
+    public function getFullNameAttribute($value)
+    {
         return "{$this->first_name} {$this->last_name}";
     }
 
     /**
      * Fetch an activity feed for the given user.
      *
-     * @param  User $user
+     * @param User $user
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function feed() 
+    public function feed()
     {
         $ids = $this->getFriends()->map->id->prepend($this->id);
-        
+
         return Post::with(['location', 'postable', 'user', 'comments', 'reactions.user'])
             ->latest()
             ->whereIn('user_id', $ids)
             ->get();
-            
     }
 }

@@ -19,11 +19,8 @@ class UploadPhotoPostImageToCloud implements ShouldQueue
 
     public $tries = 3;
 
-
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     public function __construct(PhotoPost $post)
     {
@@ -32,15 +29,17 @@ class UploadPhotoPostImageToCloud implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
         $tmpPath = $this->post->image_path;
         $file = new File($tmpPath);
-        $url = Storage::cloud()->putFile('photo-posts', $file);
-        $this->post->fill(['image_path' => $url])->save();
-        unlink($tmpPath);
+        try {
+            $url = Storage::cloud()->putFile('photo-posts', $file);
+            $this->post->fill(['image_path' => $url])->save();
+            unlink($tmpPath);
+        } catch (Exception $e) {
+            unlink($tmpPath);
+        }
     }
 }

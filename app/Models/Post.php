@@ -8,13 +8,13 @@ use Knot\Traits\Locatable;
 class Post extends Model
 {
     use Locatable;
-    
+
     protected $guarded = [];
 
-    protected static function boot() 
+    protected static function boot()
     {
         parent::boot();
-        
+
         static::deleting(function ($model) {
             $model->postable->delete();
             $model->accompaniments->each->delete();
@@ -22,13 +22,13 @@ class Post extends Model
             $model->comments->each->delete();
         });
     }
-    
+
     /**
      * Fetch the associated subject for the activity.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function postable() 
+    public function postable()
     {
         return $this->morphTo();
     }
@@ -38,17 +38,17 @@ class Post extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() 
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
-    
+
     /**
      * Fetch the associated accompaniments for the post.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function accompaniments() 
+    public function accompaniments()
     {
         return $this->hasMany(Accompaniment::class);
     }
@@ -58,7 +58,7 @@ class Post extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function reactions() 
+    public function reactions()
     {
         return $this->hasMany(Reaction::class);
     }
@@ -68,7 +68,7 @@ class Post extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function comments() 
+    public function comments()
     {
         return $this->hasMany(Comment::class);
     }
@@ -78,9 +78,9 @@ class Post extends Model
      *
      * @param  $accompaniments
      */
-    public function addAccompaniments($accompaniments) 
+    public function addAccompaniments($accompaniments)
     {
-      return $this->accompaniments()->createMany($accompaniments);
+        return $this->accompaniments()->createMany($accompaniments);
     }
 
     /**
@@ -102,5 +102,4 @@ class Post extends Model
     {
         return $this->comments()->create($comment);
     }
-
 }

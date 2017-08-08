@@ -11,8 +11,7 @@ class AddedAsFriend extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param  User  $sender
-     * @return void
+     * @param User $sender
      */
     public function __construct(User $sender)
     {
@@ -22,7 +21,8 @@ class AddedAsFriend extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)

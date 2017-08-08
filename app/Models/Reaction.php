@@ -7,17 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Reaction extends Model
 {
     protected $fillable = ['user_id', 'post_id', 'type'];
-    
+
     const REACTIONS = [
-        'smile'    => 'smile',
-        'love'     => 'love',
-        'frown'    => 'frown',
+        'smile' => 'smile',
+        'love' => 'love',
+        'frown' => 'frown',
         'surprise' => 'surprise',
-        'laugh'    => 'laugh',
-        'angry'    => 'angry',
+        'laugh' => 'laugh',
+        'angry' => 'angry',
     ];
-    
-    
+
     /**
      * Fetch the associated post for the reaction.
      *
@@ -35,6 +34,6 @@ class Reaction extends Model
      */
     public function user()
     {
-      return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -3,7 +3,6 @@
 namespace Knot\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
@@ -24,7 +23,6 @@ class NotificationsController extends Controller
 
     /**
      * Mark all notifications as read.
-     *
      */
     public function destroy()
     {

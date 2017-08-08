@@ -13,7 +13,7 @@ class Location extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function locatable() 
+    public function locatable()
     {
         return $this->morphTo();
     }

@@ -8,11 +8,10 @@ trait AddsAccompaniments
 {
     protected function setAccompaniments(Request $request, $model)
     {
-        
-          $this->validate($request, [
-              'accompaniments.*.name' => 'required'
+        $this->validate($request, [
+              'accompaniments.*.name' => 'required',
           ]);
 
-          $model->addAccompaniments($request->accompaniments);
+        $model->addAccompaniments($request->accompaniments);
     }
 }
