@@ -43,7 +43,7 @@ class PhotoPostsController extends Controller
         $imageHeight = $image->height();
 
         // Move it to the public folder
-        $thumbName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$file->getClientOriginalExtension();
+        $thumbName = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$file->getClientOriginalExtension();
         $publicPath = public_path('images/tmp/'.$thumbName);
         $image->save($publicPath);
 

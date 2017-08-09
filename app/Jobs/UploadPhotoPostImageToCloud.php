@@ -39,7 +39,10 @@ class UploadPhotoPostImageToCloud implements ShouldQueue
             $this->post->fill(['image_path' => $url])->save();
             unlink($tmpPath);
         } catch (Exception $e) {
-            unlink($tmpPath);
+            logger()->error('Cloud Upload Failed.', [
+                'post' => $this->post->toArray(),
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 }

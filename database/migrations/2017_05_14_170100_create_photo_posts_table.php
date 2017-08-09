@@ -15,7 +15,7 @@ class CreatePhotoPostsTable extends Migration
     {
         Schema::create('photo_posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('body');
+            $table->text('body')->nullable();
             $table->string('image_path');
             $table->unsignedInteger('user_id')->index();
             $table->float('width')->nullable();
