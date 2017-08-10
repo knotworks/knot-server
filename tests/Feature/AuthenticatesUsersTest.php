@@ -12,12 +12,11 @@ class AuthenticatesUserTest extends TestCase
 {
     use DatabaseMigrations;
 
-    
     /** @test */
     function can_register_a_new_user()
     {
         $this->withExceptionHandling();
-        
+
         $userData =  [
             'first_name' => 'Jane',
             'last_name' => 'Doe',
@@ -31,15 +30,15 @@ class AuthenticatesUserTest extends TestCase
 
         $this->assertEquals(1, User::count());
     }
-    
+
     /** @test */
     function can_fetch_an_authenticated_user()
     {
         $this->authenticate();
-        
+
         $response = $this->get('api/auth/user');
 
         $response->assertStatus(200);
     }
-    
+
 }
