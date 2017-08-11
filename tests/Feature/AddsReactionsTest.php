@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
 
@@ -11,7 +12,7 @@ class AddsReactionsTest extends TestCase
 
     protected $user;
     protected $post;
-    
+
     public function setup()
     {
         parent::setup();
@@ -25,7 +26,7 @@ class AddsReactionsTest extends TestCase
     function a_user_cannot_react_to_a_post_that_does_not_belong_to_a_friend()
     {
         $this->withExceptionHandling();
-        
+
         $response = $this->json('POST', 'api/posts/'.$this->post->id.'/reactions', ['type' => 'smile']);
 
         $response->assertStatus(403);
@@ -38,18 +39,18 @@ class AddsReactionsTest extends TestCase
         $response = $this->json('POST', 'api/posts/'.$this->post->id.'/reactions', ['type' => 'smile']);
 
         $response->assertStatus(200);
-        
+
         $this->assertDatabaseHas('reactions', ['post_id' => $this->post->id]);
     }
-    
+
     /** @test */
     function a_reaction_type_must_be_one_of_the_set_reactions()
     {
         $this->withExceptionHandling();
-        
+
         $this->createFriendship(auth()->user(), $this->user);
         $response = $this->json('POST', 'api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe']);
-        
+
         $response->assertStatus(422);
     }
 }

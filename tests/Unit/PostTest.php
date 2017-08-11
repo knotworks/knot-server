@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Tests\Unit;
 
@@ -18,8 +19,8 @@ class PostTest extends TestCase
   public function setup()
   {
       parent::setUp();
-      
-      
+
+
       $this->authenticate();
       $this->post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
   }
@@ -59,12 +60,12 @@ class PostTest extends TestCase
 
   /** @test */
   function a_post_can_add_reactions()
-  { 
+  {
     $reaction = make('Knot\Models\Reaction')->toArray();
     $this->post->addReaction($reaction);
 
     $this->assertCount(1, $this->post->reactions);
-    
+
     $this->assertDatabaseHas('reactions', [
         'type' => $reaction['type'],
         'user_id' => $reaction['user_id'],
@@ -81,14 +82,14 @@ class PostTest extends TestCase
       'locatable_id' => $this->post->id,
       'locatable_type' => get_class($this->post),
     ])->toArray();
-    
+
     $this->post->addAccompaniments([
       [
         'user_id' => 2,
         'name' => 'Jeff Henderson'
       ]
     ]);
-    
+
     $this->post->addReaction([
       'user_id' => 2,
       'type' => Reaction::REACTIONS['smile'],
@@ -98,7 +99,7 @@ class PostTest extends TestCase
 
     // Then delete the post
     $this->post->delete();
-    
+
     // Assert there are zero records of the relation
     $this->assertEquals(0, Accompaniment::count());
     $this->assertEquals(0, Location::count());

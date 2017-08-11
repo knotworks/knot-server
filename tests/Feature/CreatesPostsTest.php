@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
 
@@ -9,9 +10,9 @@ use Faker\Factory as Faker;
 class CreatesTextPostTest extends TestCase
 {
     use DatabaseMigrations;
-    
+
     protected $faker;
-    
+
     public function setup()
     {
         parent::setup();
@@ -21,7 +22,7 @@ class CreatesTextPostTest extends TestCase
     function a_user_can_create_a_text_post()
     {
         $this->authenticate();
-        
+
         $postContent =  ['body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'];
         $response = $this->json('POST', 'api/posts/new/text', $postContent);
 
@@ -34,7 +35,7 @@ class CreatesTextPostTest extends TestCase
     function a_user_can_include_a_location_with_a_post()
     {
         $this->authenticate();
-        
+
         $postContent =  [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'location' => [
@@ -45,7 +46,7 @@ class CreatesTextPostTest extends TestCase
         ];
 
         $response = $this->json('POST', 'api/posts/new/text', $postContent);
-        
+
         $response
         ->assertStatus(200)
         ->assertJson([
@@ -60,7 +61,7 @@ class CreatesTextPostTest extends TestCase
     function a_user_can_include_accompaniments_with_a_post()
     {
         $this->authenticate();
-        
+
         $postContent =  [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
@@ -70,7 +71,7 @@ class CreatesTextPostTest extends TestCase
         ];
 
         $response = $this->json('POST', 'api/posts/new/text', $postContent);
-        
+
         $response
         ->assertStatus(200)
         ->assertJson([
@@ -80,5 +81,5 @@ class CreatesTextPostTest extends TestCase
             ],
         ]);
     }
-    
+
 }

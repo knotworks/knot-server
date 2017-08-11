@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Tests\Unit;
 
@@ -14,7 +15,7 @@ class ReactionTest extends TestCase
   public function setup()
   {
       parent::setUp();
-      
+
       $this->reaction = create('Knot\Models\Reaction');
   }
 

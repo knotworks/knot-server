@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
 
@@ -13,7 +14,7 @@ class AddsCommentsTest extends TestCase
 
     protected $user;
     protected $post;
-    
+
     public function setup()
     {
         parent::setup();
@@ -37,7 +38,7 @@ class AddsCommentsTest extends TestCase
     function a_user_cannot_see_comments_on_a_post_that_does_not_belong_to_a_friend()
     {
         $this->withExceptionHandling();
-        
+
         $response = $this->json('GET', 'api/posts/'.$this->post->id.'/comments');
 
         $response->assertStatus(403);
@@ -51,7 +52,7 @@ class AddsCommentsTest extends TestCase
 
         $response->assertStatus(200);
     }
-    
+
     /** @test */
     function a_user_cannot_comment_on_a_post_that_does_not_belong_to_a_friend()
     {

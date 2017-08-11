@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
 
@@ -8,7 +9,7 @@ use Tests\TestCase;
 class HandlesFriendshipsTest extends TestCase
 {
     use DatabaseMigrations;
-    
+
     public function setup()
     {
         parent::setup();

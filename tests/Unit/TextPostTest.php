@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Tests\Unit;
 
@@ -11,14 +12,14 @@ class TextPostTest extends TestCase
 
     protected $textPost;
 
-    public function setup() 
+    public function setup()
     {
         parent::setUp();
-        
+
         $this->authenticate();
         $this->textPost = create('Knot\Models\TextPost', ['user_id' => auth()->id()]);
     }
-    
+
      /** @test */
     public function a_text_post_belongs_to_a_user()
     {

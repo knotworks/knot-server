@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 
 namespace Tests\Unit;
 
@@ -14,7 +15,7 @@ class AccompanimentTest extends TestCase
   public function setup()
   {
       parent::setUp();
-      
+
       $this->accompaniment = create('Knot\Models\Accompaniment');
   }
 
@@ -30,11 +31,11 @@ class AccompanimentTest extends TestCase
   function an_accompaniment_with_a_user_id_can_fetch_its_user()
   {
     $secondAccompaniment = create('Knot\Models\Accompaniment', ['user_id' => null]);
-    
+
     $this->assertInstanceOf(
         'Knot\Models\User', $this->accompaniment->user()
     );
-    
+
     $this->assertNull($secondAccompaniment->user());
   }
 }
