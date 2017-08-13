@@ -26,7 +26,7 @@ class HandlesFriendshipsTest extends TestCase
         $response = $this->json('GET', 'api/friendships');
 
         $response->assertStatus(200);
-        $this->assertCount(1, $response->getOriginalContent());
+        $this->assertCount(1, $response->getOriginalContent()['requests']);
     }
 
     /** @test */

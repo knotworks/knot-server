@@ -23,13 +23,13 @@ class AuthenticatesUserTest extends TestCase
             'last_name' => 'Doe',
             'email' => 'jane@janedoe.com',
             'password' => 'foobar',
-            'code' => Doorman::generate()->for('jane@janedoe.com')->make()->first()->code
+            'password_confirmation' => 'foobar',
         ];
         $response = $this->json('POST', 'api/auth/user', $userData);
 
         $response->assertStatus(200);
 
-        $this->assertEquals(1, User::count());
+        $this->assertCount(1, User::all());
     }
 
     /** @test */
