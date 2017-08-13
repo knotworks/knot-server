@@ -22,7 +22,10 @@ class FriendshipsController extends Controller
      */
     public function index()
     {
-        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
+        return [
+            'friends' => auth()->user()->getFriends(),
+            'requests' => auth()->user()->getFriendRequests()->load('sender'),
+        ];
     }
 
     /**
@@ -38,7 +41,10 @@ class FriendshipsController extends Controller
         auth()->user()->befriend($recipient);
         $recipient->notify(new AddedAsFriend(auth()->user()));
 
-        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
+        return [
+            'friends' => auth()->user()->getFriends(),
+            'requests' => auth()->user()->getFriendRequests()->load('sender'),
+        ];
     }
 
     /**
@@ -54,7 +60,10 @@ class FriendshipsController extends Controller
         auth()->user()->acceptFriendRequest($sender);
         $sender->notify(new FriendRequestAccepted(auth()->user()));
 
-        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
+        return [
+            'friends' => auth()->user()->getFriends(),
+            'requests' => auth()->user()->getFriendRequests()->load('sender'),
+        ];
     }
 
     /**
@@ -69,7 +78,10 @@ class FriendshipsController extends Controller
     {
         auth()->user()->denyFriendRequest($sender);
 
-        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
+        return [
+            'friends' => auth()->user()->getFriends(),
+            'requests' => auth()->user()->getFriendRequests()->load('sender'),
+        ];
     }
 
     /**
@@ -84,6 +96,9 @@ class FriendshipsController extends Controller
     {
         auth()->user()->unfriend($friend);
 
-        return auth()->user()->getAllFriendships()->load('sender', 'recipient');
+        return [
+            'friends' => auth()->user()->getFriends(),
+            'requests' => auth()->user()->getFriendRequests()->load('sender'),
+        ];
     }
 }
