@@ -25,7 +25,7 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'avatar_url'];
 
     /**
      * Hash the user's password.
@@ -49,6 +49,21 @@ class User extends Authenticatable
     public function getFullNameAttribute($value)
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        $path = config('filesystems.disks.b2.basePath');
+        $bucket = config('filesystems.disks.b2.bucketName');
+        $imagePath = $this->profile_image;
+        if (!$imagePath) {
+            return null;
+        };
+        if (starts_with($imagePath, 'avatars')) {
+            return "{$path}{$bucket}/{$imagePath}";
+        } else {
+            return asset('images/tmp/'.pathinfo($imagePath, PATHINFO_BASENAME));
+        }
     }
 
     /**
