@@ -37,15 +37,9 @@ class AuthController extends Controller
         $this->validate($request, [
             'first_name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'code' => 'required|doorman:email',
+            'password' => 'required|confirmed',
         ]);
-        try {
-            Doorman::redeem($request->input('code'), $request->input('email'));
 
-            return User::create($request->all());
-        } catch (\DoormanException $e) {
-            return response()->json(['error' => $e->getMessage()], 422);
-        }
+        return User::create($request->all());
     }
 }
