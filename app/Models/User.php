@@ -25,6 +25,17 @@ class User extends Authenticatable
         'password',
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'profile_image',
+    ];
+
     protected $appends = ['full_name', 'avatar_url'];
 
     /**
@@ -36,15 +47,6 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
 
     public function getFullNameAttribute($value)
     {
