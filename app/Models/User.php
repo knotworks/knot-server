@@ -36,7 +36,10 @@ class User extends Authenticatable
         'profile_image',
     ];
 
-    protected $appends = ['full_name', 'avatar_url'];
+    protected $appends = [
+        'full_name',
+        'avatar_url',
+    ];
 
     /**
      * Hash the user's password.
