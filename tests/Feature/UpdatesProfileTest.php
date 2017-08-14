@@ -5,6 +5,10 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Laravel\Passport\Passport;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Storage;
+use Knot\Jobs\UploadPhotoPostImageToCloud;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UpdatesProfileTest extends TestCase
@@ -31,12 +35,12 @@ class UpdatesProfileTest extends TestCase
         $this->withExceptionHandling();
 
         $newInfo = [
-        'first_name' => 'Jane',
-        'last_name' => 'Doe',
-        'email' => 'jane@doe.com',
-        'current_password' => $this->currentPassword,
-        'password' => $this->newPassword,
-        'password_confirmation' => $this->newPassword,
+            'first_name' => 'Jane',
+            'last_name' => 'Doe',
+            'email' => 'jane@doe.com',
+            'current_password' => $this->currentPassword,
+            'password' => $this->newPassword,
+            'password_confirmation' => $this->newPassword,
         ];
 
         $response = $this->putJson('api/profile/update', $newInfo);
@@ -50,11 +54,11 @@ class UpdatesProfileTest extends TestCase
         $this->withExceptionHandling();
 
         $newInfo = [
-        'first_name' => 'Jane Doe',
-        'email' => 'jane@janedoe.com',
-        'current_password' => 'incorrectoldpassword',
-        'password' => $this->newPassword,
-        'password_confirmation' => $this->newPassword,
+            'first_name' => 'Jane Doe',
+            'email' => 'jane@janedoe.com',
+            'current_password' => 'incorrectoldpassword',
+            'password' => $this->newPassword,
+            'password_confirmation' => $this->newPassword,
         ];
 
         $response = $this->putJson('api/profile/update', $newInfo);
@@ -68,11 +72,11 @@ class UpdatesProfileTest extends TestCase
         $this->withExceptionHandling();
 
         $newInfo = [
-        'first_name' => 'Jane Doe',
-        'email' => 'jane@janedoe.com',
-        'current_password' => $this->currentPassword,
-        'password' => $this->newPassword,
-        'password_confirmation' => 'doesnotmatch',
+            'first_name' => 'Jane Doe',
+            'email' => 'jane@janedoe.com',
+            'current_password' => $this->currentPassword,
+            'password' => $this->newPassword,
+            'password_confirmation' => 'doesnotmatch',
         ];
 
         $response = $this->putJson('api/profile/update', $newInfo);
