@@ -11,9 +11,17 @@ class PhotoPost extends Model
 
     protected $table = 'photo_posts';
 
-    protected $fillable = ['user_id', 'body', 'image_path', 'width', 'height'];
+    protected $fillable = [
+        'user_id',
+        'body',
+        'image_path',
+        'width',
+        'height',
+    ];
 
-    protected $appends = ['imageUrl'];
+    protected $hidden = ['image_path'];
+
+    protected $appends = ['image_url'];
 
     public function user()
     {
@@ -24,7 +32,7 @@ class PhotoPost extends Model
     {
         $path = config('filesystems.disks.b2.basePath');
         $bucket = config('filesystems.disks.b2.bucketName');
-        $imagePath = $this->attributes['image_path'];
+        $imagePath = $this->image_path;
         if (starts_with($imagePath, 'photo-posts')) {
             return "{$path}{$bucket}/{$imagePath}";
         } else {
