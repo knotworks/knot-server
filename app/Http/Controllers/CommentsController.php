@@ -28,7 +28,7 @@ class CommentsController extends Controller
      */
     public function index(Post $post)
     {
-        $this->authorize('can_view_comments', $post);
+        $this->authorize('can_view_post', $post);
 
         return $post->comments;
     }
@@ -43,7 +43,7 @@ class CommentsController extends Controller
      */
     public function store(Request $request, Post $post)
     {
-        $this->authorize('can_comment', $post);
+        $this->authorize('can_view_post', $post);
 
         $this->validate($request, ['body' => 'required']);
 

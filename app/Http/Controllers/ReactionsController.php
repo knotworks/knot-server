@@ -25,7 +25,7 @@ class ReactionsController extends Controller
      */
     public function store(Request $request, Post $post)
     {
-        $this->authorize('can_react', $post);
+        $this->authorize('can_view_post', $post);
 
         $this->validate($request, [
             'type' => [
