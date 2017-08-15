@@ -25,32 +25,20 @@ class AddsCommentsTest extends TestCase
     }
 
     /** @test */
-    function a_post_author_is_notified_when_a_user_comments_on_their_post()
-    {
-        $author = $this->post->user;
-        $this->createFriendship(auth()->user(), $author);
-
-        $response = $this->json('POST', 'api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
-        $this->assertCount(1, $author->notifications);
-    }
-
-    /** @test */
     function a_user_cannot_see_comments_on_a_post_that_does_not_belong_to_a_friend()
     {
         $this->withExceptionHandling();
 
-        $response = $this->json('GET', 'api/posts/'.$this->post->id.'/comments');
+        $this->getJson('api/posts/'.$this->post->id.'/comments')->assertStatus(403);
 
-        $response->assertStatus(403);
     }
 
     /** @test */
     function a_user_can_see_comments_on_a_post_that_belongs_to_a_friend()
     {
         $this->createFriendship(auth()->user(), $this->user);
-        $response = $this->json('GET', 'api/posts/'.$this->post->id.'/comments');
 
-        $response->assertStatus(200);
+        $this->getJson('api/posts/'.$this->post->id.'/comments')->assertStatus(200);
     }
 
     /** @test */
@@ -58,19 +46,15 @@ class AddsCommentsTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $response = $this->json('POST', 'api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
-
-        $response->assertStatus(403);
+        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment'])->assertStatus(403);
     }
 
     /** @test */
     function a_user_can_comment_on_a_post_if_it_does_belong_to_a_friend()
     {
         $this->createFriendship(auth()->user(), $this->user);
-        $response = $this->json('POST', 'api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
 
-        $response->assertStatus(200);
-
+        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment'])->assertStatus(200);
         $this->assertCount(1, $this->user->notifications);
         $this->assertDatabaseHas('comments', ['post_id' => $this->post->id]);
     }
@@ -79,19 +63,18 @@ class AddsCommentsTest extends TestCase
     function a_user_cannot_update_a_comment_that_does_not_belong_to_them()
     {
         $this->withExceptionHandling();
-        $comment = create('Knot\Models\Comment');
-        $response = $this->json('PUT', 'api/comments/'.$comment->id, ['body' => 'Updating comment']);
 
-        $response->assertStatus(403);
+        $comment = create('Knot\Models\Comment');
+
+        $this->putJson('api/comments/'.$comment->id, ['body' => 'Updating comment'])->assertStatus(403);
     }
 
     /** @test */
     function a_user_can_update_their_own_comments()
     {
         $comment = create('Knot\Models\Comment', ['user_id' => auth()->id()]);
-        $response = $this->json('PUT', 'api/comments/'.$comment->id, ['body' => 'Updating comment']);
 
-        $response->assertStatus(200);
+        $this->putJson('api/comments/'.$comment->id, ['body' => 'Updating comment'])->assertStatus(200);
     }
 
     /** @test */
@@ -99,18 +82,27 @@ class AddsCommentsTest extends TestCase
     {
         $this->withExceptionHandling();
         $comment = create('Knot\Models\Comment');
-        $response = $this->json('DELETE', 'api/comments/'.$comment->id);
 
-        $response->assertStatus(403);
+        $this->deleteJson('api/comments/'.$comment->id)->assertStatus(403);
     }
 
     /** @test */
     function a_user_can_delete_their_own_comments()
     {
         $comment = create('Knot\Models\Comment', ['user_id' => auth()->id()]);
-        $response = $this->json('DELETE', '/api/comments/'.$comment->id);
 
-        $response->assertStatus(200);
+        $this->deleteJson('/api/comments/'.$comment->id)->assertStatus(204);
+    }
+
+    /** @test */
+    function a_post_author_is_notified_when_a_user_comments_on_their_post()
+    {
+        $author = $this->post->user;
+        $this->createFriendship(auth()->user(), $author);
+
+        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
+
+        $this->assertCount(1, $author->notifications);
     }
 
     /** @test */
@@ -119,7 +111,8 @@ class AddsCommentsTest extends TestCase
         $author = $this->post->user;
         $this->createFriendship(auth()->user(), $author);
         create('Knot\Models\Comment', ['post_id' => $this->post->id], 4);
-        $comment = $this->json('POST', 'api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment'])->getOriginalContent();
+
+        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
         $this->assertCount(1, $author->notifications);
         // 4 commenters + 1 existing author notification
         $this->assertCount(5, DatabaseNotification::all());

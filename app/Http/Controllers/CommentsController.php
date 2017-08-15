@@ -106,6 +106,6 @@ class CommentsController extends Controller
 
         $comment->delete();
 
-        return response(['status' => 'Comment deleted'], 200);
+        return response([], 204);
     }
 }
