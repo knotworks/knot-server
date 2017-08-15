@@ -27,4 +27,13 @@ class PostsController extends Controller
 
         return $post->load(['location', 'postable', 'user', 'comments', 'reactions.user']);
     }
+
+    public function destroy(Post $post)
+    {
+        $this->authorize('can_modify_or_delete_post', $post);
+
+        $post->delete();
+
+        return response([], 204);
+    }
 }

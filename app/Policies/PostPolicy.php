@@ -15,7 +15,7 @@ class PostPolicy
         return $user->isFriendWith($post->user) || $user->id == $post->user_id;
     }
 
-    public function can_modify_or_delete(User $user, Post $post)
+    public function can_modify_or_delete_post(User $user, Post $post)
     {
         return $user->id == $post->user_id;
     }
