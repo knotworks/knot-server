@@ -24,6 +24,7 @@ Route::delete('/notifications', 'NotificationsController@destroy');
 
 Route::post('/posts/new/text', 'TextPostsController@store');
 Route::post('/posts/new/photo', 'PhotoPostsController@store');
+Route::get('/posts/{post}', 'PostsController@show');
 Route::post('/posts/{post}/reactions', 'ReactionsController@store');
 Route::get('/posts/{post}/comments', 'CommentsController@index');
 Route::post('/posts/{post}/comments', 'CommentsController@store');

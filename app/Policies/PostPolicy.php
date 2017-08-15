@@ -10,18 +10,13 @@ class PostPolicy
 {
     use HandlesAuthorization;
 
-    public function can_react(User $user, Post $post)
+    public function can_view_post(User $user, Post $post)
     {
-        return $user->isFriendWith($post->postable->user) || $user->id == $post->postable->user_id;
+        return $user->isFriendWith($post->user) || $user->id == $post->user_id;
     }
 
-    public function can_comment(User $user, Post $post)
+    public function can_modify_or_delete(User $user, Post $post)
     {
-        return $user->isFriendWith($post->postable->user) || $user->id == $post->postable->user_id;
-    }
-
-    public function can_view_comments(User $user, Post $post)
-    {
-        return $user->isFriendWith($post->postable->user) || $user->id == $post->postable->user_id;
+        return $user->id == $post->user_id;
     }
 }
