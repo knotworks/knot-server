@@ -5,19 +5,16 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Knot\Models\TextPost;
-use Faker\Factory as Faker;
+
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ManagesPostsTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected $faker;
-
     public function setup()
     {
         parent::setup();
-        $this->faker = Faker::create();
 
         $this->authenticate();
     }
@@ -71,27 +68,5 @@ class ManagesPostsTest extends TestCase
         $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
 
         $this->deleteJson('/api/posts/'.$post->id)->assertStatus(403);
-    }
-
-    /** @test */
-    function a_user_can_include_a_location_with_a_post()
-    {
-        $postContent =  [
-            'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            'location' => [
-                'name' => $this->faker->company,
-                'lat' => $this->faker->latitude,
-                'long' => $this->faker->longitude,
-            ],
-        ];
-
-        $this->postJson('api/posts/new/text', $postContent)
-        ->assertStatus(200)
-        ->assertJson([
-            'body' => $postContent['body'],
-            'post' => [
-                'location' => $postContent['location']
-            ],
-        ]);
     }
 }
