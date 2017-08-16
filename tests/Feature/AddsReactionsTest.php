@@ -27,19 +27,15 @@ class AddsReactionsTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $response = $this->json('POST', 'api/posts/'.$this->post->id.'/reactions', ['type' => 'smile']);
-
-        $response->assertStatus(403);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(403);
     }
 
     /** @test */
     function a_user_can_react_to_a_post_if_it_does_belong_to_a_friend()
     {
         $this->createFriendship(auth()->user(), $this->user);
-        $response = $this->json('POST', 'api/posts/'.$this->post->id.'/reactions', ['type' => 'smile']);
 
-        $response->assertStatus(200);
-
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(200);
         $this->assertDatabaseHas('reactions', ['post_id' => $this->post->id]);
     }
 
@@ -49,8 +45,7 @@ class AddsReactionsTest extends TestCase
         $this->withExceptionHandling();
 
         $this->createFriendship(auth()->user(), $this->user);
-        $response = $this->json('POST', 'api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe']);
 
-        $response->assertStatus(422);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe'])->assertStatus(422);
     }
 }

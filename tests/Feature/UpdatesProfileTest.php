@@ -22,6 +22,7 @@ class UpdatesProfileTest extends TestCase
     public function setup()
     {
         parent::setup();
+
         $this->currentPassword = 'abigsecret';
         $this->newPassword = 'anewpassword';
         $this->user = create('Knot\Models\User', ['password' => $this->currentPassword]);
@@ -43,9 +44,7 @@ class UpdatesProfileTest extends TestCase
             'password_confirmation' => $this->newPassword,
         ];
 
-        $response = $this->putJson('api/profile/update', $newInfo);
-
-        $response->assertStatus(200);
+        $this->putJson('api/profile/update', $newInfo)->assertStatus(200);
     }
 
     /** @test */
@@ -61,9 +60,7 @@ class UpdatesProfileTest extends TestCase
             'password_confirmation' => $this->newPassword,
         ];
 
-        $response = $this->putJson('api/profile/update', $newInfo);
-
-        $response->assertStatus(422);
+        $this->putJson('api/profile/update', $newInfo)->assertStatus(422);
     }
 
     /** @test */
@@ -79,9 +76,7 @@ class UpdatesProfileTest extends TestCase
             'password_confirmation' => 'doesnotmatch',
         ];
 
-        $response = $this->putJson('api/profile/update', $newInfo);
-
-        $response->assertStatus(422);
+        $response = $this->putJson('api/profile/update', $newInfo)->assertStatus(422);
         $this->assertTrue(array_key_exists('password', $response->getOriginalContent()));
     }
 
@@ -94,9 +89,7 @@ class UpdatesProfileTest extends TestCase
             'email' => 'jane@doe.com'
         ];
 
-        $response = $this->putJson('api/profile/update', $profile);
-
-        $response->assertStatus(422);
+        $response = $this->putJson('api/profile/update', $profile)->assertStatus(422);
         $this->assertTrue(array_key_exists('first_name', $response->getOriginalContent()));
     }
 
@@ -109,9 +102,7 @@ class UpdatesProfileTest extends TestCase
             'email' => 'jane123'
         ];
 
-        $response = $this->putJson('api/profile/update', $profile);
-
-        $response->assertStatus(422);
+        $response = $this->putJson('api/profile/update', $profile)->assertStatus(422);
         $this->assertTrue(array_key_exists('email', $response->getOriginalContent()));
     }
 }

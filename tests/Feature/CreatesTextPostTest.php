@@ -21,10 +21,10 @@ class CreatesTextPostTest extends TestCase
     function a_user_can_create_a_text_post()
     {
         $postContent =  ['body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'];
-        $response = $this->json('POST', 'api/posts/new/text', $postContent);
 
-        $response
+        $this->json('POST', 'api/posts/new/text', $postContent)
         ->assertStatus(200)
         ->assertJson($postContent);
+
     }
 }

@@ -25,10 +25,8 @@ class AuthenticatesUserTest extends TestCase
             'password' => 'foobar',
             'password_confirmation' => 'foobar',
         ];
-        $response = $this->json('POST', 'api/auth/user', $userData);
 
-        $response->assertStatus(200);
-
+        $this->postJson('api/auth/user', $userData)->assertStatus(200);
         $this->assertCount(1, User::all());
     }
 
@@ -37,9 +35,7 @@ class AuthenticatesUserTest extends TestCase
     {
         $this->authenticate();
 
-        $response = $this->get('api/auth/user');
-
-        $response->assertStatus(200);
+        $this->getJson('api/auth/user')->assertStatus(200);
     }
 
 }

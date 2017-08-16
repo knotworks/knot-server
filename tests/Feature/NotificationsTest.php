@@ -16,6 +16,7 @@ class NotificationsTest extends TestCase
     public function setup()
     {
         parent::setup();
+
         $this->post = create('Knot\Models\TextPost')->post;
         $this->authenticate();
     }
@@ -37,9 +38,7 @@ class NotificationsTest extends TestCase
         create(DatabaseNotification::class);
 
         $this->assertCount(1, auth()->user()->unreadNotifications);
-
         $this->deleteJson("/api/notifications");
-
         $this->assertCount(0, auth()->user()->fresh()->unreadNotifications);
     }
 }

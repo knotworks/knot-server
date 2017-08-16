@@ -56,6 +56,7 @@ class ManagesPostsTest extends TestCase
     function a_user_can_delete_their_own_post()
     {
         $post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
+
         $this->deleteJson('/api/posts/'.$post->id)->assertStatus(204);
         $this->assertEquals(0, TextPost::count());
 
@@ -84,9 +85,7 @@ class ManagesPostsTest extends TestCase
             ],
         ];
 
-        $response = $this->json('POST', 'api/posts/new/text', $postContent);
-
-        $response
+        $this->postJson('api/posts/new/text', $postContent)
         ->assertStatus(200)
         ->assertJson([
             'body' => $postContent['body'],
@@ -107,9 +106,7 @@ class ManagesPostsTest extends TestCase
             ],
         ];
 
-        $response = $this->json('POST', 'api/posts/new/text', $postContent);
-
-        $response
+        $this->postJson('api/posts/new/text', $postContent)
         ->assertStatus(200)
         ->assertJson([
             'body' => $postContent['body'],
