@@ -27,5 +27,7 @@ class NotificationsController extends Controller
     public function destroy()
     {
         auth()->user()->unreadNotifications()->update(['read_at' => Carbon::now()]);
+
+        return response([], 204);
     }
 }

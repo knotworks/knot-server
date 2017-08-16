@@ -38,7 +38,7 @@ class NotificationsTest extends TestCase
         create(DatabaseNotification::class);
 
         $this->assertCount(1, auth()->user()->unreadNotifications);
-        $this->deleteJson("/api/notifications");
+        $this->deleteJson("/api/notifications")->assertStatus(204);
         $this->assertCount(0, auth()->user()->fresh()->unreadNotifications);
     }
 }
