@@ -94,25 +94,4 @@ class ManagesPostsTest extends TestCase
             ],
         ]);
     }
-
-    /** @test */
-    function a_user_can_include_accompaniments_with_a_post()
-    {
-        $postContent =  [
-            'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            'accompaniments' => [
-                ['user_id' => null, 'name' => 'Jane Doe'],
-                ['user_id' => 2, 'name' => 'John Doe'],
-            ],
-        ];
-
-        $this->postJson('api/posts/new/text', $postContent)
-        ->assertStatus(200)
-        ->assertJson([
-            'body' => $postContent['body'],
-            'post' => [
-                'accompaniments' => $postContent['accompaniments'],
-            ],
-        ]);
-    }
 }
