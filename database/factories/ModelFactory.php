@@ -9,7 +9,7 @@
 | you a convenient way to create models for testing and seeding your
 | database. Just tell the factory how a default model should look.
 |
-*/
+ */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Knot\Models\User::class, function (Faker\Generator $faker) {
@@ -19,7 +19,7 @@ $factory->define(Knot\Models\User::class, function (Faker\Generator $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = '$2y$10$OHNan9XSwgp.rxdAUYpGqurUfVptcdP6qO0yCQuF7eTTOouNO528u',
+        'password' => $password ? : $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
 });
@@ -95,7 +95,7 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
         'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
         'type' => 'Knot\Notifications\PostCommentedOn',
         'notifiable_id' => function () {
-            return auth()->id() ?: factory('Knot\Models\User')->create()->id;
+            return auth()->id() ? : factory('Knot\Models\User')->create()->id;
         },
         'notifiable_type' => 'Knot\Models\User',
         'data' => ['foo' => 'bar']
