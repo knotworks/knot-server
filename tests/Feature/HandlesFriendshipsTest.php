@@ -3,8 +3,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Knot\Notifications\AddedAsFriend;
+use Knot\Notifications\FriendRequestAccepted;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class HandlesFriendshipsTest extends TestCase
 {
@@ -13,7 +16,7 @@ class HandlesFriendshipsTest extends TestCase
     public function setup()
     {
         parent::setup();
-
+        Notification::fake();
         $this->authenticate();
     }
 
@@ -32,9 +35,9 @@ class HandlesFriendshipsTest extends TestCase
     {
         $recipient = create('Knot\Models\User');
 
-        $response = $this->postJson('api/friendships/add/'.$recipient->id)->assertStatus(200);
+        $response = $this->postJson('api/friendships/add/' . $recipient->id)->assertStatus(200);
         $this->assertTrue($recipient->hasFriendRequestFrom(auth()->user()));
-        $this->assertCount(1, $recipient->notifications);
+        Notification::assertSentTo($recipient, AddedAsFriend::class);
     }
 
     /** @test */
@@ -43,8 +46,9 @@ class HandlesFriendshipsTest extends TestCase
         $sender = create('Knot\Models\User');
         $sender->befriend(auth()->user());
 
-        $this->postJson('api/friendships/accept/'.$sender->id)->assertStatus(200);
+        $this->postJson('api/friendships/accept/' . $sender->id)->assertStatus(200);
         $this->assertTrue(auth()->user()->isFriendWith($sender));
+        Notification::assertSentTo($sender, FriendRequestAccepted::class);
     }
 
     /** @test */
@@ -53,7 +57,7 @@ class HandlesFriendshipsTest extends TestCase
         $sender = create('Knot\Models\User');
         $sender->befriend(auth()->user());
 
-        $this->postJson('api/friendships/deny/'.$sender->id)->assertStatus(200);
+        $this->postJson('api/friendships/deny/' . $sender->id)->assertStatus(200);
         $this->assertFalse(auth()->user()->isFriendWith($sender));
     }
 
@@ -64,7 +68,7 @@ class HandlesFriendshipsTest extends TestCase
         $this->createFriendship(auth()->user(), $sender);
 
         $this->assertTrue(auth()->user()->isFriendWith($sender));
-        $this->postJson('api/friendships/unfriend/'.$sender->id)->assertStatus(200);
+        $this->postJson('api/friendships/unfriend/' . $sender->id)->assertStatus(200);
         $this->assertFalse(auth()->user()->isFriendWith($sender));
     }
 }
