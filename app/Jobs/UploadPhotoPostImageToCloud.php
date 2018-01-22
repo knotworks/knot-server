@@ -35,8 +35,8 @@ class UploadPhotoPostImageToCloud implements ShouldQueue
         $tmpPath = $this->post->image_path;
         $file = new File($tmpPath);
         try {
-            $url = Storage::cloud()->putFile('photo-posts', $file);
-            $this->post->fill(['image_path' => $url])->save();
+            $url = Storage::cloud()->putFile('photo-posts', $file, 'public');
+            $this->post->fill(['image_path' => $url, 'cloud' => true])->save();
             unlink($tmpPath);
         } catch (Exception $e) {
             logger()->error('Cloud Upload Failed.', [

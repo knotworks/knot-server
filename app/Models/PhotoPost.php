@@ -4,6 +4,7 @@ namespace Knot\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Knot\Traits\Postable;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoPost extends Model
 {
@@ -17,6 +18,7 @@ class PhotoPost extends Model
         'image_path',
         'width',
         'height',
+        'cloud',
     ];
 
     protected $hidden = ['image_path'];
@@ -30,13 +32,11 @@ class PhotoPost extends Model
 
     public function getImageUrlAttribute()
     {
-        $path = config('filesystems.disks.b2.basePath');
-        $bucket = config('filesystems.disks.b2.bucketName');
         $imagePath = $this->image_path;
-        if (starts_with($imagePath, 'photo-posts')) {
-            return "{$path}{$bucket}/{$imagePath}";
+        if ($this->cloud) {
+            return Storage::cloud()->url($imagePath);
         } else {
-            return asset('images/tmp/'.pathinfo($imagePath, PATHINFO_BASENAME));
+            return asset('images/tmp/' . pathinfo($imagePath, PATHINFO_BASENAME));
         }
     }
 }

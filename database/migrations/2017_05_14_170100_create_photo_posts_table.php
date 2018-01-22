@@ -20,6 +20,7 @@ class CreatePhotoPostsTable extends Migration
             $table->unsignedInteger('user_id')->index();
             $table->float('width')->nullable();
             $table->float('height')->nullable();
+            $table->boolean('cloud')->default(false);
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
