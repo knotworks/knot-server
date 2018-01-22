@@ -4,7 +4,6 @@ namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Knot\Models\User;
-use Doorman;
 
 class AuthController extends Controller
 {
