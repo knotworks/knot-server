@@ -90,6 +90,7 @@ $factory->define(Knot\Models\Comment::class, function (Faker\Generator $faker) {
     ];
 });
 
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function ($faker) {
     return [
         'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -99,5 +100,20 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
         },
         'notifiable_type' => 'Knot\Models\User',
         'data' => ['foo' => 'bar']
+    ];
+});
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(Knot\Models\PhotoPost::class, function (Faker\Generator $faker) {
+    $hash = $faker->md5;
+    return [
+        'body' => $faker->sentence,
+        'user_id' => function () {
+            return factory('Knot\Models\User')->create()->id;
+        },
+        'image_path' => "photo-posts/{$hash}.jpg",
+        'width' => 1200,
+        'height' => 800,
+        'cloud' => false
     ];
 });

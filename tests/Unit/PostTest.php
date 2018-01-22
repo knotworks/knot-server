@@ -8,7 +8,6 @@ use Tests\TestCase;
 use Knot\Models\Accompaniment;
 use Knot\Models\Location;
 use Knot\Models\Reaction;
-use Faker\Factory as Faker;
 
 class PostTest extends TestCase
 {
@@ -18,18 +17,19 @@ class PostTest extends TestCase
 
   public function setup()
   {
-      parent::setUp();
+    parent::setUp();
 
 
-      $this->authenticate();
-      $this->post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
+    $this->authenticate();
+    $this->post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
   }
 
   /** @test */
   function a_post_can_have_accompaniments()
   {
     $this->assertInstanceOf(
-        'Illuminate\Database\Eloquent\Collection', $this->post->accompaniments
+      'Illuminate\Database\Eloquent\Collection',
+      $this->post->accompaniments
     );
   }
 
@@ -54,7 +54,8 @@ class PostTest extends TestCase
   function a_post_can_have_reactions()
   {
     $this->assertInstanceOf(
-        'Illuminate\Database\Eloquent\Collection', $this->post->reactions
+      'Illuminate\Database\Eloquent\Collection',
+      $this->post->reactions
     );
   }
 
@@ -67,9 +68,9 @@ class PostTest extends TestCase
     $this->assertCount(1, $this->post->reactions);
 
     $this->assertDatabaseHas('reactions', [
-        'type' => $reaction['type'],
-        'user_id' => $reaction['user_id'],
-        'post_id' => $this->post->id,
+      'type' => $reaction['type'],
+      'user_id' => $reaction['user_id'],
+      'post_id' => $this->post->id,
     ]);
   }
 

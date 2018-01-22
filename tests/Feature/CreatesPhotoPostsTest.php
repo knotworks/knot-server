@@ -16,9 +16,9 @@ class CreatesPhotoPostsTest extends TestCase
 
     public function setup()
     {
-          parent::setup();
+        parent::setup();
 
-          $this->authenticate();
+        $this->authenticate();
     }
 
     /** @test */
@@ -28,11 +28,12 @@ class CreatesPhotoPostsTest extends TestCase
         Queue::fake();
 
         $response = $this->json('POST', 'api/posts/new/photo', [
-          'body' => 'My fancy photo post',
-          'image' => UploadedFile::fake()->image('french-river.jpg', 1200, 900),
+            'body' => 'My fancy photo post',
+            'image' => UploadedFile::fake()->image('french-river.jpg', 1200, 900),
         ]);
         $post = $response->getOriginalContent();
         $imagePath = $post->image_path;
+
         Queue::assertPushed(UploadPhotoPostImageToCloud::class);
 
         $this->assertDatabaseHas('photo_posts', [
