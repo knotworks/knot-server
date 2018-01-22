@@ -3,8 +3,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Notification;
+use Knot\Notifications\PostReactedTo;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AddsReactionsTest extends TestCase
 {
@@ -17,6 +19,7 @@ class AddsReactionsTest extends TestCase
     {
         parent::setup();
 
+        Notification::fake();
         $this->user = create('Knot\Models\User');
         $this->post = create('Knot\Models\TextPost', ['user_id' => $this->user->id])->post;
         $this->authenticate();
@@ -27,7 +30,7 @@ class AddsReactionsTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(403);
+        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile'])->assertStatus(403);
     }
 
     /** @test */
@@ -35,7 +38,7 @@ class AddsReactionsTest extends TestCase
     {
         $this->createFriendship(auth()->user(), $this->user);
 
-        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(200);
+        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile'])->assertStatus(200);
         $this->assertDatabaseHas('reactions', ['post_id' => $this->post->id]);
     }
 
@@ -46,6 +49,15 @@ class AddsReactionsTest extends TestCase
 
         $this->createFriendship(auth()->user(), $this->user);
 
-        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe'])->assertStatus(422);
+        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'cringe'])->assertStatus(422);
+    }
+
+    /** @test */
+    function a_post_author_receives_a_notification_when_someone_reacts_to_their_post()
+    {
+        $this->createFriendship(auth()->user(), $this->user);
+        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile']);
+
+        Notification::assertSentTo($this->user, PostReactedTo::class);
     }
 }
