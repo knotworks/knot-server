@@ -2,8 +2,8 @@
 
 namespace Knot\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Knot\Models\User;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {

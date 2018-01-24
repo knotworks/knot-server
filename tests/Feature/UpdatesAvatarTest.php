@@ -1,4 +1,5 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
@@ -21,7 +22,7 @@ class UpdatesAvatarTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_update_their_avatar()
+    public function a_user_can_update_their_avatar()
     {
         $cloud = config('filesystems.cloud');
         Storage::fake($cloud);
@@ -36,7 +37,7 @@ class UpdatesAvatarTest extends TestCase
     }
 
     /** @test */
-    function an_upload_profile_image_gets_cropped_to_a_square()
+    public function an_upload_profile_image_gets_cropped_to_a_square()
     {
         $cloud = config('filesystems.cloud');
         Storage::fake($cloud);

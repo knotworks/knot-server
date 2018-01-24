@@ -2,8 +2,8 @@
 
 namespace Knot\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Knot\Models\TextPost;
+use Illuminate\Http\Request;
 use Knot\Traits\AddsLocation;
 use Knot\Traits\AddsAccompaniments;
 

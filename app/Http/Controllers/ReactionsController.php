@@ -2,10 +2,10 @@
 
 namespace Knot\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Knot\Models\Post;
 use Knot\Models\Reaction;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Knot\Notifications\PostReactedTo;
 
 class ReactionsController extends Controller

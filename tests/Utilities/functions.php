@@ -13,5 +13,5 @@ function make($class, $attributes = [], $times = null)
 }
 
 Collection::macro('hasKeys', function ($keys) {
-    return !array_diff_key(array_flip($keys), $this->toArray());
+    return ! array_diff_key(array_flip($keys), $this->toArray());
 });

@@ -2,12 +2,13 @@
 
 namespace Knot\Notifications;
 
-use Illuminate\Notifications\Notification;
 use Knot\Models\User;
+use Illuminate\Notifications\Notification;
 
 class AddedAsFriend extends Notification
 {
     protected $sender;
+
     /**
      * Create a new notification instance.
      *

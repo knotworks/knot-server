@@ -2,8 +2,8 @@
 
 namespace Knot\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Knot\Traits\Postable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class PhotoPost extends Model
@@ -36,7 +36,7 @@ class PhotoPost extends Model
         if ($this->cloud) {
             return Storage::cloud()->url($imagePath);
         } else {
-            return asset('images/tmp/photo-posts/' . pathinfo($imagePath, PATHINFO_BASENAME));
+            return asset('images/tmp/photo-posts/'.pathinfo($imagePath, PATHINFO_BASENAME));
         }
     }
 }

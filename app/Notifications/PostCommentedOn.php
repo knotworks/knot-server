@@ -2,13 +2,14 @@
 
 namespace Knot\Notifications;
 
-use Illuminate\Notifications\Notification;
-use Knot\Models\Comment;
 use Knot\Models\Post;
+use Knot\Models\Comment;
+use Illuminate\Notifications\Notification;
 
 class PostCommentedOn extends Notification
 {
     protected $comment;
+
     /**
      * Create a new notification instance.
      *

@@ -2,8 +2,8 @@
 
 namespace Knot\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Knot\Traits\Postable;
+use Illuminate\Database\Eloquent\Model;
 
 class TextPost extends Model
 {

@@ -1,41 +1,42 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AccompanimentTest extends TestCase
 {
-  use DatabaseMigrations;
+    use DatabaseMigrations;
 
-  protected $accompaniment;
+    protected $accompaniment;
 
-  public function setup()
-  {
-      parent::setUp();
+    public function setup()
+    {
+        parent::setUp();
 
-      $this->accompaniment = create('Knot\Models\Accompaniment');
-  }
+        $this->accompaniment = create('Knot\Models\Accompaniment');
+    }
 
-  /** @test */
-  function an_accompaniment_belongs_to_a_post()
-  {
-    $this->assertInstanceOf(
+    /** @test */
+    public function an_accompaniment_belongs_to_a_post()
+    {
+        $this->assertInstanceOf(
         'Knot\Models\Post', $this->accompaniment->post
     );
-  }
+    }
 
-  /** @test */
-  function an_accompaniment_with_a_user_id_can_fetch_its_user()
-  {
-    $secondAccompaniment = create('Knot\Models\Accompaniment', ['user_id' => null]);
+    /** @test */
+    public function an_accompaniment_with_a_user_id_can_fetch_its_user()
+    {
+        $secondAccompaniment = create('Knot\Models\Accompaniment', ['user_id' => null]);
 
-    $this->assertInstanceOf(
+        $this->assertInstanceOf(
         'Knot\Models\User', $this->accompaniment->user()
     );
 
-    $this->assertNull($secondAccompaniment->user());
-  }
+        $this->assertNull($secondAccompaniment->user());
+    }
 }

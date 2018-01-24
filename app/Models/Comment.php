@@ -2,8 +2,8 @@
 
 namespace Knot\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Knot\Traits\Locatable;
+use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {

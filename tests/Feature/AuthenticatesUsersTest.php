@@ -1,24 +1,23 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use Laravel\Passport\Passport;
 use Knot\Models\User;
-use Doorman;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class AuthenticatesUserTest extends TestCase
+class AuthenticatesUsersTest extends TestCase
 {
     use DatabaseMigrations;
 
     /** @test */
-    function can_register_a_new_user()
+    public function can_register_a_new_user()
     {
         $this->withExceptionHandling();
 
-        $userData =  [
+        $userData = [
             'first_name' => 'Jane',
             'last_name' => 'Doe',
             'email' => 'jane@janedoe.com',
@@ -31,11 +30,10 @@ class AuthenticatesUserTest extends TestCase
     }
 
     /** @test */
-    function can_fetch_an_authenticated_user()
+    public function can_fetch_an_authenticated_user()
     {
         $this->authenticate();
 
         $this->getJson('api/auth/user')->assertStatus(200);
     }
-
 }

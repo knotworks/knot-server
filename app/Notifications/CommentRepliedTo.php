@@ -2,12 +2,13 @@
 
 namespace Knot\Notifications;
 
-use Illuminate\Notifications\Notification;
 use Knot\Models\Comment;
+use Illuminate\Notifications\Notification;
 
 class CommentRepliedTo extends Notification
 {
     protected $comment;
+
     /**
      * Create a new notification instance.
      *

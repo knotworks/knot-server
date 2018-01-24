@@ -1,4 +1,5 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
@@ -22,9 +23,9 @@ class AddsLocationTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_include_a_location_with_a_post()
+    public function a_user_can_include_a_location_with_a_post()
     {
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'location' => [
                 'name' => $this->faker->company,
@@ -38,17 +39,17 @@ class AddsLocationTest extends TestCase
         ->assertJson([
             'body' => $postContent['body'],
             'post' => [
-                'location' => $postContent['location']
+                'location' => $postContent['location'],
             ],
         ]);
     }
 
     /** @test */
-    function a_location_must_have_a_valid_latitude_and_longitude()
+    public function a_location_must_have_a_valid_latitude_and_longitude()
     {
         $this->withExceptionHandling();
 
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'location' => [
                 'name' => $this->faker->company,

@@ -17,7 +17,7 @@ trait AddsAccompaniments
                 'distinct',
                 'exists:users,id',
                 Rule::notIn([auth()->id()]),
-            ]
+            ],
         ]);
 
         $model->addAccompaniments($request->accompaniments);
