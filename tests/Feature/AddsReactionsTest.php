@@ -1,11 +1,12 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Support\Facades\Notification;
 use Knot\Notifications\PostReactedTo;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class AddsReactionsTest extends TestCase
@@ -26,37 +27,37 @@ class AddsReactionsTest extends TestCase
     }
 
     /** @test */
-    function a_user_cannot_react_to_a_post_that_does_not_belong_to_a_friend()
+    public function a_user_cannot_react_to_a_post_that_does_not_belong_to_a_friend()
     {
         $this->withExceptionHandling();
 
-        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile'])->assertStatus(403);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(403);
     }
 
     /** @test */
-    function a_user_can_react_to_a_post_if_it_does_belong_to_a_friend()
+    public function a_user_can_react_to_a_post_if_it_does_belong_to_a_friend()
     {
         $this->createFriendship(auth()->user(), $this->user);
 
-        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile'])->assertStatus(200);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(200);
         $this->assertDatabaseHas('reactions', ['post_id' => $this->post->id]);
     }
 
     /** @test */
-    function a_reaction_type_must_be_one_of_the_set_reactions()
+    public function a_reaction_type_must_be_one_of_the_set_reactions()
     {
         $this->withExceptionHandling();
 
         $this->createFriendship(auth()->user(), $this->user);
 
-        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'cringe'])->assertStatus(422);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe'])->assertStatus(422);
     }
 
     /** @test */
-    function a_post_author_receives_a_notification_when_someone_reacts_to_their_post()
+    public function a_post_author_receives_a_notification_when_someone_reacts_to_their_post()
     {
         $this->createFriendship(auth()->user(), $this->user);
-        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile']);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile']);
 
         Notification::assertSentTo($this->user, PostReactedTo::class);
     }

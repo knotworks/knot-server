@@ -1,4 +1,5 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
@@ -15,16 +16,15 @@ class AddsAccompanimentsTest extends TestCase
         parent::setup();
 
         $this->authenticate();
-
     }
 
     /** @test */
-    function a_user_can_include_accompaniments_with_a_post()
+    public function a_user_can_include_accompaniments_with_a_post()
     {
         $this->withExceptionHandling();
 
         $user = create('Knot\Models\User');
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
                 ['user_id' => null, 'name' => 'Jane Doe'],
@@ -42,11 +42,11 @@ class AddsAccompanimentsTest extends TestCase
     }
 
     /** @test */
-    function all_accompaniments_require_a_name()
+    public function all_accompaniments_require_a_name()
     {
         $this->withExceptionHandling();
 
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
                 ['user_id' => null, 'name' => ''],
@@ -57,11 +57,11 @@ class AddsAccompanimentsTest extends TestCase
     }
 
     /** @test */
-    function all_accompaniments_names_should_be_strings()
+    public function all_accompaniments_names_should_be_strings()
     {
         $this->withExceptionHandling();
 
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
                 ['user_id' => null, 'name' => 13],
@@ -72,11 +72,11 @@ class AddsAccompanimentsTest extends TestCase
     }
 
     /** @test */
-    function accompaniments_ids_must_be_numeric()
+    public function accompaniments_ids_must_be_numeric()
     {
         $this->withExceptionHandling();
 
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
                 ['user_id' => 'butts', 'name' => 'Jane Doe'],
@@ -87,11 +87,11 @@ class AddsAccompanimentsTest extends TestCase
     }
 
     /** @test */
-    function accompaniments_ids_must_be_distinct()
+    public function accompaniments_ids_must_be_distinct()
     {
         $this->withExceptionHandling();
 
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
                 ['user_id' => 1, 'name' => 'Jane Doe'],
@@ -103,11 +103,11 @@ class AddsAccompanimentsTest extends TestCase
     }
 
     /** @test */
-    function accompaniments_ids_must_match_a_user_in_the_database()
+    public function accompaniments_ids_must_match_a_user_in_the_database()
     {
         $this->withExceptionHandling();
 
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
                 ['user_id' => 7, 'name' => 'Jane Doe'],
@@ -118,11 +118,11 @@ class AddsAccompanimentsTest extends TestCase
     }
 
     /** @test */
-    function accompaniments_ids_must_not_include_the_authenticated_users_id()
+    public function accompaniments_ids_must_not_include_the_authenticated_users_id()
     {
         $this->withExceptionHandling();
 
-        $postContent =  [
+        $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
                 ['user_id' => auth()->id(), 'name' => 'Jane Doe'],

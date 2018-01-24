@@ -2,12 +2,13 @@
 
 namespace Knot\Notifications;
 
-use Illuminate\Notifications\Notification;
 use Knot\Models\Reaction;
+use Illuminate\Notifications\Notification;
 
 class PostReactedTo extends Notification
 {
     protected $reaction;
+
     /**
      * Create a new notification instance.
      *

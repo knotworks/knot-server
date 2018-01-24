@@ -1,4 +1,5 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
@@ -18,13 +19,12 @@ class CreatesTextPostTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_create_a_text_post()
+    public function a_user_can_create_a_text_post()
     {
-        $postContent =  ['body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'];
+        $postContent = ['body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'];
 
         $this->json('POST', 'api/posts/new/text', $postContent)
         ->assertStatus(200)
         ->assertJson($postContent);
-
     }
 }

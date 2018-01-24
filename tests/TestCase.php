@@ -3,9 +3,9 @@
 namespace Tests;
 
 use Knot\Exceptions\Handler;
+use Laravel\Passport\Passport;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Laravel\Passport\Passport;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -41,18 +41,22 @@ abstract class TestCase extends BaseTestCase
             public function __construct()
             {
             }
+
             public function report(\Exception $e)
             {
             }
+
             public function render($request, \Exception $e)
             {
                 throw $e;
             }
         });
     }
+
     protected function withExceptionHandling()
     {
         $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
+
         return $this;
     }
 }

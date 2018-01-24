@@ -1,14 +1,11 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Laravel\Passport\Passport;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Support\Facades\Storage;
-use Knot\Jobs\UploadPhotoPostImageToCloud;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UpdatesProfileTest extends TestCase
@@ -31,7 +28,7 @@ class UpdatesProfileTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_update_their_profile_information()
+    public function a_user_can_update_their_profile_information()
     {
         $this->withExceptionHandling();
 
@@ -48,7 +45,7 @@ class UpdatesProfileTest extends TestCase
     }
 
     /** @test */
-    function a_user_cannot_update_their_password_unless_they_provide_their_current_one()
+    public function a_user_cannot_update_their_password_unless_they_provide_their_current_one()
     {
         $this->withExceptionHandling();
 
@@ -64,7 +61,7 @@ class UpdatesProfileTest extends TestCase
     }
 
     /** @test */
-    function a_user_cannot_update_their_password_if_it_doesnt_match_the_confirmation_field()
+    public function a_user_cannot_update_their_password_if_it_doesnt_match_the_confirmation_field()
     {
         $this->withExceptionHandling();
 
@@ -81,12 +78,12 @@ class UpdatesProfileTest extends TestCase
     }
 
     /** @test */
-    function a_user_cannot_have_an_empty_first_name()
+    public function a_user_cannot_have_an_empty_first_name()
     {
         $this->withExceptionHandling();
         $profile = [
             'first_name' => '',
-            'email' => 'jane@doe.com'
+            'email' => 'jane@doe.com',
         ];
 
         $response = $this->putJson('api/profile/update', $profile)->assertStatus(422);
@@ -94,12 +91,12 @@ class UpdatesProfileTest extends TestCase
     }
 
     /** @test */
-    function a_user_must_provide_a_valid_email_address()
+    public function a_user_must_provide_a_valid_email_address()
     {
         $this->withExceptionHandling();
         $profile = [
             'first_name' => 'Jane Doe',
-            'email' => 'jane123'
+            'email' => 'jane123',
         ];
 
         $response = $this->putJson('api/profile/update', $profile)->assertStatus(422);

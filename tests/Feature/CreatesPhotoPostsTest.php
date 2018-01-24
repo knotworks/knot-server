@@ -1,4 +1,5 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
@@ -22,7 +23,7 @@ class CreatesPhotoPostsTest extends TestCase
     }
 
     /** @test */
-    function a_photo_post_uploads_the_passed_in_file_to_the_storage_disk()
+    public function a_photo_post_uploads_the_passed_in_file_to_the_storage_disk()
     {
         Storage::fake(config('filesystems.cloud'));
         Queue::fake();
@@ -37,7 +38,7 @@ class CreatesPhotoPostsTest extends TestCase
         Queue::assertPushed(UploadPhotoPostImageToCloud::class);
 
         $this->assertDatabaseHas('photo_posts', [
-            'image_path' => $imagePath
+            'image_path' => $imagePath,
         ]);
 
         unlink($imagePath);

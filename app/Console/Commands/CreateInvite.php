@@ -2,8 +2,8 @@
 
 namespace Knot\Console\Commands;
 
-use Illuminate\Console\Command;
 use Doorman;
+use Illuminate\Console\Command;
 
 class CreateInvite extends Command
 {

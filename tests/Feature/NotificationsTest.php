@@ -1,4 +1,5 @@
 <?php
+
 // @codingStandardsIgnoreFile
 
 namespace Tests\Feature;
@@ -22,23 +23,23 @@ class NotificationsTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_fetch_their_notifications()
+    public function a_user_can_fetch_their_notifications()
     {
         create(DatabaseNotification::class);
 
         $this->assertCount(
             1,
-            $this->getJson("/api/notifications")->json()
+            $this->getJson('/api/notifications')->json()
         );
     }
 
     /** @test */
-    function a_user_can_mark_their_notifications_as_read()
+    public function a_user_can_mark_their_notifications_as_read()
     {
         create(DatabaseNotification::class);
 
         $this->assertCount(1, auth()->user()->unreadNotifications);
-        $this->deleteJson("/api/notifications")->assertStatus(204);
+        $this->deleteJson('/api/notifications')->assertStatus(204);
         $this->assertCount(0, auth()->user()->fresh()->unreadNotifications);
     }
 }

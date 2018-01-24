@@ -25,10 +25,10 @@ class Accompaniment extends Model
      */
     public function user()
     {
-        if (!is_null($this->user_id)) {
+        if (! is_null($this->user_id)) {
             return User::find($this->user_id);
         } else {
-            return null;
+            return;
         }
     }
 }

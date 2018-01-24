@@ -4,8 +4,8 @@ namespace Knot\Models;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Hootlex\Friendships\Traits\Friendable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -61,9 +61,9 @@ class User extends Authenticatable
         $path = config('filesystems.disks.b2.basePath');
         $bucket = config('filesystems.disks.b2.bucketName');
         $imagePath = $this->profile_image;
-        if (!$imagePath) {
-            return null;
-        };
+        if (! $imagePath) {
+            return;
+        }
         if (starts_with($imagePath, 'avatars')) {
             return "{$path}{$bucket}/{$imagePath}";
         } else {

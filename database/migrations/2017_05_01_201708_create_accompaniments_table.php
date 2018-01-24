@@ -23,10 +23,10 @@ class CreateAccompanimentsTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-           $table->foreign('post_id')
+            $table->foreign('post_id')
                 ->references('id')
                 ->on('posts')
-                ->onDelete('cascade');     
+                ->onDelete('cascade');
         });
     }
 
