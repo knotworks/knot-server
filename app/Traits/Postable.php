@@ -17,7 +17,7 @@ trait Postable
 
     public function post()
     {
-        return $this->morphOne('Knot\Models\Post', 'postable');
+        return $this->morphOne(\Knot\Models\Post::class, 'postable');
     }
 
     protected function createPost($model)

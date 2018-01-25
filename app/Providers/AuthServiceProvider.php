@@ -13,8 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Knot\Models\Post' => 'Knot\Policies\PostPolicy',
-        'Knot\Models\Comment' => 'Knot\Policies\CommentPolicy',
+        \Knot\Models\Post::class => \Knot\Policies\PostPolicy::class,
+        \Knot\Models\Comment::class => \Knot\Policies\CommentPolicy::class,
     ];
 
     /**
