@@ -22,7 +22,7 @@ class PostsTest extends TestCase
     {
         $post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
 
-        $this->getJson('/api/posts/' . $post->id)->assertStatus(200);
+        $this->getJson('/api/posts/'.$post->id)->assertStatus(200);
     }
 
     /** @test */
@@ -33,7 +33,7 @@ class PostsTest extends TestCase
 
         $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
 
-        $this->getJson('/api/posts/' . $post->id)->assertStatus(200);
+        $this->getJson('/api/posts/'.$post->id)->assertStatus(200);
     }
 
     /** @test */
@@ -44,7 +44,7 @@ class PostsTest extends TestCase
         $user = create('Knot\Models\User');
         $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
 
-        $this->getJson('/api/posts/' . $post->id)->assertStatus(403);
+        $this->getJson('/api/posts/'.$post->id)->assertStatus(403);
     }
 
     /** @test */
@@ -52,7 +52,7 @@ class PostsTest extends TestCase
     {
         $post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
 
-        $this->deleteJson('/api/posts/' . $post->id)->assertStatus(204);
+        $this->deleteJson('/api/posts/'.$post->id)->assertStatus(204);
         $this->assertEquals(0, TextPost::count());
     }
 
@@ -64,6 +64,6 @@ class PostsTest extends TestCase
         $user = create('Knot\Models\User');
         $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
 
-        $this->deleteJson('/api/posts/' . $post->id)->assertStatus(403);
+        $this->deleteJson('/api/posts/'.$post->id)->assertStatus(403);
     }
 }

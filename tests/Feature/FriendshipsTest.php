@@ -34,7 +34,7 @@ class FriendshipsTest extends TestCase
     {
         $recipient = create('Knot\Models\User');
 
-        $response = $this->postJson('api/friendships/add/' . $recipient->id)->assertStatus(200);
+        $response = $this->postJson('api/friendships/add/'.$recipient->id)->assertStatus(200);
         $this->assertTrue($recipient->hasFriendRequestFrom(auth()->user()));
         Notification::assertSentTo($recipient, AddedAsFriend::class);
     }
@@ -45,7 +45,7 @@ class FriendshipsTest extends TestCase
         $sender = create('Knot\Models\User');
         $sender->befriend(auth()->user());
 
-        $this->postJson('api/friendships/accept/' . $sender->id)->assertStatus(200);
+        $this->postJson('api/friendships/accept/'.$sender->id)->assertStatus(200);
         $this->assertTrue(auth()->user()->isFriendWith($sender));
         Notification::assertSentTo($sender, FriendRequestAccepted::class);
     }
@@ -56,7 +56,7 @@ class FriendshipsTest extends TestCase
         $sender = create('Knot\Models\User');
         $sender->befriend(auth()->user());
 
-        $this->postJson('api/friendships/deny/' . $sender->id)->assertStatus(200);
+        $this->postJson('api/friendships/deny/'.$sender->id)->assertStatus(200);
         $this->assertFalse(auth()->user()->isFriendWith($sender));
     }
 
@@ -67,7 +67,7 @@ class FriendshipsTest extends TestCase
         $this->createFriendship(auth()->user(), $sender);
 
         $this->assertTrue(auth()->user()->isFriendWith($sender));
-        $this->postJson('api/friendships/unfriend/' . $sender->id)->assertStatus(200);
+        $this->postJson('api/friendships/unfriend/'.$sender->id)->assertStatus(200);
         $this->assertFalse(auth()->user()->isFriendWith($sender));
     }
 }

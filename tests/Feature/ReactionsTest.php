@@ -29,7 +29,7 @@ class ReactionsTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile'])->assertStatus(403);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(403);
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class ReactionsTest extends TestCase
     {
         $this->createFriendship(auth()->user(), $this->user);
 
-        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile'])->assertStatus(200);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(200);
         $this->assertDatabaseHas('reactions', ['post_id' => $this->post->id]);
     }
 
@@ -48,14 +48,14 @@ class ReactionsTest extends TestCase
 
         $this->createFriendship(auth()->user(), $this->user);
 
-        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'cringe'])->assertStatus(422);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe'])->assertStatus(422);
     }
 
     /** @test */
     public function a_post_author_receives_a_notification_when_someone_reacts_to_their_post()
     {
         $this->createFriendship(auth()->user(), $this->user);
-        $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile']);
+        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile']);
 
         Notification::assertSentTo($this->user, PostReactedTo::class);
     }

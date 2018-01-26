@@ -44,7 +44,7 @@ class AvatarTest extends TestCase
             'avatar' => UploadedFile::fake()->image('myavatar.jpg', 1200, 900),
         ]);
         $imagePath = $response->getOriginalContent()->profile_image;
-        $storagePath = storage_path() . '/framework/testing/disks/' . $cloud . '/' . $imagePath;
+        $storagePath = storage_path().'/framework/testing/disks/'.$cloud.'/'.$imagePath;
 
         $avatar = Image::make($storagePath);
 
