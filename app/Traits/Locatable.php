@@ -15,7 +15,7 @@ trait Locatable
 
     public function location()
     {
-        return $this->morphOne('Knot\Models\Location', 'locatable');
+        return $this->morphOne(\Knot\Models\Location::class, 'locatable');
     }
 
     public function addLocation($location)

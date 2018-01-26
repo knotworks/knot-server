@@ -1,16 +1,14 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Knot\Models\TextPost;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ManagesPostsTest extends TestCase
+class PostsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setup()
     {

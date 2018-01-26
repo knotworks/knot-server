@@ -1,18 +1,16 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Unit;
 
 use Tests\TestCase;
 use Knot\Models\Location;
 use Knot\Models\Reaction;
 use Knot\Models\Accompaniment;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $post;
 

@@ -1,17 +1,15 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Knot\Notifications\PostReactedTo;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AddsReactionsTest extends TestCase
+class ReactionsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $user;
     protected $post;

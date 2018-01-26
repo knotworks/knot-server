@@ -1,16 +1,14 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Knot\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AuthenticatesUsersTest extends TestCase
+class AuthenticationTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /** @test */
     public function can_register_a_new_user()

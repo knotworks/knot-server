@@ -1,16 +1,14 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PhotoPostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $post;
 

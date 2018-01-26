@@ -29,7 +29,7 @@ $factory->define(Knot\Models\TextPost::class, function (Faker\Generator $faker) 
     return [
         'body' => $faker->sentence,
         'user_id' => function () {
-            return factory('Knot\Models\User')->create()->id;
+            return factory(\Knot\Models\User::class)->create()->id;
         },
     ];
 });
@@ -38,12 +38,12 @@ $factory->define(Knot\Models\TextPost::class, function (Faker\Generator $faker) 
 $factory->define(Knot\Models\Location::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function () {
-            return factory('Knot\Models\User')->create()->id;
+            return factory(\Knot\Models\User::class)->create()->id;
         },
         'locatable_id' => function () {
-            return factory('Knot\Models\TextPost')->create()->post->id;
+            return factory(\Knot\Models\TextPost::class)->create()->post->id;
         },
-        'locatable_type' => 'Knot\Models\Post',
+        'locatable_type' => \Knot\Models\Post::class,
         'lat' => $faker->latitude,
         'long' => $faker->longitude,
         'city' => $faker->city,
@@ -55,10 +55,10 @@ $factory->define(Knot\Models\Location::class, function (Faker\Generator $faker) 
 $factory->define(Knot\Models\Reaction::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function () {
-            return factory('Knot\Models\User')->create()->id;
+            return factory(\Knot\Models\User::class)->create()->id;
         },
         'post_id' => function () {
-            return factory('Knot\Models\TextPost')->create()->post->id;
+            return factory(\Knot\Models\TextPost::class)->create()->post->id;
         },
         'type' => Knot\Models\Reaction::REACTIONS[array_rand(Knot\Models\Reaction::REACTIONS)],
     ];
@@ -68,10 +68,10 @@ $factory->define(Knot\Models\Reaction::class, function (Faker\Generator $faker) 
 $factory->define(Knot\Models\Accompaniment::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function () {
-            return factory('Knot\Models\User')->create()->id;
+            return factory(\Knot\Models\User::class)->create()->id;
         },
         'post_id' => function () {
-            return factory('Knot\Models\TextPost')->create()->post->id;
+            return factory(\Knot\Models\TextPost::class)->create()->post->id;
         },
         'name' => $faker->name,
     ];
@@ -81,10 +81,10 @@ $factory->define(Knot\Models\Accompaniment::class, function (Faker\Generator $fa
 $factory->define(Knot\Models\Comment::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function () {
-            return factory('Knot\Models\User')->create()->id;
+            return factory(\Knot\Models\User::class)->create()->id;
         },
         'post_id' => function () {
-            return factory('Knot\Models\TextPost')->create()->post->id;
+            return factory(\Knot\Models\TextPost::class)->create()->post->id;
         },
         'body' => $faker->sentence,
     ];
@@ -94,11 +94,11 @@ $factory->define(Knot\Models\Comment::class, function (Faker\Generator $faker) {
 $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function ($faker) {
     return [
         'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-        'type' => 'Knot\Notifications\PostCommentedOn',
+        'type' => \Knot\Notifications\PostCommentedOn::class,
         'notifiable_id' => function () {
-            return auth()->id() ?: factory('Knot\Models\User')->create()->id;
+            return auth()->id() ?: factory(\Knot\Models\User::class)->create()->id;
         },
-        'notifiable_type' => 'Knot\Models\User',
+        'notifiable_type' => \Knot\Models\User::class,
         'data' => ['foo' => 'bar'],
     ];
 });
@@ -110,7 +110,7 @@ $factory->define(Knot\Models\PhotoPost::class, function (Faker\Generator $faker)
     return [
         'body' => $faker->sentence,
         'user_id' => function () {
-            return factory('Knot\Models\User')->create()->id;
+            return factory(\Knot\Models\User::class)->create()->id;
         },
         'image_path' => "photo-posts/{$hash}.jpg",
         'width' => 1200,

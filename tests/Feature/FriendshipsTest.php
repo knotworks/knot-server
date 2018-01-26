@@ -1,18 +1,16 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Knot\Notifications\AddedAsFriend;
 use Illuminate\Support\Facades\Notification;
 use Knot\Notifications\FriendRequestAccepted;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class HandlesFriendshipsTest extends TestCase
+class FriendshipsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setup()
     {

@@ -1,18 +1,16 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Knot\Notifications\PostCommentedOn;
 use Knot\Notifications\CommentRepliedTo;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AddsCommentsTest extends TestCase
+class CommentsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $user;
     protected $post;

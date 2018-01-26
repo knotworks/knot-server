@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function authenticate($user = null)
     {
-        $user = $user ?: create('Knot\Models\User');
+        $user = $user ?: create(\Knot\Models\User::class);
         Passport::actingAs($user);
 
         return $this;

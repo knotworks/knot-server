@@ -1,16 +1,14 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Faker\Factory as Faker;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AddsLocationTest extends TestCase
+class LocationTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $faker;
 
@@ -35,13 +33,13 @@ class AddsLocationTest extends TestCase
         ];
 
         $this->postJson('api/posts/new/text', $postContent)
-        ->assertStatus(200)
-        ->assertJson([
-            'body' => $postContent['body'],
-            'post' => [
-                'location' => $postContent['location'],
-            ],
-        ]);
+            ->assertStatus(200)
+            ->assertJson([
+                'body' => $postContent['body'],
+                'post' => [
+                    'location' => $postContent['location'],
+                ],
+            ]);
     }
 
     /** @test */
@@ -59,7 +57,7 @@ class AddsLocationTest extends TestCase
         ];
 
         $response = $this->postJson('api/posts/new/text', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('location.lat', $response->getOriginalContent()));
-        $this->assertTrue(array_key_exists('location.long', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('location.lat', $response->getOriginalContent()['errors']));
+        $this->assertTrue(array_key_exists('location.long', $response->getOriginalContent()['errors']));
     }
 }

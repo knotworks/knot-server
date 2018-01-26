@@ -1,16 +1,14 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Laravel\Passport\Passport;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UpdatesProfileTest extends TestCase
+class ProfileTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $user;
     protected $currentPassword;
@@ -74,7 +72,7 @@ class UpdatesProfileTest extends TestCase
         ];
 
         $response = $this->putJson('api/profile/update', $newInfo)->assertStatus(422);
-        $this->assertTrue(array_key_exists('password', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('password', $response->getOriginalContent()['errors']));
     }
 
     /** @test */
@@ -87,7 +85,7 @@ class UpdatesProfileTest extends TestCase
         ];
 
         $response = $this->putJson('api/profile/update', $profile)->assertStatus(422);
-        $this->assertTrue(array_key_exists('first_name', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('first_name', $response->getOriginalContent()['errors']));
     }
 
     /** @test */
@@ -100,6 +98,6 @@ class UpdatesProfileTest extends TestCase
         ];
 
         $response = $this->putJson('api/profile/update', $profile)->assertStatus(422);
-        $this->assertTrue(array_key_exists('email', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('email', $response->getOriginalContent()['errors']));
     }
 }

@@ -1,15 +1,13 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ReactionTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $reaction;
 
@@ -24,15 +22,17 @@ class ReactionTest extends TestCase
     public function a_reaction_belongs_to_a_post()
     {
         $this->assertInstanceOf(
-        'Knot\Models\Post', $this->reaction->post
-    );
+            'Knot\Models\Post',
+            $this->reaction->post
+        );
     }
 
     /** @test */
     public function a_reaction_belongs_to_a_user()
     {
         $this->assertInstanceOf(
-        'Knot\Models\User', $this->reaction->user
-    );
+            'Knot\Models\User',
+            $this->reaction->user
+        );
     }
 }
