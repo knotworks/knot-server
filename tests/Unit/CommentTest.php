@@ -1,15 +1,13 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CommentTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $comment;
 
@@ -24,15 +22,17 @@ class CommentTest extends TestCase
     public function a_comment_belongs_to_a_post()
     {
         $this->assertInstanceOf(
-        'Knot\Models\Post', $this->comment->post
-    );
+            'Knot\Models\Post',
+            $this->comment->post
+        );
     }
 
     /** @test */
     public function a_comment_belongs_to_a_user()
     {
         $this->assertInstanceOf(
-        'Knot\Models\User', $this->comment->user
-    );
+            'Knot\Models\User',
+            $this->comment->user
+        );
     }
 }

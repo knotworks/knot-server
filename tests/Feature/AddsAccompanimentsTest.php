@@ -1,15 +1,13 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddsAccompanimentsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setup()
     {
@@ -32,13 +30,13 @@ class AddsAccompanimentsTest extends TestCase
             ],
         ];
         $this->postJson('api/posts/new/text', $postContent)
-        ->assertStatus(200)
-        ->assertJson([
-            'body' => $postContent['body'],
-            'post' => [
-                'accompaniments' => $postContent['accompaniments'],
-            ],
-        ]);
+            ->assertStatus(200)
+            ->assertJson([
+                'body' => $postContent['body'],
+                'post' => [
+                    'accompaniments' => $postContent['accompaniments'],
+                ],
+            ]);
     }
 
     /** @test */

@@ -1,15 +1,13 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AccompanimentTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $accompaniment;
 
@@ -24,8 +22,9 @@ class AccompanimentTest extends TestCase
     public function an_accompaniment_belongs_to_a_post()
     {
         $this->assertInstanceOf(
-        'Knot\Models\Post', $this->accompaniment->post
-    );
+            'Knot\Models\Post',
+            $this->accompaniment->post
+        );
     }
 
     /** @test */
@@ -34,8 +33,9 @@ class AccompanimentTest extends TestCase
         $secondAccompaniment = create('Knot\Models\Accompaniment', ['user_id' => null]);
 
         $this->assertInstanceOf(
-        'Knot\Models\User', $this->accompaniment->user()
-    );
+            'Knot\Models\User',
+            $this->accompaniment->user()
+        );
 
         $this->assertNull($secondAccompaniment->user());
     }

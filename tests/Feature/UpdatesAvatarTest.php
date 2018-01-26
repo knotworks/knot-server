@@ -1,18 +1,16 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Image;
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdatesAvatarTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setup()
     {
@@ -28,7 +26,7 @@ class UpdatesAvatarTest extends TestCase
         Storage::fake($cloud);
 
         $response = $this->putJson('api/profile/avatar', [
-          'avatar' => UploadedFile::fake()->image('avatar.jpg', 700, 700),
+            'avatar' => UploadedFile::fake()->image('avatar.jpg', 700, 700),
         ]);
         $imagePath = $response->getOriginalContent()->profile_image;
 
@@ -43,10 +41,10 @@ class UpdatesAvatarTest extends TestCase
         Storage::fake($cloud);
 
         $response = $this->putJson('api/profile/avatar', [
-          'avatar' => UploadedFile::fake()->image('myavatar.jpg', 1200, 900),
+            'avatar' => UploadedFile::fake()->image('myavatar.jpg', 1200, 900),
         ]);
         $imagePath = $response->getOriginalContent()->profile_image;
-        $storagePath = storage_path().'/framework/testing/disks/'.$cloud.'/'.$imagePath;
+        $storagePath = storage_path() . '/framework/testing/disks/' . $cloud . '/' . $imagePath;
 
         $avatar = Image::make($storagePath);
 

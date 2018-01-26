@@ -1,16 +1,14 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
 use Knot\Models\TextPost;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ManagesPostsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setup()
     {
@@ -24,7 +22,7 @@ class ManagesPostsTest extends TestCase
     {
         $post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
 
-        $this->getJson('/api/posts/'.$post->id)->assertStatus(200);
+        $this->getJson('/api/posts/' . $post->id)->assertStatus(200);
     }
 
     /** @test */
@@ -35,7 +33,7 @@ class ManagesPostsTest extends TestCase
 
         $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
 
-        $this->getJson('/api/posts/'.$post->id)->assertStatus(200);
+        $this->getJson('/api/posts/' . $post->id)->assertStatus(200);
     }
 
     /** @test */
@@ -46,7 +44,7 @@ class ManagesPostsTest extends TestCase
         $user = create('Knot\Models\User');
         $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
 
-        $this->getJson('/api/posts/'.$post->id)->assertStatus(403);
+        $this->getJson('/api/posts/' . $post->id)->assertStatus(403);
     }
 
     /** @test */
@@ -54,7 +52,7 @@ class ManagesPostsTest extends TestCase
     {
         $post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
 
-        $this->deleteJson('/api/posts/'.$post->id)->assertStatus(204);
+        $this->deleteJson('/api/posts/' . $post->id)->assertStatus(204);
         $this->assertEquals(0, TextPost::count());
     }
 
@@ -66,6 +64,6 @@ class ManagesPostsTest extends TestCase
         $user = create('Knot\Models\User');
         $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
 
-        $this->deleteJson('/api/posts/'.$post->id)->assertStatus(403);
+        $this->deleteJson('/api/posts/' . $post->id)->assertStatus(403);
     }
 }

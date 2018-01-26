@@ -1,15 +1,13 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreatesTextPostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     public function setup()
     {
@@ -24,7 +22,7 @@ class CreatesTextPostTest extends TestCase
         $postContent = ['body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'];
 
         $this->json('POST', 'api/posts/new/text', $postContent)
-        ->assertStatus(200)
-        ->assertJson($postContent);
+            ->assertStatus(200)
+            ->assertJson($postContent);
     }
 }

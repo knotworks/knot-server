@@ -1,16 +1,14 @@
 <?php
 
-// @codingStandardsIgnoreFile
-
 namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PhotoPostTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $post;
 
@@ -27,11 +25,11 @@ class PhotoPostTest extends TestCase
     {
         Storage::fake(config('filesystems.cloud'));
 
-        $this->assertEquals(asset('images/tmp/'.$this->post->image_path), $this->post->image_url);
+        $this->assertEquals(asset('images/tmp/' . $this->post->image_path), $this->post->image_url);
 
         $this->post->cloud = true;
         $this->post->save();
 
-        $this->assertEquals('/storage/'.$this->post->image_path, $this->post->image_url);
+        $this->assertEquals('/storage/' . $this->post->image_path, $this->post->image_url);
     }
 }
