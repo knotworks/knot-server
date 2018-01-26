@@ -34,13 +34,13 @@ class ProfileController extends Controller
             $constraint->upsize();
         });
 
-        $thumbName = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$file->getClientOriginalExtension();
-        $publicPath = public_path('images/tmp/'.$thumbName);
+        $thumbName = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
+        $publicPath = public_path('images/tmp/' . $thumbName);
         $image->save($publicPath);
 
         // Upload it to the cloud from the public folder
         $cloudFile = new File($publicPath);
-        $cloudUrl = Storage::cloud()->putFile('avatars', $cloudFile);
+        $cloudUrl = Storage::cloud()->putFile('avatars', $cloudFile, 'public');
 
         auth()->user()->update(['profile_image' => $cloudUrl]);
 
