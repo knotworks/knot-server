@@ -8,7 +8,7 @@ use Knot\Notifications\CommentRepliedTo;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AddsCommentsTest extends TestCase
+class CommentsTest extends TestCase
 {
     use RefreshDatabase;
 

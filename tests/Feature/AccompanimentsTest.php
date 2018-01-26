@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AddsAccompanimentsTest extends TestCase
+class AccompanimentsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -51,7 +51,7 @@ class AddsAccompanimentsTest extends TestCase
             ],
         ];
         $response = $this->postJson('api/posts/new/text', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.name', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('accompaniments.0.name', $response->getOriginalContent()['errors']));
     }
 
     /** @test */
@@ -66,7 +66,7 @@ class AddsAccompanimentsTest extends TestCase
             ],
         ];
         $response = $this->postJson('api/posts/new/text', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.name', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('accompaniments.0.name', $response->getOriginalContent()['errors']));
     }
 
     /** @test */
@@ -81,7 +81,7 @@ class AddsAccompanimentsTest extends TestCase
             ],
         ];
         $response = $this->postJson('api/posts/new/text', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()['errors']));
     }
 
     /** @test */
@@ -97,7 +97,7 @@ class AddsAccompanimentsTest extends TestCase
             ],
         ];
         $response = $this->postJson('api/posts/new/text', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()['errors']));
     }
 
     /** @test */
@@ -112,7 +112,7 @@ class AddsAccompanimentsTest extends TestCase
             ],
         ];
         $response = $this->postJson('api/posts/new/text', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()['errors']));
     }
 
     /** @test */
@@ -127,6 +127,6 @@ class AddsAccompanimentsTest extends TestCase
             ],
         ];
         $response = $this->postJson('api/posts/new/text', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()));
+        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()['errors']));
     }
 }

@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Knot\Models\TextPost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ManagesPostsTest extends TestCase
+class PostsTest extends TestCase
 {
     use RefreshDatabase;
 

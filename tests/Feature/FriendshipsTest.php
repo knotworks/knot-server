@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Notification;
 use Knot\Notifications\FriendRequestAccepted;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class HandlesFriendshipsTest extends TestCase
+class FriendshipsTest extends TestCase
 {
     use RefreshDatabase;
 

@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Knot\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AuthenticatesUsersTest extends TestCase
+class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 

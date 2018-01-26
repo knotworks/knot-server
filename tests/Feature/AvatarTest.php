@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UpdatesAvatarTest extends TestCase
+class AvatarTest extends TestCase
 {
     use RefreshDatabase;
 

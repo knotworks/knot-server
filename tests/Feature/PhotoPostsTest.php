@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Knot\Jobs\UploadPhotoPostImageToCloud;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class CreatesPhotoPostsTest extends TestCase
+class PhotoPostsTest extends TestCase
 {
     use RefreshDatabase;
 

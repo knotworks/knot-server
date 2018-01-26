@@ -7,7 +7,7 @@ use Knot\Notifications\PostReactedTo;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AddsReactionsTest extends TestCase
+class ReactionsTest extends TestCase
 {
     use RefreshDatabase;
 
