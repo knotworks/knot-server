@@ -39,7 +39,7 @@ class ProfileTest extends TestCase
             'password_confirmation' => $this->newPassword,
         ];
 
-        $this->putJson('api/profile/update', $newInfo)->assertStatus(200);
+        $this->putJson('api/profile/update', $newInfo)->assertStatus(201);
     }
 
     /** @test */

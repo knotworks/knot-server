@@ -30,7 +30,7 @@ class CommentsTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->getJson('api/posts/'.$this->post->id.'/comments')->assertStatus(403);
+        $this->getJson('api/posts/' . $this->post->id . '/comments')->assertStatus(403);
     }
 
     /** @test */
@@ -38,7 +38,7 @@ class CommentsTest extends TestCase
     {
         $this->createFriendship(auth()->user(), $this->user);
 
-        $this->getJson('api/posts/'.$this->post->id.'/comments')->assertStatus(200);
+        $this->getJson('api/posts/' . $this->post->id . '/comments')->assertStatus(200);
     }
 
     /** @test */
@@ -46,7 +46,7 @@ class CommentsTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment'])->assertStatus(403);
+        $this->postJson('api/posts/' . $this->post->id . '/comments', ['body' => 'This is a comment'])->assertStatus(403);
     }
 
     /** @test */
@@ -54,7 +54,7 @@ class CommentsTest extends TestCase
     {
         $this->createFriendship(auth()->user(), $this->user);
 
-        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment'])->assertStatus(200);
+        $this->postJson('api/posts/' . $this->post->id . '/comments', ['body' => 'This is a comment'])->assertStatus(201);
         $this->assertDatabaseHas('comments', ['post_id' => $this->post->id]);
     }
 
@@ -65,7 +65,7 @@ class CommentsTest extends TestCase
 
         $comment = create('Knot\Models\Comment');
 
-        $this->putJson('api/comments/'.$comment->id, ['body' => 'Updating comment'])->assertStatus(403);
+        $this->putJson('api/comments/' . $comment->id, ['body' => 'Updating comment'])->assertStatus(403);
     }
 
     /** @test */
@@ -73,7 +73,7 @@ class CommentsTest extends TestCase
     {
         $comment = create('Knot\Models\Comment', ['user_id' => auth()->id()]);
 
-        $this->putJson('api/comments/'.$comment->id, ['body' => 'Updating comment'])->assertStatus(200);
+        $this->putJson('api/comments/' . $comment->id, ['body' => 'Updating comment'])->assertStatus(200);
     }
 
     /** @test */
@@ -82,7 +82,7 @@ class CommentsTest extends TestCase
         $this->withExceptionHandling();
         $comment = create('Knot\Models\Comment');
 
-        $this->deleteJson('api/comments/'.$comment->id)->assertStatus(403);
+        $this->deleteJson('api/comments/' . $comment->id)->assertStatus(403);
     }
 
     /** @test */
@@ -90,7 +90,7 @@ class CommentsTest extends TestCase
     {
         $comment = create('Knot\Models\Comment', ['user_id' => auth()->id()]);
 
-        $this->deleteJson('/api/comments/'.$comment->id)->assertStatus(204);
+        $this->deleteJson('/api/comments/' . $comment->id)->assertStatus(204);
     }
 
     /** @test */
@@ -99,7 +99,7 @@ class CommentsTest extends TestCase
         $author = $this->post->user;
         $this->createFriendship(auth()->user(), $author);
 
-        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
+        $this->postJson('api/posts/' . $this->post->id . '/comments', ['body' => 'This is a comment']);
 
         Notification::assertSentTo($author, PostCommentedOn::class);
     }
@@ -111,7 +111,7 @@ class CommentsTest extends TestCase
         $this->createFriendship(auth()->user(), $author);
         create('Knot\Models\Comment', ['post_id' => $this->post->id], 4);
 
-        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
+        $this->postJson('api/posts/' . $this->post->id . '/comments', ['body' => 'This is a comment']);
 
         $commenters = $this->post->comments->slice(0, -1)->map(function ($comment, $key) {
             return $comment->user;

@@ -33,7 +33,7 @@ class LocationTest extends TestCase
         ];
 
         $this->postJson('api/posts/new/text', $postContent)
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson([
                 'body' => $postContent['body'],
                 'post' => [

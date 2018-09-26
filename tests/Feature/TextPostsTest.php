@@ -22,7 +22,7 @@ class TextPostsTest extends TestCase
         $postContent = ['body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'];
 
         $this->json('POST', 'api/posts/new/text', $postContent)
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson($postContent);
     }
 }
