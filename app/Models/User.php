@@ -58,16 +58,10 @@ class User extends Authenticatable
 
     public function getAvatarUrlAttribute()
     {
-        $path = config('filesystems.disks.b2.basePath');
-        $bucket = config('filesystems.disks.b2.bucketName');
-        $imagePath = $this->profile_image;
-        if (! $imagePath) {
-            return;
-        }
-        if (starts_with($imagePath, 'avatars')) {
-            return "{$path}{$bucket}/{$imagePath}";
+        if ($this->profile_image) {
+            return $this->profile_image
         } else {
-            return asset('images/tmp/'.pathinfo($imagePath, PATHINFO_BASENAME));
+            return "https://placekitten.com/400/400";
         }
     }
 
