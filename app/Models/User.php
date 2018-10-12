@@ -59,7 +59,7 @@ class User extends Authenticatable
     public function getAvatarUrlAttribute()
     {
         if ($this->profile_image) {
-            return $this->profile_image
+            return $this->profile_image;
         } else {
             return "https://placekitten.com/400/400";
         }
