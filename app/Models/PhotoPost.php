@@ -36,7 +36,7 @@ class PhotoPost extends Model
         if ($this->cloud) {
             return Storage::cloud()->url($imagePath);
         } else {
-            return asset('images/tmp/photo-posts/'.pathinfo($imagePath, PATHINFO_BASENAME));
+            return asset($imagePath);
         }
     }
 }

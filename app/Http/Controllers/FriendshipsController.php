@@ -25,6 +25,7 @@ class FriendshipsController extends Controller
         return [
             'friends' => auth()->user()->getFriends(),
             'requests' => auth()->user()->getFriendRequests()->load('sender'),
+            'outgoing' => auth()->user()->getPendingFriendships()->load('recipient'),
         ];
     }
 
@@ -44,6 +45,7 @@ class FriendshipsController extends Controller
         return [
             'friends' => auth()->user()->getFriends(),
             'requests' => auth()->user()->getFriendRequests()->load('sender'),
+            'outgoing' => auth()->user()->getPendingFriendships(),
         ];
     }
 
@@ -63,6 +65,7 @@ class FriendshipsController extends Controller
         return [
             'friends' => auth()->user()->getFriends(),
             'requests' => auth()->user()->getFriendRequests()->load('sender'),
+            'outgoing' => auth()->user()->getPendingFriendships(),
         ];
     }
 
@@ -81,6 +84,7 @@ class FriendshipsController extends Controller
         return [
             'friends' => auth()->user()->getFriends(),
             'requests' => auth()->user()->getFriendRequests()->load('sender'),
+            'outgoing' => auth()->user()->getPendingFriendships(),
         ];
     }
 
@@ -99,6 +103,7 @@ class FriendshipsController extends Controller
         return [
             'friends' => auth()->user()->getFriends(),
             'requests' => auth()->user()->getFriendRequests()->load('sender'),
+            'outgoing' => auth()->user()->getPendingFriendships(),
         ];
     }
 }

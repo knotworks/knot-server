@@ -43,9 +43,9 @@ class PhotoPostsController extends Controller
         $imageHeight = $image->height();
 
         // Move it to the public folder
-        $thumbName = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$file->getClientOriginalExtension();
-        $publicPath = public_path('images/tmp/photo-posts/'.$thumbName);
-        $image->save($publicPath);
+        $thumbName = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
+        $path = 'images/tmp/photo-posts/' . $thumbName;
+        $image->save(public_path($path));
 
         // Destroy the image instance
         $image->destroy();
@@ -53,7 +53,7 @@ class PhotoPostsController extends Controller
         // Create the post, and queue the cloud upload
         $post = PhotoPost::create([
             'body' => $request->input('body'),
-            'image_path' => $publicPath,
+            'image_path' => $path,
             'width' => $imageWidth,
             'height' => $imageHeight,
             'user_id' => auth()->id(),

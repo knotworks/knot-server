@@ -35,7 +35,7 @@ class ProfileController extends Controller
         });
 
         $thumbName = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
-        $publicPath = public_path('images/tmp/' . $thumbName);
+        $publicPath = public_path('images/tmp/avatars/' . $thumbName);
         $image->save($publicPath);
 
         // Upload it to the cloud from the public folder
