@@ -61,7 +61,7 @@ class User extends Authenticatable
         if ($this->profile_image) {
             return $this->profile_image;
         } else {
-            return "https://placekitten.com/400/400";
+            return 'https://placekitten.com/400/400';
         }
     }
 
