@@ -32,7 +32,7 @@ class UploadPhotoPostImageToCloud implements ShouldQueue
      */
     public function handle()
     {
-        $tmpPath = $this->post->image_path;
+        $tmpPath = public_path($this->post->image_path);
         $file = new File($tmpPath);
         try {
             $url = Storage::cloud()->putFile('photo-posts', $file, 'public');
