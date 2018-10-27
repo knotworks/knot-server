@@ -61,7 +61,7 @@ class User extends Authenticatable
         if ($this->profile_image) {
             return $this->profile_image;
         } else {
-            return "https://placekitten.com/400/400";
+            return 'https://placekitten.com/400/400';
         }
     }
 
@@ -92,6 +92,6 @@ class User extends Authenticatable
 
         $idsToExclude = collect($ids)->unique()->values()->all();
 
-        return User::whereNotIn('id', $idsToExclude)->get();
+        return self::whereNotIn('id', $idsToExclude)->get();
     }
 }
