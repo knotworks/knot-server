@@ -27,14 +27,17 @@ class PhotoPostsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['image' => 'required|image|max:10000']);
+        $this->validate($request, ['image' => 'required|image|max:' . config('image.max_size')]);
 
         $file = $request->file('image');
+        // Move it to the public folder
+        $thumbName = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.jpg';
+        $path = 'images/tmp/photo-posts/' . $thumbName;
 
         // Resize the image, while constraining aspect ratio, and ensuring it does not upsize
-        $image = Image::make($file)->encode('jpg', 80);
+        $image = Image::make($file)->encode('jpg', config('image.upload_quality'));
 
-        $image->resize(1200, 1600, function ($constraint) {
+        $image->resize(config('image.max_width'), config('image.max_height'), function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         });
@@ -42,9 +45,7 @@ class PhotoPostsController extends Controller
         $imageWidth = $image->width();
         $imageHeight = $image->height();
 
-        // Move it to the public folder
-        $thumbName = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
-        $path = 'images/tmp/photo-posts/' . $thumbName;
+
         $image->save(public_path($path));
 
         // Destroy the image instance
