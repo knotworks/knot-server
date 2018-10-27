@@ -81,4 +81,17 @@ class User extends Authenticatable
             ->whereIn('user_id', $ids)
             ->get();
     }
+
+    public function getSuggestedFriends()
+    {
+        $ids = [$this->id];
+
+        $this->getAllFriendships()->each(function ($friendship) use (&$ids) {
+            array_push($ids, $friendship->sender_id, $friendship->recipient_id);
+        });
+
+        $idsToExclude = collect($ids)->unique()->values()->all();
+
+        return User::whereNotIn('id', $idsToExclude)->get();
+    }
 }

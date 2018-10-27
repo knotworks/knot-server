@@ -22,11 +22,7 @@ class FriendshipsController extends Controller
      */
     public function index()
     {
-        return [
-            'friends' => auth()->user()->getFriends(),
-            'requests' => auth()->user()->getFriendRequests()->load('sender'),
-            'outgoing' => auth()->user()->getPendingFriendships()->load('recipient'),
-        ];
+        return $this->getFriendships();
     }
 
     /**
@@ -42,11 +38,7 @@ class FriendshipsController extends Controller
         auth()->user()->befriend($recipient);
         $recipient->notify(new AddedAsFriend(auth()->user()));
 
-        return [
-            'friends' => auth()->user()->getFriends(),
-            'requests' => auth()->user()->getFriendRequests()->load('sender'),
-            'outgoing' => auth()->user()->getPendingFriendships(),
-        ];
+        return $this->getFriendships();
     }
 
     /**
@@ -62,11 +54,7 @@ class FriendshipsController extends Controller
         auth()->user()->acceptFriendRequest($sender);
         $sender->notify(new FriendRequestAccepted(auth()->user()));
 
-        return [
-            'friends' => auth()->user()->getFriends(),
-            'requests' => auth()->user()->getFriendRequests()->load('sender'),
-            'outgoing' => auth()->user()->getPendingFriendships(),
-        ];
+        return $this->getFriendships();
     }
 
     /**
@@ -81,11 +69,7 @@ class FriendshipsController extends Controller
     {
         auth()->user()->denyFriendRequest($sender);
 
-        return [
-            'friends' => auth()->user()->getFriends(),
-            'requests' => auth()->user()->getFriendRequests()->load('sender'),
-            'outgoing' => auth()->user()->getPendingFriendships(),
-        ];
+        return $this->getFriendships();
     }
 
     /**
@@ -100,10 +84,16 @@ class FriendshipsController extends Controller
     {
         auth()->user()->unfriend($friend);
 
+        return $this->getFriendships();
+    }
+
+    private function getFriendships()
+    {
         return [
             'friends' => auth()->user()->getFriends(),
             'requests' => auth()->user()->getFriendRequests()->load('sender'),
-            'outgoing' => auth()->user()->getPendingFriendships(),
+            'outgoing' => auth()->user()->getPendingFriendships()->where('recipient_id', '!=', auth()->id())->load('recipient'),
+            'suggested' => auth()->user()->getSuggestedFriends(),
         ];
     }
 }
