@@ -25,11 +25,11 @@ class PhotoPostTest extends TestCase
     {
         Storage::fake(config('filesystems.cloud'));
 
-        $this->assertEquals(asset('images/tmp/'.$this->post->image_path), $this->post->image_url);
+        $this->assertEquals(asset($this->post->image_path), $this->post->image_url);
 
         $this->post->cloud = true;
         $this->post->save();
 
-        $this->assertEquals('/storage/'.$this->post->image_path, $this->post->image_url);
+        $this->assertEquals('/storage/' . $this->post->image_path, $this->post->image_url);
     }
 }

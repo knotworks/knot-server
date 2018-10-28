@@ -177,7 +177,6 @@ return [
         Knot\Providers\RouteServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Hootlex\Friendships\FriendshipsServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
     ],

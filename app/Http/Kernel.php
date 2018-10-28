@@ -19,7 +19,7 @@ class Kernel extends HttpKernel
         \Knot\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Knot\Http\Middleware\TrustProxies::class,
-        \Barryvdh\Cors\HandleCors::class,
+        \Knot\Http\Middleware\CorsMiddleware::class,
     ];
 
     /**

@@ -34,9 +34,9 @@ class AccompanimentTest extends TestCase
 
         $this->assertInstanceOf(
             'Knot\Models\User',
-            $this->accompaniment->user()
+            $this->accompaniment->user
         );
 
-        $this->assertNull($secondAccompaniment->user());
+        $this->assertNull($secondAccompaniment->user);
     }
 }

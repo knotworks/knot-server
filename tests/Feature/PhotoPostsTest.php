@@ -39,6 +39,6 @@ class PhotoPostsTest extends TestCase
             'image_path' => $imagePath,
         ]);
 
-        unlink($imagePath);
+        unlink(public_path($imagePath));
     }
 }
