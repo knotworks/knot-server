@@ -14,6 +14,8 @@ return [
 
     'name' => env('APP_NAME', 'Knot'),
 
+    'posts_per_page' => 30,
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -175,6 +177,7 @@ return [
         // Knot\Providers\BroadcastServiceProvider::class,
         Knot\Providers\EventServiceProvider::class,
         Knot\Providers\RouteServiceProvider::class,
+        Knot\Providers\NovaServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Hootlex\Friendships\FriendshipsServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,

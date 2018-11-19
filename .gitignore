@@ -9,4 +9,5 @@
 Homestead.json
 Homestead.yaml
 npm-debug.log
+auth.json
 .env

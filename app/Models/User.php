@@ -79,7 +79,7 @@ class User extends Authenticatable
         return Post::with(['location', 'postable', 'user', 'comments', 'reactions.user', 'accompaniments.user'])
             ->latest()
             ->whereIn('user_id', $ids)
-            ->get();
+            ->paginate(config('app.posts_per_page'));
     }
 
     public function getSuggestedFriends()
