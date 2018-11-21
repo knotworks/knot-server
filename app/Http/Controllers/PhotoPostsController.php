@@ -62,10 +62,10 @@ class PhotoPostsController extends Controller
 
         dispatch(new UploadPhotoPostImageToCloud($post));
 
-        if ($request->has('location')) {
+        if ($request->filled('location')) {
             $this->setLocation($request, $post->post);
         }
-        if ($request->has('accompaniments')) {
+        if ($request->filled('accompaniments')) {
             $this->setAccompaniments($request, $post->post);
         }
 
