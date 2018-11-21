@@ -27,12 +27,12 @@ class PhotoPostsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['image' => 'required|image|max:' . config('image.max_size')]);
+        $this->validate($request, ['image' => 'required|image|max:'.config('image.max_size')]);
 
         $file = $request->file('image');
         // Move it to the public folder
-        $thumbName = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.jpg';
-        $path = 'images/tmp/photo-posts/' . $thumbName;
+        $thumbName = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.jpg';
+        $path = 'images/tmp/photo-posts/'.$thumbName;
 
         // Resize the image, while constraining aspect ratio, and ensuring it does not upsize
         $image = Image::make($file)->encode('jpg', config('image.upload_quality'));
@@ -44,7 +44,6 @@ class PhotoPostsController extends Controller
 
         $imageWidth = $image->width();
         $imageHeight = $image->height();
-
 
         $image->save(public_path($path));
 
