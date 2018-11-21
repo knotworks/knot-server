@@ -52,7 +52,7 @@ class CommentsController extends Controller
             'body' => $request->input('body'),
         ]);
 
-        if ($request->has('location')) {
+        if ($request->filled('location')) {
             $this->setLocation($request, $comment);
         }
 
