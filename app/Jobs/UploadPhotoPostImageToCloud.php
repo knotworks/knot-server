@@ -2,9 +2,11 @@
 
 namespace Knot\Jobs;
 
+use Notification;
 use Illuminate\Http\File;
 use Knot\Models\PhotoPost;
 use Illuminate\Bus\Queueable;
+use Knot\Notifications\AddedPost;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,12 +34,15 @@ class UploadPhotoPostImageToCloud implements ShouldQueue
      */
     public function handle()
     {
+        $authorFriends = $this->post->user->getFriends();
+
         $tmpPath = public_path($this->post->image_path);
         $file = new File($tmpPath);
         try {
             $url = Storage::cloud()->putFile('photo-posts', $file, 'public');
             $this->post->fill(['image_path' => $url, 'cloud' => true])->save();
             unlink($tmpPath);
+            Notification::send($authorFriends, new AddedPost($this->post->post));
         } catch (Exception $e) {
             logger()->error('Cloud Upload Failed.', [
                 'post' => $this->post->toArray(),

@@ -3,6 +3,8 @@
 namespace Knot\Notifications;
 
 use Knot\Models\Reaction;
+use NotificationChannels\Telegram\TelegramChannel;
+use NotificationChannels\Telegram\TelegramMessage;
 use Illuminate\Notifications\Notification;
 
 class PostReactedTo extends Notification
@@ -28,7 +30,11 @@ class PostReactedTo extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        $channels = ['database'];
+        if ($notifiable->telegram_user_id) {
+            $channels[] = TelegramChannel::class;
+        }
+        return $channels;
     }
 
     /**
@@ -41,5 +47,20 @@ class PostReactedTo extends Notification
         return [
             'reaction' => $this->reaction->load('user', 'post'),
         ];
+    }
+
+    public function toTelegram($notifiable)
+    {
+        $reactions = [
+            'smile' => '🙂',
+            'love' => '😍',
+            'frown' => '☹️',
+            'surprise' => '😮',
+            'laugh' => '😆',
+            'angry' => '😡',
+        ];
+
+        return TelegramMessage::create()
+            ->content("*" . $this->reaction->user->first_name . "* " . $reactions[$this->reaction->type] . " at your post.");
     }
 }

@@ -2,10 +2,12 @@
 
 namespace Knot\Http\Controllers;
 
+use Notification;
 use Knot\Models\TextPost;
 use Illuminate\Http\Request;
 use Knot\Traits\AddsLocation;
 use Knot\Traits\AddsAccompaniments;
+use Knot\Notifications\AddedPost;
 
 class TextPostsController extends Controller
 {
@@ -38,6 +40,8 @@ class TextPostsController extends Controller
         if ($request->filled('accompaniments')) {
             $this->setAccompaniments($request, $post->post);
         }
+
+        Notification::send(auth()->user()->getFriends(), new AddedPost($post->post));
 
         return $post->load('post.location', 'post.accompaniments');
     }
