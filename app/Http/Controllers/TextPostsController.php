@@ -6,8 +6,8 @@ use Notification;
 use Knot\Models\TextPost;
 use Illuminate\Http\Request;
 use Knot\Traits\AddsLocation;
-use Knot\Traits\AddsAccompaniments;
 use Knot\Notifications\AddedPost;
+use Knot\Traits\AddsAccompaniments;
 
 class TextPostsController extends Controller
 {
