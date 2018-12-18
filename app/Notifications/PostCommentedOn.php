@@ -53,6 +53,6 @@ class PostCommentedOn extends Notification
     public function toTelegram($notifiable)
     {
         return TelegramMessage::create()
-            ->content("*" . $this->comment->user->first_name . "* commented on your post: \n _" . $this->comment->body . "_");
+            ->content('*' . $this->comment->user->first_name . '* commented on your post: \n _' . $this->comment->body . '_');
     }
 }

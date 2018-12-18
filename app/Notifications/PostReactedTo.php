@@ -61,6 +61,6 @@ class PostReactedTo extends Notification
         ];
 
         return TelegramMessage::create()
-            ->content("*" . $this->reaction->user->first_name . "* " . $reactions[$this->reaction->type] . " at your post.");
+            ->content('*' . $this->reaction->user->first_name . '* ' . $reactions[$this->reaction->type] . ' at your post.');
     }
 }
