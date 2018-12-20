@@ -41,11 +41,6 @@ class User extends Authenticatable
         'avatar_url',
     ];
 
-    public function routeNotificationForTelegram()
-    {
-        return $this->telegram_user_id;
-    }
-
     /**
      * Hash the user's password.
      *
@@ -85,18 +80,5 @@ class User extends Authenticatable
             ->latest()
             ->whereIn('user_id', $ids)
             ->paginate(config('app.posts_per_page'));
-    }
-
-    public function getSuggestedFriends()
-    {
-        $ids = [$this->id];
-
-        $this->getAllFriendships()->each(function ($friendship) use (&$ids) {
-            array_push($ids, $friendship->sender_id, $friendship->recipient_id);
-        });
-
-        $idsToExclude = collect($ids)->unique()->values()->all();
-
-        return self::whereNotIn('id', $idsToExclude)->get();
     }
 }
