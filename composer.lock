@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47353cca1c77ff102b5c0829780d4432",
+    "content-hash": "dab7468557e0dfd04454d4c74246d163",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.81.6",
+            "version": "3.82.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0e07e92ec7042316ffc79ef290cf7bbb7d7be24b"
+                "reference": "f3c38c0d74fba49fdaa1ce856412ea1017513002"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0e07e92ec7042316ffc79ef290cf7bbb7d7be24b",
-                "reference": "0e07e92ec7042316ffc79ef290cf7bbb7d7be24b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/f3c38c0d74fba49fdaa1ce856412ea1017513002",
+                "reference": "f3c38c0d74fba49fdaa1ce856412ea1017513002",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2018-12-14T22:50:05+00:00"
+            "time": "2018-12-19T22:35:44+00:00"
         },
         {
             "name": "defuse/php-encryption",
@@ -1187,67 +1187,6 @@
             ],
             "description": "Highlight PHP code in terminal",
             "time": "2018-09-29T18:48:56+00:00"
-        },
-        {
-            "name": "laravel-notification-channels/telegram",
-            "version": "0.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel-notification-channels/telegram.git",
-                "reference": "9c5863137e9db65e23036d1a4e45ad00b1c2e96e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel-notification-channels/telegram/zipball/9c5863137e9db65e23036d1a4e45ad00b1c2e96e",
-                "reference": "9c5863137e9db65e23036d1a4e45ad00b1c2e96e",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.2",
-                "illuminate/notifications": ">=5.3",
-                "illuminate/support": ">=5.1",
-                "php": ">=5.6.4"
-            },
-            "require-dev": {
-                "mockery/mockery": "^0.9.5",
-                "orchestra/testbench": "3.4.x-dev",
-                "phpunit/phpunit": "5.*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "NotificationChannels\\Telegram\\TelegramServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "NotificationChannels\\Telegram\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Syed Irfaq R.",
-                    "email": "syed@lukonet.com",
-                    "homepage": "https://lukonet.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Telegram Notifications Driver",
-            "homepage": "https://github.com/laravel-notification-channels/telegram",
-            "keywords": [
-                "laravel",
-                "notification",
-                "telegram",
-                "telegram notification",
-                "telegram notifications channel"
-            ],
-            "time": "2018-09-05T14:24:44+00:00"
         },
         {
             "name": "laravel/framework",
