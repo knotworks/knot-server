@@ -3,6 +3,7 @@
 namespace Knot\Http\Controllers;
 
 use Knot\Models\Post;
+use Knot\Models\User;
 
 class PostsController extends Controller
 {
@@ -16,9 +17,19 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function feed()
+    public function timeline()
     {
-        return auth()->user()->feed();
+        return auth()->user()->timeline();
+    }
+
+    public function feed(User $user)
+    {
+        $this->authorize('can_view_profile', $user);
+
+        return [
+            'user' => $user,
+            'posts' => $user->feed(),
+        ];
     }
 
     public function show(Post $post)

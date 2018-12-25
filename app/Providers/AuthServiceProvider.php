@@ -15,6 +15,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         \Knot\Models\Post::class => \Knot\Policies\PostPolicy::class,
         \Knot\Models\Comment::class => \Knot\Policies\CommentPolicy::class,
+        \Knot\Models\User::class => \Knot\Policies\ViewProfilePolicy::class,
     ];
 
     /**
