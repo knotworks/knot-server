@@ -93,7 +93,6 @@ class FriendshipsController extends Controller
             'friends' => auth()->user()->getFriends(),
             'requests' => auth()->user()->getFriendRequests()->load('sender'),
             'outgoing' => auth()->user()->getPendingFriendships()->where('recipient_id', '!=', auth()->id())->load('recipient'),
-            'suggested' => auth()->user()->getSuggestedFriends(),
         ];
     }
 }

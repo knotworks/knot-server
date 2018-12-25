@@ -28,19 +28,15 @@ class ProfileController extends Controller
 
         $file = $request->file('avatar');
 
-        $thumbName = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.jpg';
-        $path = 'images/tmp/avatars/' . $thumbName;
-
         $image = Image::make($file)->encode('jpg', 80);
 
         $image->fit(600, 600, function ($constraint) {
             $constraint->upsize();
         });
 
-        $publicPath = public_path($path);
+        $thumbName = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$file->getClientOriginalExtension();
+        $publicPath = public_path('images/tmp/avatars/'.$thumbName);
         $image->save($publicPath);
-
-        $image->destroy();
 
         // Upload it to the cloud from the public folder
         $cloudFile = new File($publicPath);
@@ -49,7 +45,7 @@ class ProfileController extends Controller
         auth()->user()->update(['profile_image' => $cloudUrl]);
 
         unlink($publicPath);
-
+        $image->destroy();
 
         return auth()->user();
     }

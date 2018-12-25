@@ -5,7 +5,7 @@
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
- */
+*/
 
 Route::get('/auth/user', 'AuthController@user');
 Route::post('/auth/user', 'AuthController@register');
@@ -27,8 +27,7 @@ Route::post('/posts/{post}/comments', 'CommentsController@store');
 Route::put('/comments/{comment}', 'CommentsController@update');
 Route::delete('/comments/{comment}', 'CommentsController@destroy');
 
-Route::get('/timeline', 'PostsController@timeline');
-Route::get('/feed/{user}', 'PostsController@feed');
+Route::get('/feed', 'PostsController@feed');
 
 Route::get('/friendships', 'FriendshipsController@index');
 Route::post('/friendships/add/{recipient}', 'FriendshipsController@addFriend');
