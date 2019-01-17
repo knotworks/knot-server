@@ -110,23 +110,21 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-* Add a client key for oauth access in knot client. The client id and client secret
-  will need to be retained and added to the knot-client environment
+* Get the client key for oauth access in knot client. You'll need the `id and the `secret`
 
 ```
-php artisan passport:client
-Which user ID should the client be assigned to?:
- > 1
+mysql
 
- What should we name the client?:
- > knot client
+mysql> use forge;
 
- Where should we redirect the request after authorization? [https://knot-server.test/auth/callback]:
- >
-
-New client created successfully.
-Client ID: <SOME_ID>
-Client secret: <SOME_KEY>
+Database changed
+mysql> select * from oauth_clients where name like '%Password%';
++----+---------+----------------------------+------------------------------------------+------------------+------------------------+-----------------+---------+---------------------+---------------------+
+| id | user_id | name                       | secret                                   | redirect         | personal_access_client | password_client | revoked | created_at          | updated_at          |
++----+---------+----------------------------+------------------------------------------+------------------+------------------------+-----------------+---------+---------------------+---------------------+
+|  2 |    NULL | Knot Password Grant Client | QXQNqSME4HUC2LFpAk5U0xVBpyVKr8ePrlcsAC0F | http://localhost |                      0 |               1 |       0 | 2019-01-01 20:42:50 | 2019-01-01 20:42:50 |
++----+---------+----------------------------+------------------------------------------+------------------+------------------------+-----------------+---------+---------------------+---------------------+
+1 row in set (0.00 sec)
 ```
 
 * visit http://knot-server.test
