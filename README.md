@@ -110,6 +110,25 @@ cp .env.example .env
 php artisan key:generate
 ```
 
+* Add a client key for oauth access in knot client. The client id and client secret
+  will need to be retained and added to the knot-client environment
+
+```
+php artisan passport:client
+Which user ID should the client be assigned to?:
+ > 1
+
+ What should we name the client?:
+ > knot client
+
+ Where should we redirect the request after authorization? [https://knot-server.test/auth/callback]:
+ >
+
+New client created successfully.
+Client ID: <SOME_ID>
+Client secret: <SOME_KEY>
+```
+
 * visit http://knot-server.test
 
 ### On the client side
@@ -124,9 +143,23 @@ yarn install
 ```
 
 * Setup a bugsnag account, and grab a key
+* Add keys to a .env file in the root of knot-client. Your .env file should look
+  something like:
 
 ```
-export BUGSNAG_KEY=<your key>
-export BASE_URL=http://knot-server.test/
+BASE_URL=http://knot-server.test
+BUGSNAG_KEY= <SOME_KEY>
+KNOT_CLIENT_ID= <SOME_ID>
+KNOT_CLIENT_SECRET= <SOME_KEY>
+
+# optional
+OPENCAGE_API_KEY=
+FOURSQUARE_CLIENT_ID=
+FOURSQUARE_CLIENT_SECRET=
+```
+
+* Run the dev server:
+
+```
 yarn run dev
 ```
