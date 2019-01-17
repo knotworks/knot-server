@@ -68,4 +68,54 @@ By default all image uploads are uploaded to a cloud provider of your choice. I 
 
 ## Installation
 
-Coming soon...
+### Server
+
+* Clone this repo!
+* Download and install https://getcomposer.org/download/
+
+    php composer.phar install
+
+* Follow instructions @ https://laravel.com/docs/5.7/homestead to setup homestead
+* Edit `Homestead.yaml`, map the knot-server folder, change the hostname of the server to knot-server.test
+* In `/etc/hosts` map knot-server.test to the ip listed in Homestead.yaml
+
+    vagrant up
+
+* Login to server: `vagrant ssh`
+* Setup database user + db
+
+    mysql
+
+    > CREATE USER 'forge'@'localhost' IDENTIFIED BY '';
+    > GRANT ALL PRIVILEGES ON * . * TO 'forge'@'localhost';
+    > FLUSH PRIVILEGES;
+    > CREATE DATABASE forge;
+
+* Run migrations and install dependencies
+
+    php artisan migrate
+      php artisan passport:install
+
+* Turn on debugging in `config/app.php`
+* Generate keys
+
+    cp .env.example .env
+    php artisan key:generate
+
+* visit http://knot-server.test
+
+
+### On the client side
+
+* Clone https://github.com/knotworks/knot-client
+* Install dependencies
+
+    brew install yarn
+    nvm install 11
+    yarn install
+
+* Setup a bugsnag account, and grab a key
+
+    export BUGSNAG_KEY=<your key>
+    export BASE_URL=http://knot-server.test/
+    yarn run dev
