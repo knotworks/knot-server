@@ -89,6 +89,7 @@ class User extends Authenticatable
             array_push($ids, $friendship->sender_id, $friendship->recipient_id);
         });
         $idsToExclude = collect($ids)->unique()->values()->all();
+
         return self::whereNotIn('id', $idsToExclude)->get();
     }
 }
