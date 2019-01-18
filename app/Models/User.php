@@ -72,7 +72,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function feed()
+    public function timeline()
     {
         $ids = $this->getFriends()->map->id->prepend($this->id);
 
