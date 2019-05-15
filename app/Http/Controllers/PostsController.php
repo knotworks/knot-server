@@ -2,8 +2,8 @@
 
 namespace Knot\Http\Controllers;
 
-use Knot\Models\User;
 use Knot\Models\Post;
+use Knot\Models\User;
 
 class PostsController extends Controller
 {
@@ -25,6 +25,7 @@ class PostsController extends Controller
     public function profile(User $user)
     {
         $this->authorize('can_view_profile', $user);
+
         return [
             'user' => $user,
             'posts' => $user->timeline(),
