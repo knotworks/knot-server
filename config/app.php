@@ -180,6 +180,7 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         Hootlex\Friendships\FriendshipsServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        NotificationChannels\Telegram\TelegramServiceProvider::class,
 
     ],
 
