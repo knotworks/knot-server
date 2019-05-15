@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "794a8f679b74aca5dcc1f2c9e7aba873",
+    "content-hash": "e345840a608763f8bcf585847114524a",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1300,6 +1300,67 @@
                 "upload"
             ],
             "time": "2018-05-08T00:22:05+00:00"
+        },
+        {
+            "name": "laravel-notification-channels/telegram",
+            "version": "0.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-notification-channels/telegram.git",
+                "reference": "9c5863137e9db65e23036d1a4e45ad00b1c2e96e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-notification-channels/telegram/zipball/9c5863137e9db65e23036d1a4e45ad00b1c2e96e",
+                "reference": "9c5863137e9db65e23036d1a4e45ad00b1c2e96e",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2",
+                "illuminate/notifications": ">=5.3",
+                "illuminate/support": ">=5.1",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.5",
+                "orchestra/testbench": "3.4.x-dev",
+                "phpunit/phpunit": "5.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NotificationChannels\\Telegram\\TelegramServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NotificationChannels\\Telegram\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Syed Irfaq R.",
+                    "email": "syed@lukonet.com",
+                    "homepage": "https://lukonet.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Telegram Notifications Driver",
+            "homepage": "https://github.com/laravel-notification-channels/telegram",
+            "keywords": [
+                "laravel",
+                "notification",
+                "telegram",
+                "telegram notification",
+                "telegram notifications channel"
+            ],
+            "time": "2018-09-05T14:24:44+00:00"
         },
         {
             "name": "laravel/framework",

@@ -15,6 +15,7 @@
     "hootlex/laravel-friendships": "^1.0",
     "intervention/image": "^2.3",
     "jrm2k6/cloudder": "^0.6.0",
+    "laravel-notification-channels/telegram": "^0.0.5",
     "laravel/framework": "5.7.*",
     "laravel/passport": "^7.0",
     "laravel/tinker": "~1.0",
