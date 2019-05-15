@@ -3,11 +3,13 @@
 namespace Knot\Http\Controllers;
 
 use Image;
+use Notification;
 use Knot\Models\PhotoPost;
 use Illuminate\Http\Request;
 use Knot\Traits\AddsLocation;
+use Knot\Notifications\AddedPost;
+use JD\Cloudder\Facades\Cloudder;
 use Knot\Traits\AddsAccompaniments;
-use Knot\Jobs\UploadPhotoPostImageToCloud;
 
 class PhotoPostsController extends Controller
 {
@@ -30,9 +32,10 @@ class PhotoPostsController extends Controller
         $this->validate($request, ['image' => 'required|image|max:'.config('image.max_size')]);
 
         $file = $request->file('image');
+
         // Move it to the public folder
-        $thumbName = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.jpg';
-        $path = 'images/tmp/photo-posts/'.$thumbName;
+        $name = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $path = 'images/tmp/photo-posts/'.$name.'.jpg';
 
         // Resize the image, while constraining aspect ratio, and ensuring it does not upsize
         $image = Image::make($file)->encode('jpg', config('image.upload_quality'));
@@ -47,25 +50,31 @@ class PhotoPostsController extends Controller
 
         $image->save(public_path($path));
 
+        Cloudder::upload(public_path($path), 'photo-posts/'.$name);
+
         // Destroy the image instance
         $image->destroy();
 
         // Create the post, and queue the cloud upload
         $post = PhotoPost::create([
             'body' => $request->input('body'),
-            'image_path' => $path,
+            'image_path' => Cloudder::getPublicId(),
             'width' => $imageWidth,
             'height' => $imageHeight,
             'user_id' => auth()->id(),
         ]);
 
-        dispatch(new UploadPhotoPostImageToCloud($post));
+        unlink(public_path($path));
 
         if ($request->filled('location')) {
             $this->setLocation($request, $post->post);
         }
         if ($request->filled('accompaniments')) {
             $this->setAccompaniments($request, $post->post);
+        }
+
+        if (count(auth()->user()->getFriends()->all())) {
+            Notification::send( auth()->user()->getFriends(), new AddedPost($post->post));
         }
 
         return $post->load('post.location', 'post.accompaniments');

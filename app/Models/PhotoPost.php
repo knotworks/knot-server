@@ -21,22 +21,9 @@ class PhotoPost extends Model
         'cloud',
     ];
 
-    protected $hidden = ['image_path'];
-
-    protected $appends = ['image_url'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function getImageUrlAttribute()
-    {
-        $imagePath = $this->image_path;
-        if ($this->cloud) {
-            return Storage::cloud()->url($imagePath);
-        } else {
-            return asset($imagePath);
-        }
     }
 }

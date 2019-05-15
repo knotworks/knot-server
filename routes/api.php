@@ -12,6 +12,7 @@ Route::post('/auth/user', 'AuthController@register');
 
 Route::put('/profile/avatar', 'ProfileController@updateAvatar');
 Route::put('/profile/update', 'ProfileController@updateInfo');
+Route::get('/profile/{user}', 'PostsController@profile');
 
 Route::get('/notifications', 'NotificationsController@index');
 Route::delete('/notifications', 'NotificationsController@destroy');

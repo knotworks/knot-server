@@ -5,6 +5,7 @@ namespace Knot\Http\Controllers;
 use Image;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,24 +29,26 @@ class ProfileController extends Controller
 
         $file = $request->file('avatar');
 
+        // Move it to the public folder
+        $name = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $path = 'images/tmp/avatars/' . $name . '.jpg';
+
         $image = Image::make($file)->encode('jpg', 80);
 
         $image->fit(600, 600, function ($constraint) {
             $constraint->upsize();
         });
 
-        $thumbName = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$file->getClientOriginalExtension();
-        $publicPath = public_path('images/tmp/avatars/'.$thumbName);
-        $image->save($publicPath);
+        $image->save(public_path($path));
 
-        // Upload it to the cloud from the public folder
-        $cloudFile = new File($publicPath);
-        $cloudUrl = Storage::cloud()->putFile('avatars', $cloudFile, 'public');
+        Cloudder::upload(public_path($path), 'avatars/' . $name);
 
-        auth()->user()->update(['profile_image' => $cloudUrl]);
-
-        unlink($publicPath);
+        // Destroy the image instance
         $image->destroy();
+
+        auth()->user()->update(['profile_image' => Cloudder::getPublicId()]);
+
+        unlink(public_path($path));
 
         return auth()->user();
     }

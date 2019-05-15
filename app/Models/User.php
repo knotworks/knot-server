@@ -33,12 +33,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'profile_image',
     ];
 
     protected $appends = [
         'full_name',
-        'avatar_url',
     ];
 
     /**
@@ -54,15 +52,6 @@ class User extends Authenticatable
     public function getFullNameAttribute($value)
     {
         return "{$this->first_name} {$this->last_name}";
-    }
-
-    public function getAvatarUrlAttribute()
-    {
-        if ($this->profile_image) {
-            return $this->profile_image;
-        } else {
-            return 'https://placekitten.com/400/400';
-        }
     }
 
     /**

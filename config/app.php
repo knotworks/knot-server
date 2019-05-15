@@ -14,7 +14,7 @@ return [
 
     'name' => env('APP_NAME', 'Knot'),
 
-    'posts_per_page' => 20,
+    'posts_per_page' => 5,
 
     /*
     |--------------------------------------------------------------------------
@@ -229,7 +229,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Doorman' => Clarkeash\Doorman\Facades\Doorman::class,
         'Image' => Intervention\Image\Facades\Image::class,
 
     ],
