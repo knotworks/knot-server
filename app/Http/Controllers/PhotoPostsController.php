@@ -7,8 +7,8 @@ use Notification;
 use Knot\Models\PhotoPost;
 use Illuminate\Http\Request;
 use Knot\Traits\AddsLocation;
-use Knot\Notifications\AddedPost;
 use JD\Cloudder\Facades\Cloudder;
+use Knot\Notifications\AddedPost;
 use Knot\Traits\AddsAccompaniments;
 
 class PhotoPostsController extends Controller
@@ -74,7 +74,7 @@ class PhotoPostsController extends Controller
         }
 
         if (count(auth()->user()->getFriends()->all())) {
-            Notification::send( auth()->user()->getFriends(), new AddedPost($post->post));
+            Notification::send(auth()->user()->getFriends(), new AddedPost($post->post));
         }
 
         return $post->load('post.location', 'post.accompaniments');

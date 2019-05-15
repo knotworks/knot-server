@@ -3,11 +3,9 @@
 namespace Knot\Http\Controllers;
 
 use Image;
-use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -30,8 +28,8 @@ class ProfileController extends Controller
         $file = $request->file('avatar');
 
         // Move it to the public folder
-        $name = strtotime('now') . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $path = 'images/tmp/avatars/' . $name . '.jpg';
+        $name = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $path = 'images/tmp/avatars/'.$name.'.jpg';
 
         $image = Image::make($file)->encode('jpg', 80);
 
@@ -41,7 +39,7 @@ class ProfileController extends Controller
 
         $image->save(public_path($path));
 
-        Cloudder::upload(public_path($path), 'avatars/' . $name);
+        Cloudder::upload(public_path($path), 'avatars/'.$name);
 
         // Destroy the image instance
         $image->destroy();
