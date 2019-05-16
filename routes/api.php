@@ -29,6 +29,7 @@ Route::put('/comments/{comment}', 'CommentsController@update');
 Route::delete('/comments/{comment}', 'CommentsController@destroy');
 
 Route::get('/timeline', 'PostsController@timeline');
+Route::get('/profile/{user}', 'PostsController@profile');
 
 Route::get('/friendships', 'FriendshipsController@index');
 Route::post('/friendships/add/{recipient}', 'FriendshipsController@addFriend');

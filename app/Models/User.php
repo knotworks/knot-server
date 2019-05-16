@@ -71,12 +71,22 @@ class User extends Authenticatable
             ->paginate(config('app.posts_per_page'));
     }
 
+    public function feed()
+    {
+        return Post::with(['location', 'postable', 'user', 'comments', 'reactions.user', 'accompaniments.user'])
+            ->latest()
+            ->where('user_id', $this->id)
+            ->paginate(config('app.posts_per_page'));
+    }
+
     public function getSuggestedFriends()
     {
         $ids = [$this->id];
+
         $this->getAllFriendships()->each(function ($friendship) use (&$ids) {
             array_push($ids, $friendship->sender_id, $friendship->recipient_id);
         });
+
         $idsToExclude = collect($ids)->unique()->values()->all();
 
         return self::whereNotIn('id', $idsToExclude)->get();

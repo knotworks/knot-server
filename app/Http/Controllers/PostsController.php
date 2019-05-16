@@ -28,7 +28,7 @@ class PostsController extends Controller
 
         return [
             'user' => $user,
-            'posts' => $user->timeline(),
+            'posts' => $user->feed(),
         ];
     }
 
