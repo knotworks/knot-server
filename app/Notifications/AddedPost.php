@@ -59,10 +59,10 @@ class AddedPost extends Notification
             $photo = $this->post->postable->image_url;
 
             return TelegramMessage::create()
-                ->content("*" . $author . "* added a photo. \n _" . $body . "_ \n" . $photo);
+                ->content('*'.$author."* added a photo. \n _".$body."_ \n".$photo);
         } else {
             return TelegramMessage::create()
-                ->content("*".$author."* added a post. \n _".$body."_");
+                ->content('*'.$author."* added a post. \n _".$body.'_');
         }
     }
 }

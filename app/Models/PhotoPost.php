@@ -4,7 +4,6 @@ namespace Knot\Models;
 
 use Knot\Traits\Postable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class PhotoPost extends Model
 {
@@ -20,7 +19,6 @@ class PhotoPost extends Model
         'height',
         'cloud',
     ];
-
 
     public function user()
     {
