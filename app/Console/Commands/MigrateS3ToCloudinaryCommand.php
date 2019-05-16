@@ -47,12 +47,12 @@ class MigrateS3ToCloudinaryCommand extends Command
 
             $bar->start();
 
-            foreach($posts as $post) {
+            foreach ($posts as $post) {
                 $s3Url = Storage::cloud()->url($post->image_path);
                 Cloudder::upload($s3Url, 'photo-posts/'.pathinfo($post->image_path, PATHINFO_FILENAME));
                 $post->update([
                     'image_path' => Cloudder::getPublicId(),
-                    'cloud' => false
+                    'cloud' => false,
                 ]);
                 $bar->advance();
             }
