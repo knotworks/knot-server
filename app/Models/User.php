@@ -39,6 +39,11 @@ class User extends Authenticatable
         'full_name',
     ];
 
+    public function routeNotificationForTelegram()
+    {
+        return $this->telegram_user_id;
+    }
+
     /**
      * Hash the user's password.
      *
