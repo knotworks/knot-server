@@ -2,17 +2,19 @@
 
 namespace Tests\Feature;
 
-use Image;
+use Mockery;
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AvatarTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setup()
+    protected $cloudderMock;
+
+    public function setup(): void
     {
         parent::setup();
 
@@ -22,35 +24,15 @@ class AvatarTest extends TestCase
     /** @test */
     public function a_user_can_update_their_avatar()
     {
-        $cloud = config('filesystems.cloud');
-        Storage::fake($cloud);
-
+        Cloudder::spy();
+        Cloudder::shouldReceive('getPublicId')->andReturn('avatars/12345');
+        $fakeFile = UploadedFile::fake()->image('avatar.jpg', 700, 700);
         $response = $this->putJson('api/profile/avatar', [
-            'avatar' => UploadedFile::fake()->image('avatar.jpg', 700, 700),
+            'avatar' => $fakeFile,
         ]);
         $imagePath = $response->getOriginalContent()->profile_image;
 
+        Cloudder::shouldHaveReceived('upload')->with(Mockery::type('string'), Mockery::type('string'))->once();
         $this->assertEquals($imagePath, auth()->user()->profile_image);
-        Storage::cloud()->assertExists($imagePath);
-    }
-
-    /** @test */
-    public function an_upload_profile_image_gets_cropped_to_a_square()
-    {
-        $cloud = config('filesystems.cloud');
-        Storage::fake($cloud);
-
-        $response = $this->putJson('api/profile/avatar', [
-            'avatar' => UploadedFile::fake()->image('myavatar.jpg', 1200, 900),
-        ]);
-        $imagePath = $response->getOriginalContent()->profile_image;
-        $storagePath = storage_path().'/framework/testing/disks/'.$cloud.'/'.$imagePath;
-
-        $avatar = Image::make($storagePath);
-
-        $this->assertEquals($avatar->width(), 600);
-        $this->assertEquals($avatar->height(), 600);
-
-        $avatar->destroy();
     }
 }

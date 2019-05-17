@@ -21,15 +21,11 @@ class PhotoPostTest extends TestCase
     }
 
     /** @test */
-    public function a_photo_post_returns_the_proper_url_depending_on_if_its_uploaded_to_the_cloud_or_not()
+    public function a_photo_post_belongs_to_a_user()
     {
-        Storage::fake(config('filesystems.cloud'));
-
-        $this->assertEquals(asset($this->post->image_path), $this->post->image_url);
-
-        $this->post->cloud = true;
-        $this->post->save();
-
-        $this->assertEquals('/storage/'.$this->post->image_path, $this->post->image_url);
+        $this->assertInstanceOf(
+      'Knot\Models\User',
+      $this->post->user
+    );
     }
 }
