@@ -2,8 +2,8 @@
 
 namespace Knot\Notifications;
 
-use Knot\Models\User;
 use Illuminate\Notifications\Notification;
+use Knot\Models\User;
 
 class AddedAsFriend extends Notification
 {
