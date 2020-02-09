@@ -2,10 +2,10 @@
 
 namespace Knot\Http\Controllers;
 
-use Image;
 use Illuminate\Http\Request;
-use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\Hash;
+use Image;
+use JD\Cloudder\Facades\Cloudder;
 
 class ProfileController extends Controller
 {

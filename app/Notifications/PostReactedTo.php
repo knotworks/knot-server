@@ -2,8 +2,8 @@
 
 namespace Knot\Notifications;
 
-use Knot\Models\Reaction;
 use Illuminate\Notifications\Notification;
+use Knot\Models\Reaction;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 

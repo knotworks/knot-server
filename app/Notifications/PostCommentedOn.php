@@ -2,9 +2,8 @@
 
 namespace Knot\Notifications;
 
-use Knot\Models\Post;
-use Knot\Models\Comment;
 use Illuminate\Notifications\Notification;
+use Knot\Models\Comment;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 

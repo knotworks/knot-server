@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Mockery;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use JD\Cloudder\Facades\Cloudder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery;
+use Tests\TestCase;
 
 class AvatarTest extends TestCase
 {
