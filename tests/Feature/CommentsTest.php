@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Knot\Notifications\PostCommentedOn;
-use Knot\Notifications\CommentRepliedTo;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Knot\Notifications\CommentRepliedTo;
+use Knot\Notifications\PostCommentedOn;
+use Tests\TestCase;
 
 class CommentsTest extends TestCase
 {
