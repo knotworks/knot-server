@@ -33,12 +33,6 @@ class InstallCommand extends Command
             $this->info('~ App key generated.');
         }
 
-        if (! file_exists('/storage/oauth-public.key')) {
-            $this->call('passport:keys');
-
-            $this->info('~ OAuth keys generated.');
-        }
-
         $credentials = $this->requestDatabaseCredentials();
         $this->updateEnvironmentFile($credentials);
 
@@ -46,11 +40,8 @@ class InstallCommand extends Command
             $this->migrateDatabaseWithFreshCredentials($credentials);
 
             $this->info('~ Database successfully migrated.');
-            $this->line('Creating Laravel Passport OAuth client....');
-            $this->call('passport:client --password');
-            $this->info('~ OAuth client created.');
         } else {
-            $this->comment('~ NOTE: You will need to manually run `php artisan migrate && php artisan passport:client --password` in your console.');
+            $this->comment('~ NOTE: You will need to manually run `php artisan migrate` in your console.');
         }
 
         $this->goodbye();

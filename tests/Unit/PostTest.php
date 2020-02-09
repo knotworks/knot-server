@@ -66,10 +66,10 @@ class PostTest extends TestCase
         $this->assertCount(1, $this->post->reactions);
 
         $this->assertDatabaseHas('reactions', [
-      'type' => $reaction['type'],
-      'user_id' => $reaction['user_id'],
-      'post_id' => $this->post->id,
-    ]);
+          'type' => $reaction['type'],
+          'user_id' => $reaction['user_id'],
+          'post_id' => $this->post->id,
+        ]);
     }
 
     /** @test */
@@ -77,10 +77,10 @@ class PostTest extends TestCase
     {
         // Attach various relations to the post
         $location = make('Knot\Models\Location', [
-      'user_id' => auth()->id(),
-      'locatable_id' => $this->post->id,
-      'locatable_type' => get_class($this->post),
-    ])->toArray();
+          'user_id' => auth()->id(),
+          'locatable_id' => $this->post->id,
+          'locatable_type' => get_class($this->post),
+        ])->toArray();
 
         $this->post->addAccompaniments([
       [
@@ -90,9 +90,9 @@ class PostTest extends TestCase
     ]);
 
         $this->post->addReaction([
-      'user_id' => 2,
-      'type' => Reaction::REACTIONS['smile'],
-    ]);
+          'user_id' => 2,
+          'type' => Reaction::REACTIONS['smile'],
+        ]);
 
         $this->post->addLocation($location);
 
