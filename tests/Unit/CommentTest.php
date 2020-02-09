@@ -11,7 +11,7 @@ class CommentTest extends TestCase
 
     protected $comment;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setUp();
 

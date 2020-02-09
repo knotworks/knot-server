@@ -12,7 +12,7 @@ class LocationTest extends TestCase
 
     protected $faker;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 

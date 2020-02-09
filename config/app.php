@@ -177,7 +177,6 @@ return [
         // Knot\Providers\BroadcastServiceProvider::class,
         Knot\Providers\EventServiceProvider::class,
         Knot\Providers\RouteServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
         Hootlex\Friendships\FriendshipsServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         NotificationChannels\Telegram\TelegramServiceProvider::class,

@@ -8,7 +8,8 @@
  */
 
 Route::get('/auth/user', 'AuthController@user');
-Route::post('/auth/user', 'AuthController@register');
+Route::post('/auth/user/login', 'AuthController@login');
+Route::post('/auth/user/register', 'AuthController@register');
 
 Route::put('/profile/avatar', 'ProfileController@updateAvatar');
 Route::put('/profile/update', 'ProfileController@updateInfo');

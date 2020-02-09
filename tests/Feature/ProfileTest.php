@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Laravel\Passport\Passport;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProfileTest extends TestCase
@@ -14,7 +13,7 @@ class ProfileTest extends TestCase
     protected $currentPassword;
     protected $newPassword;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 
@@ -22,7 +21,7 @@ class ProfileTest extends TestCase
         $this->newPassword = 'anewpassword';
         $this->user = create('Knot\Models\User', ['password' => $this->currentPassword]);
 
-        Passport::actingAs($this->user);
+        $this->authenticate($this->user);
     }
 
     /** @test */
@@ -39,7 +38,7 @@ class ProfileTest extends TestCase
             'password_confirmation' => $this->newPassword,
         ];
 
-        $this->putJson('api/profile/update', $newInfo)->assertStatus(201);
+        $this->putJson('api/profile/update', $newInfo)->assertStatus(200);
     }
 
     /** @test */

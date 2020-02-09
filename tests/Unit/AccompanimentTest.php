@@ -11,7 +11,7 @@ class AccompanimentTest extends TestCase
 
     protected $accompaniment;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setUp();
 

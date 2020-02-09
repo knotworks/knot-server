@@ -13,8 +13,6 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function can_register_a_new_user()
     {
-        $this->withExceptionHandling();
-
         $userData = [
             'first_name' => 'Jane',
             'last_name' => 'Doe',
@@ -32,6 +30,6 @@ class AuthenticationTest extends TestCase
     {
         $this->authenticate();
 
-        $this->getJson('api/auth/user')->assertStatus(201);
+        $this->getJson('api/auth/user')->assertStatus(200);
     }
 }

@@ -14,7 +14,7 @@ class ReactionsTest extends TestCase
     protected $user;
     protected $post;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 

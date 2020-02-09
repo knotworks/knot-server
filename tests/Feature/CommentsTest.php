@@ -15,7 +15,7 @@ class CommentsTest extends TestCase
     protected $user;
     protected $post;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 
@@ -28,8 +28,6 @@ class CommentsTest extends TestCase
     /** @test */
     public function a_user_cannot_see_comments_on_a_post_that_does_not_belong_to_a_friend()
     {
-        $this->withExceptionHandling();
-
         $this->getJson('api/posts/'.$this->post->id.'/comments')->assertStatus(403);
     }
 

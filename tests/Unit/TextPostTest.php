@@ -11,7 +11,7 @@ class TextPostTest extends TestCase
 
     protected $textPost;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setUp();
 

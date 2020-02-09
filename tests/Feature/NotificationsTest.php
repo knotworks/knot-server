@@ -12,7 +12,7 @@ class NotificationsTest extends TestCase
 
     protected $post;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 

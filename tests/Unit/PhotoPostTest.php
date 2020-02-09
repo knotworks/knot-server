@@ -11,7 +11,7 @@ class PhotoPostTest extends TestCase
 
     protected $post;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setUp();
 

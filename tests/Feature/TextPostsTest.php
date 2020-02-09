@@ -9,7 +9,7 @@ class TextPostsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setup()
+    public function setup(): void
     {
         parent::setup();
 

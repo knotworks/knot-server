@@ -2,14 +2,14 @@
 
 namespace Knot\Models;
 
-use Laravel\Passport\HasApiTokens;
+use Laravel\Airlock\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Hootlex\Friendships\Traits\Friendable;
+use Knot\Traits\KnotFriendable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, Friendable;
+    use HasApiTokens, Notifiable, KnotFriendable;
 
     /**
      * The attributes that are mass assignable.
