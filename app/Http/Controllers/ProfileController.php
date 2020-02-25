@@ -2,10 +2,10 @@
 
 namespace Knot\Http\Controllers;
 
-use Image;
 use Illuminate\Http\Request;
-use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\Hash;
+use Image;
+use JD\Cloudder\Facades\Cloudder;
 
 class ProfileController extends Controller
 {
@@ -14,7 +14,8 @@ class ProfileController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function show(User $user) {
+    public function show(User $user)
+    {
         $this->authorize('can_view_profile', $user);
 
         return [

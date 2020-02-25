@@ -5,8 +5,8 @@ namespace Knot\Services;
 use Image;
 use JD\Cloudder\Facades\Cloudder;
 
-class MediaUploadService {
-
+class MediaUploadService
+{
     protected $image;
     protected $name;
 
@@ -46,7 +46,7 @@ class MediaUploadService {
         return [
             'publicId' => $publicId,
             'width' => $imageWidth,
-            'height' => $imageHeight
+            'height' => $imageHeight,
         ];
     }
 }

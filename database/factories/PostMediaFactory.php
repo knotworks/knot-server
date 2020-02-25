@@ -11,6 +11,6 @@ $factory->define(PostMedia::class, function (Faker $faker) {
         'path' => 'media/'.$faker->md5(),
         'width' => 1200,
         'height' => 800,
-        'type' => "image",
+        'type' => 'image',
     ];
 });

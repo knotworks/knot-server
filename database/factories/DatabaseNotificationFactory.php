@@ -1,7 +1,6 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-
 $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function () {
     return [
         'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),

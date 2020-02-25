@@ -2,13 +2,13 @@
 
 namespace Knot\Http\Controllers;
 
-use Notification;
-use Knot\Models\Post;
-use Knot\Models\Comment;
 use Illuminate\Http\Request;
-use Knot\Traits\AddsLocation;
-use Knot\Notifications\PostCommentedOn;
+use Knot\Models\Comment;
+use Knot\Models\Post;
 use Knot\Notifications\CommentRepliedTo;
+use Knot\Notifications\PostCommentedOn;
+use Knot\Traits\AddsLocation;
+use Notification;
 
 class CommentsController extends Controller
 {

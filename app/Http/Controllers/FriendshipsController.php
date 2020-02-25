@@ -2,10 +2,10 @@
 
 namespace Knot\Http\Controllers;
 
-use Knot\Models\User;
-use Illuminate\Http\Request;
-use Knot\Notifications\AddedAsFriend;
 use Hootlex\Friendships\Models\Friendship;
+use Illuminate\Http\Request;
+use Knot\Models\User;
+use Knot\Notifications\AddedAsFriend;
 use Knot\Notifications\FriendRequestAccepted;
 
 class FriendshipsController extends Controller
