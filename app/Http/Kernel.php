@@ -3,7 +3,6 @@
 namespace Knot\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Laravel\Airlock\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 class Kernel extends HttpKernel
 {
@@ -40,7 +39,6 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             'bindings',
         ],

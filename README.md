@@ -14,7 +14,7 @@ Thanks for checking out Knot!
 
 ### Token-based OAuth authentication
 
-Knot's authentication system is powered by a [Laravel Airlock](https://github.com/laravel/airlock) password client. Users sign in with a simple email and password, and the server will send back an authentication token to use for all subsequent requests.
+Knot's authentication system is powered by [Laravel Airlock](https://github.com/laravel/airlock). Users sign in with a simple email and password, and the server will send back an authentication token to use for all subsequent requests.
 
 ### Multiple post types
 

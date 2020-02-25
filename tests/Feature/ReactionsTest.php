@@ -20,15 +20,13 @@ class ReactionsTest extends TestCase
 
         Notification::fake();
         $this->user = create('Knot\Models\User');
-        $this->post = create('Knot\Models\TextPost', ['user_id' => $this->user->id])->post;
+        $this->post = create('Knot\Models\Post', ['user_id' => $this->user->id]);
         $this->authenticate();
     }
 
     /** @test */
     public function a_user_cannot_react_to_a_post_that_does_not_belong_to_a_friend()
     {
-        $this->withExceptionHandling();
-
         $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(403);
     }
 
@@ -44,8 +42,6 @@ class ReactionsTest extends TestCase
     /** @test */
     public function a_reaction_type_must_be_one_of_the_set_reactions()
     {
-        $this->withExceptionHandling();
-
         $this->createFriendship(auth()->user(), $this->user);
 
         $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe'])->assertStatus(422);

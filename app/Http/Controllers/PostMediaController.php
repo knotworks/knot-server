@@ -4,20 +4,16 @@ namespace Knot\Http\Controllers;
 
 use Image;
 use Notification;
-use Knot\Models\PhotoPost;
+use Knot\Models\PostMedia;
 use Illuminate\Http\Request;
-use Knot\Traits\AddsLocation;
 use JD\Cloudder\Facades\Cloudder;
 use Knot\Notifications\AddedPost;
-use Knot\Traits\AddsAccompaniments;
 
-class PhotoPostsController extends Controller
+class PostMediaController extends Controller
 {
-    use AddsLocation, AddsAccompaniments;
-
     public function __construct()
     {
-        $this->middleware('auth:airlock');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -65,18 +61,5 @@ class PhotoPostsController extends Controller
         ]);
 
         unlink(public_path($path));
-
-        if ($request->filled('location')) {
-            $this->setLocation($request, $post->post);
-        }
-        if ($request->filled('accompaniments')) {
-            $this->setAccompaniments($request, $post->post);
-        }
-
-        if (count(auth()->user()->getFriends()->all())) {
-            Notification::send(auth()->user()->getFriends(), new AddedPost($post->post));
-        }
-
-        return $post->load('post.location', 'post.accompaniments');
     }
 }

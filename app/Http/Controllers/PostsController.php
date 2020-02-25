@@ -2,41 +2,65 @@
 
 namespace Knot\Http\Controllers;
 
+use Notification;
 use Knot\Models\Post;
-use Knot\Models\User;
+use Illuminate\Http\Request;
+use Knot\Traits\AddsLocation;
+use Knot\Notifications\AddedPost;
+use Knot\Traits\AddsAccompaniments;
+use Knot\Services\MediaUploadService;
 
 class PostsController extends Controller
 {
-    public function __construct()
+    use AddsLocation, AddsAccompaniments;
+
+    protected $uploadService;
+
+    public function __construct(MediaUploadService $uploadService)
     {
-        $this->middleware('auth:airlock');
+        $this->middleware('auth:api');
+        $this->uploadService = $uploadService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function timeline()
+    public function store(Request $request)
     {
-        return auth()->user()->timeline();
-    }
+        $post = auth()->user()->posts()->create([
+            'body' => $request->input('body')
+        ]);
 
-    public function profile(User $user)
-    {
-        $this->authorize('can_view_profile', $user);
+        if ($request->filled('location')) {
+            $this->setLocation($request, $post);
+        }
+        if ($request->filled('accompaniments')) {
+            $this->setAccompaniments($request, $post);
+        }
 
-        return [
-            'user' => $user,
-            'posts' => $user->feed(),
-        ];
+        if ($request->hasFile('media')) {
+            // TODO: Do some validation here you absolute buffoon.
+            foreach($request->file('media') as $media) {
+                $upload = $this->uploadService->uploadImage($media);
+                $post->media()->create([
+                    'path' => $upload['publicId'],
+                    'width' => $upload['width'],
+                    'height' => $upload['height'],
+                    'type' => 'image',
+                ]);
+            }
+        }
+
+        $friendsToNotify = auth()->user()->getFriends();
+        if (count($friendsToNotify->all())) {
+            Notification::send($friendsToNotify, new AddedPost($post));
+        }
+
+        return $post->load('location', 'user', 'comments', 'reactions.user', 'accompaniments', 'media');
     }
 
     public function show(Post $post)
     {
         $this->authorize('can_view_post', $post);
 
-        return $post->load(['location', 'postable', 'user', 'comments', 'reactions.user']);
+        return $post->load(['location', 'user', 'comments', 'reactions.user', 'accompaniments']);
     }
 
     public function destroy(Post $post)

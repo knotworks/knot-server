@@ -2,14 +2,24 @@
 
 namespace Knot\Models;
 
-use Laravel\Airlock\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Knot\Traits\KnotFriendable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, Notifiable, KnotFriendable;
+    use Notifiable, KnotFriendable;
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -70,7 +80,7 @@ class User extends Authenticatable
     {
         $ids = $this->getFriends()->map->id->prepend($this->id);
 
-        return Post::with(['location', 'postable', 'user', 'comments', 'reactions.user', 'accompaniments.user'])
+        return Post::with(['location', 'user', 'comments', 'reactions.user', 'accompaniments.user', 'media'])
             ->latest()
             ->whereIn('user_id', $ids)
             ->paginate(config('app.posts_per_page'));
@@ -78,7 +88,7 @@ class User extends Authenticatable
 
     public function feed()
     {
-        return Post::with(['location', 'postable', 'user', 'comments', 'reactions.user', 'accompaniments.user'])
+        return Post::with(['location', 'user', 'comments', 'reactions.user', 'accompaniments.user'])
             ->latest()
             ->where('user_id', $this->id)
             ->paginate(config('app.posts_per_page'));
@@ -95,5 +105,10 @@ class User extends Authenticatable
         $idsToExclude = collect($ids)->unique()->values()->all();
 
         return self::whereNotIn('id', $idsToExclude)->get();
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

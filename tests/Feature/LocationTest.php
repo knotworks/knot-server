@@ -23,6 +23,7 @@ class LocationTest extends TestCase
     /** @test */
     public function a_user_can_include_a_location_with_a_post()
     {
+        $this->withoutExceptionHandling();
         $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'location' => [
@@ -32,13 +33,11 @@ class LocationTest extends TestCase
             ],
         ];
 
-        $this->postJson('api/posts/new/text', $postContent)
+        $this->postJson('api/posts', $postContent)
             ->assertStatus(201)
             ->assertJson([
                 'body' => $postContent['body'],
-                'post' => [
-                    'location' => $postContent['location'],
-                ],
+                'location' => $postContent['location'],
             ]);
     }
 
@@ -56,7 +55,7 @@ class LocationTest extends TestCase
             ],
         ];
 
-        $response = $this->postJson('api/posts/new/text', $postContent)->assertStatus(422);
+        $response = $this->postJson('api/posts', $postContent)->assertStatus(422);
         $this->assertTrue(array_key_exists('location.lat', $response->getOriginalContent()['errors']));
         $this->assertTrue(array_key_exists('location.long', $response->getOriginalContent()['errors']));
     }

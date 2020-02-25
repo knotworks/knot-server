@@ -11,27 +11,21 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:airlock', ['only' => [
-            'user',
-        ]]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function login(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'device_name' => 'required'
         ]);
 
-        $user = User::where('email', $request->email)->first();
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        return $token;
     }
 
     /**
@@ -60,5 +54,12 @@ class AuthController extends Controller
         ]);
 
         return User::create($request->all());
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return response([], 204);
     }
 }

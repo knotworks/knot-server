@@ -16,21 +16,15 @@ class Post extends Model
         parent::boot();
 
         static::deleting(function ($model) {
-            $model->postable->delete();
             $model->accompaniments->each->delete();
             $model->reactions->each->delete();
             $model->comments->each->delete();
         });
     }
 
-    /**
-     * Fetch the associated subject for the activity.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function postable()
+    public function media()
     {
-        return $this->morphTo();
+        return $this->hasMany(PostMedia::class);
     }
 
     /**

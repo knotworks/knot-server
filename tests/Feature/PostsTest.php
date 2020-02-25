@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Knot\Models\TextPost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PostsTest extends TestCase
@@ -20,7 +19,7 @@ class PostsTest extends TestCase
     /** @test */
     public function a_user_can_view_their_own_post()
     {
-        $post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
+        $post = create('Knot\Models\Post', ['user_id' => auth()->id()]);
 
         $this->getJson('/api/posts/'.$post->id)->assertStatus(200);
     }
@@ -31,7 +30,7 @@ class PostsTest extends TestCase
         $user = create('Knot\Models\User');
         $this->createFriendship(auth()->user(), $user);
 
-        $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
+        $post = create('Knot\Models\Post', ['user_id' => $user->id]);
 
         $this->getJson('/api/posts/'.$post->id)->assertStatus(200);
     }
@@ -39,10 +38,8 @@ class PostsTest extends TestCase
     /** @test */
     public function a_user_cannot_view_non_friends_post()
     {
-        $this->withExceptionHandling();
-
         $user = create('Knot\Models\User');
-        $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
+        $post = create('Knot\Models\Post', ['user_id' => $user->id]);
 
         $this->getJson('/api/posts/'.$post->id)->assertStatus(403);
     }
@@ -50,19 +47,18 @@ class PostsTest extends TestCase
     /** @test */
     public function a_user_can_delete_their_own_post()
     {
-        $post = create('Knot\Models\TextPost', ['user_id' => auth()->id()])->post;
+        $this->withoutExceptionHandling();
+        $post = create('Knot\Models\Post', ['user_id' => auth()->id()]);
 
         $this->deleteJson('/api/posts/'.$post->id)->assertStatus(204);
-        $this->assertEquals(0, TextPost::count());
+        $this->assertEquals(0, \Knot\Models\Post::count());
     }
 
     /** @test */
     public function a_user_cannot_delete_someone_elses_post()
     {
-        $this->withExceptionHandling();
-
         $user = create('Knot\Models\User');
-        $post = create('Knot\Models\TextPost', ['user_id' => $user->id])->post;
+        $post = create('Knot\Models\Post', ['user_id' => $user->id]);
 
         $this->deleteJson('/api/posts/'.$post->id)->assertStatus(403);
     }

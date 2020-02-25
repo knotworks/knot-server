@@ -16,9 +16,9 @@ return [
  */
 
     'driver' => 'gd',
-    'upload_quality' => 85,
-    'max_size' => 20000,
-    'max_width' => 1200,
-    'max_height' => 1600,
+    'upload_quality' => 100,
+    'max_size' => 40000,
+    'max_width' => 2400,
+    'max_height' => 3200,
 
 ];
