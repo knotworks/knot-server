@@ -2,8 +2,8 @@
 
 namespace Knot\Models;
 
-use Knot\Traits\Locatable;
 use Illuminate\Database\Eloquent\Model;
+use Knot\Traits\Locatable;
 
 class Post extends Model
 {

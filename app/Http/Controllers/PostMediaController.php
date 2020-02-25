@@ -2,12 +2,9 @@
 
 namespace Knot\Http\Controllers;
 
-use Image;
-use Notification;
-use Knot\Models\PostMedia;
 use Illuminate\Http\Request;
+use Image;
 use JD\Cloudder\Facades\Cloudder;
-use Knot\Notifications\AddedPost;
 
 class PostMediaController extends Controller
 {

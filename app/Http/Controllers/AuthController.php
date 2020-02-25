@@ -2,10 +2,8 @@
 
 namespace Knot\Http\Controllers;
 
-use Knot\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use Knot\Models\User;
 
 class AuthController extends Controller
 {

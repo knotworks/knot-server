@@ -2,13 +2,13 @@
 
 namespace Knot\Http\Controllers;
 
-use Notification;
-use Knot\Models\Post;
 use Illuminate\Http\Request;
-use Knot\Traits\AddsLocation;
+use Knot\Models\Post;
 use Knot\Notifications\AddedPost;
-use Knot\Traits\AddsAccompaniments;
 use Knot\Services\MediaUploadService;
+use Knot\Traits\AddsAccompaniments;
+use Knot\Traits\AddsLocation;
+use Notification;
 
 class PostsController extends Controller
 {
@@ -25,7 +25,7 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $post = auth()->user()->posts()->create([
-            'body' => $request->input('body')
+            'body' => $request->input('body'),
         ]);
 
         if ($request->filled('location')) {
@@ -37,7 +37,7 @@ class PostsController extends Controller
 
         if ($request->hasFile('media')) {
             // TODO: Do some validation here you absolute buffoon.
-            foreach($request->file('media') as $media) {
+            foreach ($request->file('media') as $media) {
                 $upload = $this->uploadService->uploadImage($media);
                 $post->media()->create([
                     'path' => $upload['publicId'],

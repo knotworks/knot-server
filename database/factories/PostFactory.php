@@ -8,6 +8,6 @@ use Knot\Models\Post;
 $factory->define(Post::class, function (Faker $faker) {
     return [
         'user_id' => factory(\Knot\Models\User::class),
-        'body' => $faker->sentence()
+        'body' => $faker->sentence(),
     ];
 });

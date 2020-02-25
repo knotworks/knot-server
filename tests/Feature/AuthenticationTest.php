@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Knot\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Knot\Models\User;
+use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
