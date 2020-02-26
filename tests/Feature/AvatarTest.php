@@ -35,7 +35,6 @@ class AvatarTest extends TestCase
         Cloudder::shouldHaveReceived('upload')->with(Mockery::type('string'), Mockery::type('string'))->once();
         Cloudder::shouldHaveReceived('getPublicId')->once();
 
-
         $this->assertEquals($imagePath, auth()->user()->profile_image);
     }
 
