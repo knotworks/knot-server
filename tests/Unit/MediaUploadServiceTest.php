@@ -2,11 +2,9 @@
 
 namespace Tests\Unit;
 
-use Knot\Services\MediaUploadService;
 use Illuminate\Http\UploadedFile;
 use JD\Cloudder\Facades\Cloudder;
-use Mockery;
-use Intervention\Image\Facades\Image as Image;
+use Knot\Services\MediaUploadService;
 use Tests\TestCase;
 
 class MediaUploadServiceTest extends TestCase
