@@ -21,7 +21,7 @@ class AuthenticationTest extends TestCase
             'password_confirmation' => 'foobar',
         ];
 
-        $this->postJson('api/auth/user/register', $userData)->assertStatus(201);
+        $this->postJson('api/auth/register', $userData)->assertStatus(201);
         $this->assertCount(1, User::all());
     }
 

@@ -16,7 +16,7 @@ class NotificationsTest extends TestCase
     {
         parent::setup();
 
-        $this->post = create('Knot\Models\TextPost')->post;
+        $this->post = create('Knot\Models\Post');
         $this->authenticate();
     }
 

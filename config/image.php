@@ -15,10 +15,8 @@ return [
     |
  */
 
-    'driver' => 'gd',
+    'driver' => 'imagick',
     'upload_quality' => 100,
-    'max_size' => 40000,
-    'max_width' => 2400,
-    'max_height' => 3200,
+    'max_size' => 10000,
 
 ];

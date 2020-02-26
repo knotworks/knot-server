@@ -39,7 +39,7 @@ class ProfileController extends Controller
 
         // Move it to the public folder
         $name = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $path = 'images/tmp/avatars/'.$name.'.jpg';
+        $path = 'uploads/avatars/'.$name.'.jpg';
 
         $image = Image::make($file)->encode('jpg', 80);
 
@@ -47,16 +47,18 @@ class ProfileController extends Controller
             $constraint->upsize();
         });
 
-        $image->save(public_path($path));
+        $publicPath = public_path($path);
 
-        Cloudder::upload(public_path($path), 'avatars/'.$name);
+        $image->save($publicPath);
+
+        $publicId = Cloudder::upload($publicPath, config('app.env').'avatars/'.$name)->getPublicId();
 
         // Destroy the image instance
         $image->destroy();
 
-        auth()->user()->update(['profile_image' => Cloudder::getPublicId()]);
+        auth()->user()->update(['profile_image' => $publicId]);
 
-        unlink(public_path($path));
+        unlink($publicPath);
 
         return auth()->user();
     }

@@ -2,28 +2,23 @@
 
 namespace Knot\Services;
 
-use Image;
 use JD\Cloudder\Facades\Cloudder;
+use Image;
 
 class MediaUploadService
 {
     protected $image;
     protected $name;
 
-    protected function processImage($file): string
+    public function processImage($file): string
     {
         $path = 'uploads/media/images/'.$this->name.'.jpg';
-
-        $this->image = Image::make($file)->encode('jpg', config('image.upload_quality'));
-
-        $this->image->resize(config('image.max_width'), config('image.max_height'), function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-
         $publicPath = public_path($path);
 
-        $this->image->save($publicPath);
+        $this->image = Image::make($file)
+            ->encode('jpg', config('image.upload_quality'))
+            ->orientate()
+            ->save($publicPath);
 
         return $publicPath;
     }
@@ -42,6 +37,7 @@ class MediaUploadService
 
         // Destroy the image instance
         $this->image->destroy();
+        unlink($publicPath);
 
         return [
             'publicId' => $publicId,
