@@ -20,7 +20,7 @@ jobs:
           key: dependencies-php-7.4-composer-${{ hashFiles('composer.json') }}
 
       - name: Install Imagick
-        run: pecl install imagick && echo 'extension=imagick.so' >> /usr/local/etc/php/php.ini
+        run: sudo apt-get update && sudo apt-get install -y php-imagick && echo 'extension=imagick.so' >> /usr/local/etc/php/php.ini
 
       - name: Fix Imagick Policy
         run: sudo sed -i 's/none/read|write/g' /etc/ImageMagick-6/policy.xml
