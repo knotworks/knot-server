@@ -51,7 +51,7 @@ class ProfileController extends Controller
 
         $image->save($publicPath);
 
-        $publicId = Cloudder::upload($publicPath, config('app.env').'avatars/'.$name)->getPublicId();
+        $publicId = Cloudder::upload($publicPath, config('app.env').'avatars/'.$name, ['angle' => 0])->getPublicId();
 
         // Destroy the image instance
         $image->destroy();

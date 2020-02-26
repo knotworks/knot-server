@@ -29,7 +29,7 @@ class MediaUploadService
 
         $publicPath = $this->processImage($file);
 
-        $publicId = Cloudder::upload($publicPath, config('app.env').'/media/images/'.$this->name)
+        $publicId = Cloudder::upload($publicPath, config('app.env').'/media/images/'.$this->name, ['angle' => 0])
             ->getPublicId();
 
         $imageWidth = $this->image->width();
