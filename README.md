@@ -1,6 +1,6 @@
 # Knot Server
 
-[![Build Status](https://travis-ci.org/knotworks/knot-server.svg?branch=master)](https://travis-ci.org/knotworks/knot-server)
+![](https://github.com/knotworks/knot-server/workflows/run-tests/badge.svg?branch=v2)
 
 A decentralized server to build private social networks from.
 
@@ -14,13 +14,11 @@ Thanks for checking out Knot!
 
 ### Token-based OAuth authentication
 
-Knot's authentication system is powered by [Laravel Airlock](https://github.com/laravel/airlock). Users sign in with a simple email and password, and the server will send back an authentication token to use for all subsequent requests.
+Knot's authentication system is powered by JWT. Users sign in with a simple email and password, and the server will send back an authentication token to use for all subsequent requests.
 
-### Multiple post types
+### Posts with multi-image support
 
-- Photo posts
-- Text posts
-- Location posts (coming soon...)
+Create a post and attach up to 5 images
 
 ### Post meta attachments
 
