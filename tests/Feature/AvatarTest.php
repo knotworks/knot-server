@@ -22,8 +22,8 @@ class AvatarTest extends TestCase
     /** @test */
     public function a_user_can_update_their_avatar()
     {
-        Cloudder::spy();
-        Cloudder::shouldReceive('upload')->andReturn(Mockery::self());
+        Cloudder::partialMock();
+        Cloudder::shouldReceive('upload->getPublicId')->andReturn(Mockery::self());
         Cloudder::shouldReceive('getPublicId')->andReturn('avatars/12345');
 
         $fakeFile = UploadedFile::fake()->image('avatar.jpg', 700, 700);
@@ -31,9 +31,6 @@ class AvatarTest extends TestCase
             'avatar' => $fakeFile,
         ]);
         $imagePath = $response->getOriginalContent()->profile_image;
-
-        Cloudder::shouldHaveReceived('upload')->with(Mockery::type('string'), Mockery::type('string'))->once();
-        Cloudder::shouldHaveReceived('getPublicId')->once();
 
         $this->assertEquals($imagePath, auth()->user()->profile_image);
     }
