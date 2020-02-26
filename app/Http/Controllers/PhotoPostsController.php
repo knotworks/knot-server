@@ -2,14 +2,14 @@
 
 namespace Knot\Http\Controllers;
 
-use Image;
-use Notification;
-use Knot\Models\PhotoPost;
 use Illuminate\Http\Request;
-use Knot\Traits\AddsLocation;
+use Image;
 use JD\Cloudder\Facades\Cloudder;
+use Knot\Models\PhotoPost;
 use Knot\Notifications\AddedPost;
 use Knot\Traits\AddsAccompaniments;
+use Knot\Traits\AddsLocation;
+use Notification;
 
 class PhotoPostsController extends Controller
 {

@@ -2,8 +2,8 @@
 
 namespace Knot\Policies;
 
-use Knot\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Knot\Models\User;
 
 class ViewProfilePolicy
 {

@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Laravel\Airlock\Airlock;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\Airlock\Airlock;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -24,5 +24,4 @@ abstract class TestCase extends BaseTestCase
 
         return $this;
     }
-
 }
