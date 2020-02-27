@@ -16,9 +16,8 @@ class MediaUploadService
         $publicPath = public_path($path);
 
         $this->image = Image::make($file)
-            ->encode('jpg', config('image.upload_quality'))
             ->orientate()
-            ->save($publicPath);
+            ->save($publicPath, 100);
 
         return $publicPath;
     }
