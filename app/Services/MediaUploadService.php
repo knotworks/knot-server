@@ -17,7 +17,11 @@ class MediaUploadService
 
         $this->image = Image::make($file)
             ->orientate()
-            ->save($publicPath, 100);
+            ->resize(config('image.max_width'), config('image.max_height'), function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
+            ->save($publicPath, config('image.upload_quality'));
 
         return $publicPath;
     }

@@ -35,8 +35,13 @@ class PostsController extends Controller
             $this->setAccompaniments($request, $post);
         }
 
+        $request->validate([
+            'body' => 'string|nullable',
+            'media' => 'array|min:0|max:5',
+            'media.*' => 'max:'.config('image.max_size').'|mimes:jpeg,bmp,png,mp4',
+        ]);
+
         if ($request->hasFile('media')) {
-            // TODO: Do some validation here you absolute buffoon.
             foreach ($request->file('media') as $media) {
                 $upload = $this->uploadService->uploadImage($media);
                 $post->media()->create([
