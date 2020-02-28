@@ -45,7 +45,7 @@ class PostsController extends Controller
             foreach ($request->file('media') as $media) {
                 $type = $media->clientExtension() == 'mp4' ? 'video' : 'image';
 
-                if($type == 'video') {
+                if ($type == 'video') {
                     $upload = $this->uploadService->uploadVideo($media);
                 } else {
                     $upload = $this->uploadService->uploadImage($media);
