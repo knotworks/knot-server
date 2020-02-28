@@ -43,12 +43,19 @@ class PostsController extends Controller
 
         if ($request->hasFile('media')) {
             foreach ($request->file('media') as $media) {
-                $upload = $this->uploadService->uploadImage($media);
+                $type = $media->clientExtension() == 'mp4' ? 'video' : 'image';
+
+                if($type == 'video') {
+                    $upload = $this->uploadService->uploadVideo($media);
+                } else {
+                    $upload = $this->uploadService->uploadImage($media);
+                }
+
                 $post->media()->create([
                     'path' => $upload['publicId'],
                     'width' => $upload['width'],
                     'height' => $upload['height'],
-                    'type' => 'image',
+                    'type' => $type,
                 ]);
             }
         }

@@ -19,6 +19,6 @@ return [
     'upload_quality' => 100,
     'max_width' => 2400,
     'max_height' => 3200,
-    'max_size' => 50000,
+    'max_size' => 40000,
 
 ];

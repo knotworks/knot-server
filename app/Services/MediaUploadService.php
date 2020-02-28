@@ -48,4 +48,24 @@ class MediaUploadService
             'height' => $imageHeight,
         ];
     }
-}
+
+    public function uploadVideo($file)
+    {
+        $this->name = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $path = 'uploads/media/videos/';
+        $publicPath = public_path($path);
+        $file->move($publicPath, $this->name.'.mp4');
+
+        $filePath = $publicPath.''.$this->name.'.mp4';
+        $upload = Cloudder::uploadVideo($filePath, config('app.env').'/media/videos/'.$this->name, ['start_offset' => 0, 'end_offset' => 30]);
+        $result = $upload->getResult();
+        $publicId = $result['public_id'];
+        unlink($filePath);
+
+        return [
+            'publicId' => $publicId,
+            'width' => $result['width'],
+            'height' => $result['height'],
+        ];
+    }
+ }
