@@ -50,4 +50,4 @@ class MediaUploadService
             'height' => $result['height'],
         ];
     }
- }
+}
