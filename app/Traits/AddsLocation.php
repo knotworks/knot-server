@@ -22,6 +22,7 @@ trait AddsLocation
 
         if ($validator->fails()) {
             $model->delete();
+
             return response($validator->errors(), 422);
         }
 
