@@ -7,7 +7,8 @@ use JD\Cloudder\Facades\Cloudder;
 
 class MediaUploadService
 {
-    protected function setFileName($file): string {
+    protected function setFileName($file): string
+    {
         return strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
     }
 
@@ -56,7 +57,6 @@ class MediaUploadService
         } finally {
             unlink($filePath);
         }
-
 
         return [
             'publicId' => $result['public_id'],

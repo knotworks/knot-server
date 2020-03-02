@@ -3,8 +3,8 @@
 namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Knot\Models\Post;
 use Knot\Notifications\AddedPost;
 use Knot\Services\MediaUploadService;
@@ -28,9 +28,9 @@ class PostsController extends Controller
     {
         $request->validate([
             'body' => [
-                Rule::requiredIf(!$request->hasFile('media')),
+                Rule::requiredIf(! $request->hasFile('media')),
                 'nullable',
-                'string'
+                'string',
             ],
         ]);
 
@@ -46,6 +46,7 @@ class PostsController extends Controller
 
             if ($validator->fails()) {
                 $post->delete();
+
                 return response($validator->errors(), 422);
             }
 

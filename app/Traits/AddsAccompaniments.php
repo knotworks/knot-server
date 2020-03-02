@@ -3,8 +3,8 @@
 namespace Knot\Traits;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 trait AddsAccompaniments
 {
@@ -23,11 +23,12 @@ trait AddsAccompaniments
 
         if ($validator->fails()) {
             $model->delete();
+
             return response($validator->errors(), 422);
         }
 
         $model->addAccompaniments(collect($request->accompaniments)->map(function ($accompaniment) {
-            return ['user_id' => (int)$accompaniment['id']];
+            return ['user_id' => (int) $accompaniment['id']];
         }));
     }
 }
