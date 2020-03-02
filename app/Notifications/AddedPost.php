@@ -46,7 +46,7 @@ class AddedPost extends Notification
     public function toArray($notifiable)
     {
         return [
-            'post' => $this->post->load('user', 'postable'),
+            'post' => $this->post->load('user'),
         ];
     }
 

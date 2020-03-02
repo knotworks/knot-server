@@ -17,7 +17,6 @@ class CreateAccompanimentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('post_id')->index();
             $table->unsignedInteger('user_id')->nullable()->index();
-            $table->string('name');
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')

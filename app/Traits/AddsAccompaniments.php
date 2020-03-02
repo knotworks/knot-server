@@ -4,14 +4,15 @@ namespace Knot\Traits;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 trait AddsAccompaniments
 {
     protected function setAccompaniments(Request $request, $model)
     {
-        $this->validate($request, [
-            'accompaniments.*.name' => 'required|string',
-            'accompaniments.*.user_id' => [
+        $validator = Validator::make($request->all(), [
+            'accompaniments' => 'present|array|min:0',
+            'accompaniments.*.id' => [
                 'nullable',
                 'numeric',
                 'distinct',
@@ -20,6 +21,13 @@ trait AddsAccompaniments
             ],
         ]);
 
-        $model->addAccompaniments($request->accompaniments);
+        if ($validator->fails()) {
+            $model->delete();
+            return response($validator->errors(), 422);
+        }
+
+        $model->addAccompaniments(collect($request->accompaniments)->map(function ($accompaniment) {
+            return ['user_id' => (int)$accompaniment['id']];
+        }));
     }
 }

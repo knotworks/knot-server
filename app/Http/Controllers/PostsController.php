@@ -3,6 +3,8 @@
 namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use Knot\Models\Post;
 use Knot\Notifications\AddedPost;
 use Knot\Services\MediaUploadService;
@@ -24,24 +26,29 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'body' => [
+                Rule::requiredIf(!$request->hasFile('media')),
+                'nullable',
+                'string'
+            ],
+        ]);
+
         $post = auth()->user()->posts()->create([
             'body' => $request->input('body'),
         ]);
 
-        if ($request->filled('location')) {
-            $this->setLocation($request, $post);
-        }
-        if ($request->filled('accompaniments')) {
-            $this->setAccompaniments($request, $post);
-        }
-
-        $request->validate([
-            'body' => 'string|nullable',
-            'media' => 'array|min:0|max:5',
-            'media.*' => 'max:'.config('image.max_size').'|mimes:jpeg,bmp,png,mp4',
-        ]);
-
         if ($request->hasFile('media')) {
+            $validator = Validator::make($request->all(), [
+                'media' => 'present|array|min:0|max:5',
+                'media.*' => 'max:'.config('image.max_size').'|mimes:jpeg,png,mp4',
+            ]);
+
+            if ($validator->fails()) {
+                $post->delete();
+                return response($validator->errors(), 422);
+            }
+
             foreach ($request->file('media') as $media) {
                 $type = $media->clientExtension() == 'mp4' ? 'video' : 'image';
 
@@ -60,7 +67,15 @@ class PostsController extends Controller
             }
         }
 
+        if ($request->filled('location')) {
+            $this->setLocation($request, $post);
+        }
+        if ($request->filled('accompaniments')) {
+            $this->setAccompaniments($request, $post);
+        }
+
         $friendsToNotify = auth()->user()->getFriends();
+
         if (count($friendsToNotify->all())) {
             Notification::send($friendsToNotify, new AddedPost($post));
         }

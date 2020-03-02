@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Accompaniment extends Model
 {
-    protected $fillable = ['user_id', 'post_id', 'name'];
+    protected $fillable = ['user_id', 'post_id'];
 
     /**
      * Fetch the associated post for the accompaniment.

@@ -19,6 +19,7 @@ class Post extends Model
             $model->accompaniments->each->delete();
             $model->reactions->each->delete();
             $model->comments->each->delete();
+
         });
     }
 
