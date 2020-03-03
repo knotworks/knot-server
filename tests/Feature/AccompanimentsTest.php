@@ -30,8 +30,8 @@ class AccompanimentsTest extends TestCase
         ->assertStatus(201)
         ->assertJson([
             'body' => $postContent['body'],
-            'accompaniments' => $users->map(function($user) {
-                return ['user_id' => "".$user['id']];
+            'accompaniments' => $users->map(function ($user) {
+                return ['user_id' => ''.$user['id']];
             })->toArray(),
         ]);
     }
