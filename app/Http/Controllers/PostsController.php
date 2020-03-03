@@ -69,10 +69,16 @@ class PostsController extends Controller
         }
 
         if ($request->filled('location')) {
-            $this->setLocation($request, $post);
+            $location = $this->setLocation($request, $post);
+            if ($location instanceof \Illuminate\Http\Response) {
+                return response($location->getOriginalContent(), 422);
+            }
         }
         if ($request->filled('accompaniments')) {
-            $this->setAccompaniments($request, $post);
+            $accompaniments = $this->setAccompaniments($request, $post);
+            if ($accompaniments instanceof \Illuminate\Http\Response) {
+                return response($accompaniments->getOriginalContent(), 422);
+            }
         }
 
         $friendsToNotify = auth()->user()->getFriends();

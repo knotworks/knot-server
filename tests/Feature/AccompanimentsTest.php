@@ -19,61 +19,32 @@ class AccompanimentsTest extends TestCase
     /** @test */
     public function a_user_can_include_accompaniments_with_a_post()
     {
-        $this->withoutExceptionHandling();
+        $users = create('Knot\Models\User', [], 3);
 
-        $user = create('Knot\Models\User');
         $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            'accompaniments' => [
-                ['user_id' => null, 'name' => 'Jane Doe'],
-                ['user_id' => $user->id, 'name' => $user->full_name],
-            ],
+            'accompaniments' => $users->map->id,
         ];
+
         $this->postJson('api/posts', $postContent)
-            ->assertStatus(201)
-            ->assertJson([
-                'body' => $postContent['body'],
-                'accompaniments' => $postContent['accompaniments'],
-            ]);
-    }
-
-    /** @test */
-    public function all_accompaniments_require_a_name()
-    {
-        $postContent = [
-            'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            'accompaniments' => [
-                ['user_id' => null, 'name' => ''],
-            ],
-        ];
-        $response = $this->postJson('api/posts', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.name', $response->getOriginalContent()['errors']));
-    }
-
-    /** @test */
-    public function all_accompaniments_names_should_be_strings()
-    {
-        $postContent = [
-            'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            'accompaniments' => [
-                ['user_id' => null, 'name' => 13],
-            ],
-        ];
-        $response = $this->postJson('api/posts', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.name', $response->getOriginalContent()['errors']));
+        ->assertStatus(201)
+        ->assertJson([
+            'body' => $postContent['body'],
+            'accompaniments' => $users->map(function($user) {
+                return ['user_id' => "".$user['id']];
+            })->toArray(),
+        ]);
     }
 
     /** @test */
     public function accompaniments_ids_must_be_numeric()
     {
+        $users = create('Knot\Models\User', [], 3);
         $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-            'accompaniments' => [
-                ['user_id' => 'butts', 'name' => 'Jane Doe'],
-            ],
+            'accompaniments' => ['nope', 'noooo'],
         ];
-        $response = $this->postJson('api/posts', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()['errors']));
+        $this->postJson('api/posts', $postContent)->assertStatus(422);
     }
 
     /** @test */
@@ -82,25 +53,24 @@ class AccompanimentsTest extends TestCase
         $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
-                ['user_id' => 1, 'name' => 'Jane Doe'],
-                ['user_id' => 1, 'name' => 'John Doe'],
+                ['user_id' => 1],
+                ['user_id' => 1],
             ],
         ];
-        $response = $this->postJson('api/posts', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()['errors']));
+        $this->postJson('api/posts', $postContent)->assertStatus(422);
     }
 
     /** @test */
     public function accompaniments_ids_must_match_a_user_in_the_database()
     {
+        $users = create('Knot\Models\User', [], 1);
         $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
-                ['user_id' => 7, 'name' => 'Jane Doe'],
+                ['user_id' => 7],
             ],
         ];
-        $response = $this->postJson('api/posts', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()['errors']));
+        $this->postJson('api/posts', $postContent)->assertStatus(422);
     }
 
     /** @test */
@@ -109,10 +79,9 @@ class AccompanimentsTest extends TestCase
         $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'accompaniments' => [
-                ['user_id' => auth()->id(), 'name' => 'Jane Doe'],
+                ['user_id' => auth()->id()],
             ],
         ];
-        $response = $this->postJson('api/posts', $postContent)->assertStatus(422);
-        $this->assertTrue(array_key_exists('accompaniments.0.user_id', $response->getOriginalContent()['errors']));
+        $this->postJson('api/posts', $postContent)->assertStatus(422);
     }
 }
