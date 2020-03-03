@@ -26,7 +26,7 @@ trait AddsAccompaniments
         }
 
         $model->addAccompaniments(collect($request->accompaniments)->map(function ($user_id) {
-            return ["user_id" => (int) $user_id];
+            return ['user_id' => (int) $user_id];
         }));
     }
 }
