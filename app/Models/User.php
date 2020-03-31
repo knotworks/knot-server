@@ -2,10 +2,10 @@
 
 namespace Knot\Models;
 
-use Laravel\Airlock\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Knot\Traits\KnotFriendable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Airlock\HasApiTokens;
 
 class User extends Authenticatable
 {

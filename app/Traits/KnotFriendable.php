@@ -1,8 +1,8 @@
 <?php
+
 namespace Knot\Traits;
 
 use Hootlex\Friendships\Models\Friendship;
-use Hootlex\Friendships\Models\FriendFriendshipGroups;
 use Hootlex\Friendships\Status;
 use Hootlex\Friendships\Traits\Friendable;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +18,7 @@ trait KnotFriendable
      */
     public function befriend(Model $recipient)
     {
-        if (!$this->canBefriend($recipient)) {
+        if (! $this->canBefriend($recipient)) {
             return false;
         }
 
@@ -84,7 +84,7 @@ trait KnotFriendable
     {
         // if there is a friendship between the two users and the sender is not blocked
         // by the recipient user then delete the friendship
-        if (!$this->isBlockedBy($recipient)) {
+        if (! $this->isBlockedBy($recipient)) {
             $this->findFriendship($recipient)->delete();
         }
 

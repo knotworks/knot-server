@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Knot\Notifications\PostReactedTo;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Knot\Notifications\PostReactedTo;
+use Tests\TestCase;
 
 class ReactionsTest extends TestCase
 {

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Knot\Notifications\AddedAsFriend;
-use Illuminate\Support\Facades\Notification;
-use Knot\Notifications\FriendRequestAccepted;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Knot\Notifications\AddedAsFriend;
+use Knot\Notifications\FriendRequestAccepted;
+use Tests\TestCase;
 
 class FriendshipsTest extends TestCase
 {

@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Knot\Models\Accompaniment;
 use Knot\Models\Location;
 use Knot\Models\Reaction;
-use Knot\Models\Accompaniment;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class PostTest extends TestCase
 {
@@ -35,15 +35,15 @@ class PostTest extends TestCase
     public function a_post_can_add_accompaniments()
     {
         $this->post->addAccompaniments([
-      [
-        'user_id' => 2,
-        'name' => 'Jane Doe',
-      ],
-      [
-        'user_id' => null,
-        'name' => 'Someone Else',
-      ],
-    ]);
+            [
+                'user_id' => 2,
+                'name' => 'Jane Doe',
+            ],
+            [
+                'user_id' => null,
+                'name' => 'Someone Else',
+            ],
+        ]);
 
         $this->assertCount(2, $this->post->accompaniments);
     }
@@ -66,9 +66,9 @@ class PostTest extends TestCase
         $this->assertCount(1, $this->post->reactions);
 
         $this->assertDatabaseHas('reactions', [
-          'type' => $reaction['type'],
-          'user_id' => $reaction['user_id'],
-          'post_id' => $this->post->id,
+            'type' => $reaction['type'],
+            'user_id' => $reaction['user_id'],
+            'post_id' => $this->post->id,
         ]);
     }
 
@@ -77,21 +77,21 @@ class PostTest extends TestCase
     {
         // Attach various relations to the post
         $location = make('Knot\Models\Location', [
-          'user_id' => auth()->id(),
-          'locatable_id' => $this->post->id,
-          'locatable_type' => get_class($this->post),
+            'user_id' => auth()->id(),
+            'locatable_id' => $this->post->id,
+            'locatable_type' => get_class($this->post),
         ])->toArray();
 
         $this->post->addAccompaniments([
-      [
-        'user_id' => 2,
-        'name' => 'Jeff Henderson',
-      ],
-    ]);
+            [
+                'user_id' => 2,
+                'name' => 'Jeff Henderson',
+            ],
+        ]);
 
         $this->post->addReaction([
-          'user_id' => 2,
-          'type' => Reaction::REACTIONS['smile'],
+            'user_id' => 2,
+            'type' => Reaction::REACTIONS['smile'],
         ]);
 
         $this->post->addLocation($location);

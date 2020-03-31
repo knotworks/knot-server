@@ -2,10 +2,10 @@
 
 namespace Knot\Http\Controllers;
 
-use Knot\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Knot\Models\User;
 
 class AuthController extends Controller
 {
@@ -21,7 +21,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'device_name' => 'required'
+            'device_name' => 'required',
         ]);
 
         $user = User::where('email', $request->email)->first();
