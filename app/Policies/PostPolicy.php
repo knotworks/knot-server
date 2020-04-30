@@ -2,9 +2,9 @@
 
 namespace Knot\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Knot\Models\Post;
 use Knot\Models\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
 {

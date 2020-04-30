@@ -91,11 +91,11 @@ class InstallCommand extends Command
     protected function requestDatabaseCredentials()
     {
         return [
-      'DB_DATABASE' => $this->ask('Database name', 'knot'),
-      'DB_PORT' => $this->ask('Database port', 3306),
-      'DB_USERNAME' => $this->ask('Database user', 'homestead'),
-      'DB_PASSWORD' => $this->askHiddenWithDefault('Database password (leave blank for no password)'),
-    ];
+            'DB_DATABASE' => $this->ask('Database name', 'knot'),
+            'DB_PORT' => $this->ask('Database port', 3306),
+            'DB_USERNAME' => $this->ask('Database user', 'homestead'),
+            'DB_PASSWORD' => $this->askHiddenWithDefault('Database password (leave blank for no password)'),
+        ];
     }
 
     /**
