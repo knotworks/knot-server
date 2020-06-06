@@ -2,9 +2,9 @@
 
 namespace Knot\Policies;
 
-use Knot\Models\User;
-use Knot\Models\Comment;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Knot\Models\Comment;
+use Knot\Models\User;
 
 class CommentPolicy
 {

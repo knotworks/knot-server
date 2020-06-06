@@ -2,10 +2,10 @@
 
 namespace Knot\Console\Commands;
 
-use Knot\Models\PhotoPost;
 use Illuminate\Console\Command;
-use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\Storage;
+use JD\Cloudder\Facades\Cloudder;
+use Knot\Models\PhotoPost;
 
 class MigrateS3ToCloudinaryCommand extends Command
 {

@@ -2,8 +2,8 @@
 
 namespace Knot\Notifications;
 
-use Knot\Models\Comment;
 use Illuminate\Notifications\Notification;
+use Knot\Models\Comment;
 
 class CommentRepliedTo extends Notification
 {

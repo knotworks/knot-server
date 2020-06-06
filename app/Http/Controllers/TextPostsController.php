@@ -2,12 +2,12 @@
 
 namespace Knot\Http\Controllers;
 
-use Notification;
-use Knot\Models\TextPost;
 use Illuminate\Http\Request;
-use Knot\Traits\AddsLocation;
+use Knot\Models\TextPost;
 use Knot\Notifications\AddedPost;
 use Knot\Traits\AddsAccompaniments;
+use Knot\Traits\AddsLocation;
+use Notification;
 
 class TextPostsController extends Controller
 {

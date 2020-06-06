@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Knot\Models\TextPost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Knot\Models\TextPost;
+use Tests\TestCase;
 
 class PostsTest extends TestCase
 {
