@@ -53,7 +53,10 @@ class CommentsController extends Controller
         ]);
 
         if ($request->filled('location')) {
-            $this->setLocation($request, $comment);
+            $location = $this->setLocation($request, $comment);
+            if ($location instanceof \Illuminate\Http\Response) {
+                return response($location->getOriginalContent(), 422);
+            }
         }
 
         $comment->load('user', 'location');
@@ -62,9 +65,9 @@ class CommentsController extends Controller
             $post->user->notify(new PostCommentedOn($comment));
         }
 
-        $replyNotificationUsers = $post->comments->map(function ($item, $key) {
+        $replyNotificationUsers = $post->comments->map(function ($item) {
             return $item->user;
-        })->reject(function ($user, $key) use ($post) {
+        })->reject(function ($user) use ($post) {
             return $user->id == $post->user->id || $user->id == auth()->id();
         });
         if (count($replyNotificationUsers)) {

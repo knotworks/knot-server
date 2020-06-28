@@ -41,9 +41,9 @@ class ProfileController extends Controller
         $name = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $path = 'uploads/avatars/'.$name.'.jpg';
 
-        $image = Image::make($file)->encode('jpg', 80);
+        $image = Image::make($file)->encode('jpg', 90);
 
-        $image->fit(600, 600, function ($constraint) {
+        $image->fit(300, 300, function ($constraint) {
             $constraint->upsize();
         });
 

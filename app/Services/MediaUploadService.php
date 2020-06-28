@@ -50,7 +50,7 @@ class MediaUploadService
 
         $filePath = $publicPath.$name.'.mp4';
         try {
-            $upload = Cloudder::uploadVideo($filePath, config('app.env').'/media/videos/'.$name, ['start_offset' => 0, 'end_offset' => 30, 'quality' => 85, 'timeout' => 90]);
+            $upload = Cloudder::uploadVideo($filePath, config('app.env').'/media/videos/'.$name, ['start_offset' => 0, 'end_offset' => 30, 'quality' => 85, 'timeout' => 120]);
             $result = $upload->getResult();
         } catch (Exception $e) {
             throw $e;
