@@ -41,7 +41,7 @@ class PostsController extends Controller
         if ($request->hasFile('media')) {
             $validator = Validator::make($request->all(), [
                 'media' => 'present|array|min:0|max:5',
-                'media.*' => 'max:'.config('image.max_size').'|mimes:jpeg,png,mp4',
+                'media.*' => 'max:'.config('image.max_size').'|mimes:jpeg,png,mp4,qt',
             ]);
 
             if ($validator->fails()) {
@@ -51,7 +51,7 @@ class PostsController extends Controller
             }
 
             foreach ($request->file('media') as $media) {
-                $type = $media->clientExtension() == 'mp4' ? 'video' : 'image';
+                $type = $media->clientExtension() == 'mp4' || $media->clientExtension() == 'qt' ? 'video' : 'image';
 
                 if ($type == 'video') {
                     $upload = $this->uploadService->uploadVideo($media);

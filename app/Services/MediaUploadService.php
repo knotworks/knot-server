@@ -45,10 +45,11 @@ class MediaUploadService
     public function uploadVideo($file)
     {
         $name = $this->setFileName($file);
+        $extension = $file->extension();
         $publicPath = public_path('uploads/media/videos/');
-        $file->move($publicPath, $name.'.mp4');
+        $file->move($publicPath, $name.'.'.$extension);
 
-        $filePath = $publicPath.$name.'.mp4';
+        $filePath = $publicPath.$name.'.'.$extension;
         try {
             $upload = Cloudder::uploadVideo($filePath, config('app.env').'/media/videos/'.$name, ['start_offset' => 0, 'end_offset' => 30, 'quality' => 85, 'timeout' => 120]);
             $result = $upload->getResult();
