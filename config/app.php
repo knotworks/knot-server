@@ -16,6 +16,8 @@ return [
 
     'posts_per_page' => 10,
 
+    'disable_new_signups' => env('DISABLE_NEW_SIGNUPS', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

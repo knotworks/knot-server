@@ -45,6 +45,10 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        if (config('app.disable_new_signups')) {
+            return response('Signups have been disabled.', 401);
+        }
+
         $this->validate($request, [
             'first_name' => 'required',
             'email' => 'required|email|unique:users',
@@ -52,6 +56,7 @@ class AuthController extends Controller
         ]);
 
         return User::create($request->all());
+
     }
 
     public function logout()
