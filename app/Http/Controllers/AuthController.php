@@ -56,7 +56,6 @@ class AuthController extends Controller
         ]);
 
         return User::create($request->all());
-
     }
 
     public function logout()
