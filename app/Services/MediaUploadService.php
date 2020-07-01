@@ -2,9 +2,9 @@
 
 namespace Knot\Services;
 
+use Illuminate\Support\Facades\Storage;
 use Image;
 use JD\Cloudder\Facades\Cloudder;
-use Illuminate\Support\Facades\Storage;
 
 class MediaUploadService
 {
