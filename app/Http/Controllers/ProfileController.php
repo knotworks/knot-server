@@ -2,10 +2,11 @@
 
 namespace Knot\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Image;
+use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -39,26 +40,26 @@ class ProfileController extends Controller
 
         // Move it to the public folder
         $name = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $path = 'uploads/avatars/'.$name.'.jpg';
+        $nameWithExtension = $name.'.jpg';
 
-        $image = Image::make($file)->encode('jpg', 90);
-
-        $image->fit(300, 300, function ($constraint) {
+        $image = Image::make($file)->fit(300, 300, function ($constraint) {
             $constraint->upsize();
-        });
+        })->encode('jpg', 90);
 
-        $publicPath = public_path($path);
+        Storage::disk('avatars')->put($nameWithExtension, $image);
 
-        $image->save($publicPath);
+        try {
+            $filePath = Storage::disk('avatars')->path($nameWithExtension);
+            $uploadPath = config('app.env').'/avatars/'.$name;
+            $publicId = Cloudder::upload($filePath, $uploadPath, ['angle' => 0])->getPublicId();
 
-        $publicId = Cloudder::upload($publicPath, config('app.env').'avatars/'.$name, ['angle' => 0])->getPublicId();
-
-        // Destroy the image instance
-        $image->destroy();
-
-        auth()->user()->update(['profile_image' => $publicId]);
-
-        unlink($publicPath);
+            auth()->user()->update(['profile_image' => $publicId]);
+        } catch (Exception $e) {
+            throw $e;
+        } finally {
+            $image->destroy();
+            Storage::disk('avatars')->delete($nameWithExtension);
+        }
 
         return auth()->user();
     }

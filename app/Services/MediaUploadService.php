@@ -4,6 +4,7 @@ namespace Knot\Services;
 
 use Image;
 use JD\Cloudder\Facades\Cloudder;
+use Illuminate\Support\Facades\Storage;
 
 class MediaUploadService
 {
@@ -12,19 +13,26 @@ class MediaUploadService
         return strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
     }
 
+    protected function getCloudinaryUploadPath($name): string
+    {
+        return config('app.env').'/media/'.$name;
+    }
+
     public function uploadImage($file)
     {
         $name = $this->setFileName($file);
-        $publicPath = public_path('uploads/media/images/'.$name.'.jpg');
-
+        $nameWithExtension = $name.'.jpg';
         $image = Image::make($file)->resize(config('image.max_width'), config('image.max_height'), function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        })->save($publicPath, config('image.upload_quality'));
+        })->encode('jpg', config('image.upload_quality'));
+
+        Storage::disk('media')->put($nameWithExtension, $image);
 
         try {
-            $uploadPath = config('app.env').'/media/images/'.$name;
-            $publicId = Cloudder::upload($publicPath, $uploadPath)->getPublicId();
+            $filePath = Storage::disk('media')->path($nameWithExtension);
+            $uploadPath = $this->getCloudinaryUploadPath($name);
+            $publicId = Cloudder::upload($filePath, $uploadPath)->getPublicId();
 
             $imageWidth = $image->width();
             $imageHeight = $image->height();
@@ -32,7 +40,7 @@ class MediaUploadService
             throw $e;
         } finally {
             $image->destroy();
-            unlink($publicPath);
+            Storage::disk('media')->delete($nameWithExtension);
         }
 
         return [
@@ -45,18 +53,27 @@ class MediaUploadService
     public function uploadVideo($file)
     {
         $name = $this->setFileName($file);
-        $extension = $file->extension();
-        $publicPath = public_path('uploads/media/videos/');
-        $file->move($publicPath, $name.'.'.$extension);
+        $nameWithExtension = $name.'.mp4';
 
-        $filePath = $publicPath.$name.'.'.$extension;
+        Storage::disk('media')->put($nameWithExtension, file_get_contents($file));
+
         try {
-            $upload = Cloudder::uploadVideo($filePath, config('app.env').'/media/videos/'.$name, ['start_offset' => 0, 'end_offset' => 30, 'quality' => 85, 'timeout' => 120]);
+            $filePath = Storage::disk('media')->path($nameWithExtension);
+            $uploadPath = $this->getCloudinaryUploadPath($name);
+
+            $upload = Cloudder::uploadVideo($filePath, $uploadPath, [
+                'video_codec' => 'auto',
+                'start_offset' => 0,
+                'end_offset' => 30,
+                'quality' => 85,
+                'timeout' => 120,
+            ]);
+
             $result = $upload->getResult();
         } catch (Exception $e) {
             throw $e;
         } finally {
-            unlink($filePath);
+            Storage::disk('media')->delete($nameWithExtension);
         }
 
         return [
