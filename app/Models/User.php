@@ -88,7 +88,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function feed()
     {
-        return Post::with(['location', 'user', 'comments', 'reactions.user', 'accompaniments.user'])
+        return Post::with(['location', 'user', 'comments', 'reactions.user', 'accompaniments.user', 'media'])
             ->latest()
             ->where('user_id', $this->id)
             ->paginate(config('app.posts_per_page'));
