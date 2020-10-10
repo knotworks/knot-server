@@ -2,15 +2,15 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Knot\Models\User;
 use Laravel\Sanctum\Sanctum;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
     }
@@ -18,7 +18,7 @@ abstract class TestCase extends BaseTestCase
     protected function authenticate($user = null)
     {
         $user = $user ?: create(User::class);
-        Sanctum::actingAs($user, ["*"], 'web');
+        Sanctum::actingAs($user, ['*'], 'web');
 
         return $this;
     }
