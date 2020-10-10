@@ -1,14 +1,31 @@
 <?php
+namespace Database\Factories;
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-
-use Faker\Generator as Faker;
+use Knot\Models\User;
+use Knot\Models\Post;
 use Knot\Models\Comment;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Comment::class, function (Faker $faker) {
-    return [
-        'user_id' => factory(\Knot\Models\User::class),
-        'post_id' => factory(\Knot\Models\Post::class),
-        'body' => $faker->sentence,
-    ];
-});
+class CommentFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Comment::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'user_id' => User::factory(),
+            'post_id' => Post::factory(),
+            'body' => $this->faker->sentence,
+        ];
+    }
+}

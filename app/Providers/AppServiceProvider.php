@@ -4,6 +4,7 @@ namespace Knot\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,6 +14,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        Factory::guessFactoryNamesUsing(function ($modelName) {
+            return 'Database\\Factories\\'.class_basename($modelName).'Factory';
+        });
     }
 
     /**

@@ -20,7 +20,6 @@ class PostsController extends Controller
 
     public function __construct(MediaUploadService $uploadService)
     {
-        $this->middleware('auth:api');
         $this->uploadService = $uploadService;
     }
 

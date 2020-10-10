@@ -9,11 +9,6 @@ use Knot\Notifications\FriendRequestAccepted;
 
 class FriendshipsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     /**
      * Return a user's friendship data.
      *

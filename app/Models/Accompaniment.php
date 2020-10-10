@@ -3,9 +3,12 @@
 namespace Knot\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Accompaniment extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['user_id', 'post_id'];
 
     /**

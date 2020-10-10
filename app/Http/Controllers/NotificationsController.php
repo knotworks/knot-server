@@ -6,11 +6,6 @@ use Carbon\Carbon;
 
 class NotificationsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     /**
      * Fetch all notifications for the user.
      *

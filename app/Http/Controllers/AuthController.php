@@ -7,11 +7,6 @@ use Knot\Models\User;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
-
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -19,11 +14,11 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Invalid Credentials'], 401);
         }
 
-        return $token;
+        return response()->json('', 204);
     }
 
     /**

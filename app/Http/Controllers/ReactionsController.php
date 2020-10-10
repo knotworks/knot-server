@@ -10,11 +10,6 @@ use Knot\Notifications\PostReactedTo;
 
 class ReactionsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     /**
      * Add a new reaction to a post.
      *

@@ -11,11 +11,6 @@ use Knot\Models\User;
 
 class ProfileController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     public function show(User $user)
     {
         $this->authorize('can_view_profile', $user);

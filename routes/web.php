@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return 'This is an API, go away >:(';
+    return "This is an API, go away! >:-(";
+});
+
+Route::post('login', 'AuthController@login');
+Route::post('register', 'AuthController@register');
+
+Route::post('logout', function() {
+    auth()->logout();
+
+    return response()->json('', 204);
 });
