@@ -1,11 +1,12 @@
 <?php
+
 namespace Database\Factories;
 
-use Knot\Models\User;
-use Ramsey\Uuid\Uuid;
-use Knot\Notifications\PostCommentedOn;
-use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Notifications\DatabaseNotification;
+use Knot\Models\User;
+use Knot\Notifications\PostCommentedOn;
+use Ramsey\Uuid\Uuid;
 
 class DatabaseNotificationFactory extends Factory
 {
