@@ -1,9 +1,10 @@
 <?php
+
 namespace Database\Factories;
 
-use Knot\Models\Post;
-use Knot\Models\Location;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Knot\Models\Location;
+use Knot\Models\Post;
 
 class LocationFactory extends Factory
 {
