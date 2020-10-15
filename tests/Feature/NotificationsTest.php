@@ -21,7 +21,7 @@ class NotificationsTest extends TestCase
         );
 
         $this->post = create('Knot\Models\Post');
-        $this->authenticate();
+        $this->login();
     }
 
     /** @test */

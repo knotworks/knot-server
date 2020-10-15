@@ -17,7 +17,7 @@ class LocationTest extends TestCase
         parent::setup();
 
         $this->faker = Faker::create();
-        $this->authenticate();
+        $this->login();
     }
 
     /** @test */

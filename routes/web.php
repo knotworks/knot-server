@@ -17,9 +17,4 @@ Route::get('/', function () {
 
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
-
-Route::post('logout', function() {
-    auth()->logout();
-
-    return response()->json('', 204);
-});
+Route::post('logout', 'AuthController@logout');

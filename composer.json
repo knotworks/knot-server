@@ -14,8 +14,6 @@
     "fideloper/proxy": "^4.2",
     "fruitcake/laravel-cors": "^2.0",
     "hootlex/laravel-friendships": "^1.0",
-    "intervention/image": "^2.3",
-    "jrm2k6/cloudder": "^0.6.0",
     "laravel-notification-channels/telegram": "^0.0.5",
     "laravel/framework": "^8.0",
     "laravel/tinker": "^2.0",

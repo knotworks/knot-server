@@ -40,7 +40,7 @@ class CommentsController extends Controller
     {
         $this->authorize('can_view_post', $post);
 
-        $this->validate($request, ['body' => 'required']);
+        $request->validate(['body' => 'required']);
 
         $comment = $post->addComment([
             'user_id' => auth()->id(),
@@ -84,9 +84,9 @@ class CommentsController extends Controller
     {
         $this->authorize('can_modify_or_delete', $comment);
 
-        $this->validate($request, ['body' => 'required']);
+        $body = $request->validate(['body' => 'required']);
 
-        $comment->update($request->only('body'));
+        $comment->update($body);
 
         return $comment;
     }

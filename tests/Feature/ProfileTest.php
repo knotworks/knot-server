@@ -21,7 +21,7 @@ class ProfileTest extends TestCase
         $this->newPassword = 'anewpassword';
         $this->user = create('Knot\Models\User', ['password' => $this->currentPassword]);
 
-        $this->authenticate($this->user);
+        $this->login($this->user);
     }
 
     /** @test */

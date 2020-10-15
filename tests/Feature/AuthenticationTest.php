@@ -28,7 +28,7 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function can_fetch_an_authenticated_user()
     {
-        $this->authenticate();
+        $this->login();
 
         $this->getJson('api/user')->assertStatus(200);
     }

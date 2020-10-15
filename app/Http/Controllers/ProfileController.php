@@ -30,32 +30,9 @@ class ProfileController extends Controller
      */
     public function updateAvatar(Request $request)
     {
-        $this->validate($request, ['avatar' => 'required|image|max:5000']);
+        $avatar = $request->validate(['avatar' => 'required|string']);
 
-        $file = $request->file('avatar');
-
-        // Move it to the public folder
-        $name = strtotime('now').'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $nameWithExtension = $name.'.jpg';
-
-        $image = Image::make($file)->fit(300, 300, function ($constraint) {
-            $constraint->upsize();
-        })->encode('jpg', 90);
-
-        Storage::disk('avatars')->put($nameWithExtension, $image);
-
-        try {
-            $filePath = Storage::disk('avatars')->path($nameWithExtension);
-            $uploadPath = config('app.env').'/avatars/'.$name;
-            $publicId = Cloudder::upload($filePath, $uploadPath, ['angle' => 0])->getPublicId();
-
-            auth()->user()->update(['profile_image' => $publicId]);
-        } catch (Exception $e) {
-            throw $e;
-        } finally {
-            $image->destroy();
-            Storage::disk('avatars')->delete($nameWithExtension);
-        }
+        auth()->user()->update($avatar);
 
         return auth()->user();
     }
@@ -64,18 +41,18 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $this->validate($request, [
+        $request->validate([
             'first_name' => 'required',
             'email' => 'required|email|unique:users',
             'current_password' => 'required_with:password',
             'password' => 'confirmed',
         ]);
 
-        $user->fill($request->only('first_name', 'last_name', 'email'))->save();
+        $user->update($request->only('first_name', 'last_name', 'email'));
 
         if ($request->has('current_password')) {
             if (Hash::check($request->current_password, $user->password)) {
-                $user->fill(['password' => $request->password])->save();
+                $user->update(['password' => $request->password]);
             } else {
                 return response()->json(['error' => 'The provided current password did not match our records.'], 422);
             }

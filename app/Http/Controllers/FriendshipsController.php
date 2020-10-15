@@ -30,6 +30,7 @@ class FriendshipsController extends Controller
     public function addFriend(Request $request, User $recipient)
     {
         auth()->user()->befriend($recipient);
+
         $recipient->notify(new AddedAsFriend(auth()->user()));
 
         return $this->getFriendships();
@@ -46,6 +47,7 @@ class FriendshipsController extends Controller
     public function acceptFriendship(Request $request, User $sender)
     {
         auth()->user()->acceptFriendRequest($sender);
+
         $sender->notify(new FriendRequestAccepted(auth()->user()));
 
         return $this->getFriendships();

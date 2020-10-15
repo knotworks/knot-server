@@ -52,17 +52,16 @@ class AddedPost extends Notification
 
     public function toTelegram($notifiable)
     {
-        $isPhotoPost = $this->post->postable_type == 'Knot\Models\PhotoPost';
-        $author = $this->post->user->first_name;
-        $body = $this->post->postable->body;
-        if ($isPhotoPost) {
-            $photo = $this->post->postable->image_url;
+        $isPhotoPost = $this->post->media()->exists();
+        $postAuthor = $this->post->user->first_name;
+        $postBody = $this->post->body;
+        $messageBody = '*'.$postAuthor."* added a post. \n _".$postBody.'_';
 
-            return TelegramMessage::create()
-                ->content('*'.$author."* added a photo. \n _".$body."_ \n".$photo);
-        } else {
-            return TelegramMessage::create()
-                ->content('*'.$author."* added a post. \n _".$body.'_');
+        if ($isPhotoPost) {
+            $postMedia = $this->post->media->map->path->join("\n");
+            $messageBody = '*'.$postAuthor."* added a photo. \n _".$postBody."_ \n".$postMedia;
         }
+
+        return TelegramMessage::create()->content($messageBody);
     }
 }
