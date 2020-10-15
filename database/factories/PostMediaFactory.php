@@ -1,9 +1,10 @@
 <?php
+
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Knot\Models\Post;
 use Knot\Models\PostMedia;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostMediaFactory extends Factory
 {

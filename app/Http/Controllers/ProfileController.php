@@ -4,9 +4,6 @@ namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Image;
-use JD\Cloudder\Facades\Cloudder;
 use Knot\Models\User;
 
 class ProfileController extends Controller

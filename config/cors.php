@@ -20,7 +20,7 @@ return [
         'login',
         'logout',
         'register',
-        'api/*'
+        'api/*',
     ],
 
     'allowed_methods' => ['*'],

@@ -14,7 +14,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (!auth()->attempt($credentials)) {
+        if (! auth()->attempt($credentials)) {
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }
 

@@ -1,10 +1,11 @@
 <?php
+
 namespace Database\Factories;
 
-use Knot\Models\User;
-use Knot\Models\Post;
-use Knot\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Knot\Models\Comment;
+use Knot\Models\Post;
+use Knot\Models\User;
 
 class CommentFactory extends Factory
 {

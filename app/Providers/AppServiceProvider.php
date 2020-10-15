@@ -2,9 +2,9 @@
 
 namespace Knot\Providers;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AppServiceProvider extends ServiceProvider
 {

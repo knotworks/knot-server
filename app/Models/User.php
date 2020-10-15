@@ -2,11 +2,11 @@
 
 namespace Knot\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Knot\Traits\KnotFriendable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
