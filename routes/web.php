@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return "This is an API, go away! >:-(";
+    return 'This is an API, go away! >:-(';
 });
 
 Route::post('login', 'AuthController@login');

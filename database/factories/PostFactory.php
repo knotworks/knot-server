@@ -1,9 +1,10 @@
 <?php
+
 namespace Database\Factories;
 
-use Knot\Models\User;
-use Knot\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Knot\Models\Post;
+use Knot\Models\User;
 
 class PostFactory extends Factory
 {
