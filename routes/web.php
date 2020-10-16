@@ -15,6 +15,6 @@ Route::get('/', function () {
     return 'This is an API, go away! >:-(';
 });
 
-Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
-Route::post('logout', 'AuthController@logout');
+Route::post('login', 'AuthController@store');
+Route::post('register', 'UserController@store');
+Route::post('logout', 'AuthController@destroy');

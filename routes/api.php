@@ -7,7 +7,7 @@
  */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', 'AuthController@user');
+    Route::get('/user', 'UserController@show');
 
     Route::put('/profile/avatar', 'ProfileController@updateAvatar');
     Route::put('/profile/update', 'ProfileController@updateInfo');

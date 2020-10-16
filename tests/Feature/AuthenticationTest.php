@@ -11,25 +11,27 @@ class AuthenticationTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function can_register_a_new_user()
+    public function a_user_can_login()
     {
-        $userData = [
-            'first_name' => 'Jane',
-            'last_name' => 'Doe',
-            'email' => 'jane@janedoe.com',
-            'password' => 'foobar',
-            'password_confirmation' => 'foobar',
+        $user = create(User::class, ['password' => 'password']);
+        $credentials = [
+            'email' => $user->email,
+            'password' => 'password',
         ];
 
-        $this->postJson('register', $userData)->assertStatus(201);
-        $this->assertCount(1, User::all());
+        $this->postJson('login', $credentials)->assertStatus(204);
+
+        $this->assertTrue(auth()->user()->is($user));
     }
 
     /** @test */
-    public function can_fetch_an_authenticated_user()
+    public function a_user_can_logout()
     {
         $this->login();
 
-        $this->getJson('api/user')->assertStatus(200);
+        $this->postJson('logout')->assertStatus(204);
+
+        $this->assertGuest();
+
     }
 }
