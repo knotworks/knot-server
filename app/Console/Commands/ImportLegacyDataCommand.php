@@ -46,7 +46,7 @@ class ImportLegacyDataCommand extends Command
                 'avatar' => "{$this->env}/{$user->profile_image}",
                 'created_at' => $user->created_at,
                 'updated_at' => $user->updated_at,
-                'telegram_id' => $user->telegram_id,
+                'telegram_user_id' => $user->telegram_user_id,
             ]);
         });
     }
