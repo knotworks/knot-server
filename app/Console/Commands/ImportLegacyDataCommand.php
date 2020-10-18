@@ -153,5 +153,6 @@ class ImportLegacyDataCommand extends Command
         $this->importAccompaniments();
         $this->info("Importing locations...");
         $this->importLocations();
+        $this->info("All done!");
     }
 }
