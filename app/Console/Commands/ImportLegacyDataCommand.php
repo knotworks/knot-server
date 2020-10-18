@@ -67,7 +67,7 @@ class ImportLegacyDataCommand extends Command
         DB::connection('legacy')->table('posts')->get()->each(function ($post) {
             $type = $post->postable_type;
             if ($type === "Knot\Models\TextPost") {
-                $textPost = DB::connection('legacy')->table('text_posts')->find($post->id);
+                $textPost = DB::connection('legacy')->table('text_posts')->find($post->postable_id);
                 DB::table('posts')->insert([
                     'id' => $post->id,
                     'user_id' => $post->user_id,
@@ -76,7 +76,7 @@ class ImportLegacyDataCommand extends Command
                     'updated_at' => $post->updated_at,
                 ]);
             } else {
-                $mediaPost = DB::connection('legacy')->table('photo_posts')->find($post->id);
+                $mediaPost = DB::connection('legacy')->table('photo_posts')->find($post->postable_id);
                 $id = DB::table('posts')->insertGetId([
                     'id' => $post->id,
                     'user_id' => $post->user_id,
