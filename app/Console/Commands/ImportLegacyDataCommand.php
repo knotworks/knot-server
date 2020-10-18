@@ -170,6 +170,5 @@ class ImportLegacyDataCommand extends Command
             $this->importLocations();
             $this->info('All done!');
         });
-
     }
 }

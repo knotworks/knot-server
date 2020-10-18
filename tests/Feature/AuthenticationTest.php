@@ -32,6 +32,5 @@ class AuthenticationTest extends TestCase
         $this->postJson('logout')->assertStatus(204);
 
         $this->assertGuest();
-
     }
 }
