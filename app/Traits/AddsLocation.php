@@ -27,7 +27,6 @@ trait AddsLocation
         }
 
         $model->addLocation([
-            'user_id' => auth()->id(),
             'lat' => $request->input('location.lat'),
             'long' => $request->input('location.long'),
             'name' => $request->input('location.name', null),
