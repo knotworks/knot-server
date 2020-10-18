@@ -144,24 +144,23 @@ class ImportLegacyDataCommand extends Command
      */
     public function handle()
     {
-        $this->info("Beginning data import...");
+        $this->info('Beginning data import...');
         DB::transaction(function () {
-            $this->info("Importing users...");
+            $this->info('Importing users...');
             $this->importUsers();
-            $this->info("Importing friendships...");
+            $this->info('Importing friendships...');
             $this->importFriendships();
-            $this->info("Importing posts...");
+            $this->info('Importing posts...');
             $this->importPosts();
-            $this->info("Importing comments...");
+            $this->info('Importing comments...');
             $this->importComments();
-            $this->info("Importing reactions...");
+            $this->info('Importing reactions...');
             $this->importReactions();
-            $this->info("Importing accompaniments...");
+            $this->info('Importing accompaniments...');
             $this->importAccompaniments();
-            $this->info("Importing locations...");
+            $this->info('Importing locations...');
             $this->importLocations();
-            $this->info("All done!");
+            $this->info('All done!');
         });
-
     }
 }
