@@ -40,7 +40,7 @@ class CommentsController extends Controller
     {
         $this->authorize('can_view_post', $post);
 
-        $this->validate($request, ['body' => 'required']);
+        $request->validate(['body' => 'required']);
 
         $comment = $post->addComment([
             'user_id' => auth()->id(),
@@ -49,8 +49,8 @@ class CommentsController extends Controller
 
         if ($request->filled('location')) {
             $location = $this->setLocation($request, $comment);
-            if ($location instanceof \Illuminate\Http\Response) {
-                return response($location->getOriginalContent(), 422);
+            if ($location instanceof \Illuminate\Validation\Validator) {
+                return response(['errors' => $location->errors()], 422);
             }
         }
 
@@ -84,9 +84,9 @@ class CommentsController extends Controller
     {
         $this->authorize('can_modify_or_delete', $comment);
 
-        $this->validate($request, ['body' => 'required']);
+        $body = $request->validate(['body' => 'required']);
 
-        $comment->update($request->only('body'));
+        $comment->update($body);
 
         return $comment;
     }

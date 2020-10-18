@@ -21,7 +21,7 @@ class ReactionsTest extends TestCase
         Notification::fake();
         $this->user = create('Knot\Models\User');
         $this->post = create('Knot\Models\Post', ['user_id' => $this->user->id]);
-        $this->authenticate();
+        $this->login();
     }
 
     /** @test */

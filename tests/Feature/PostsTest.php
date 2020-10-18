@@ -13,7 +13,7 @@ class PostsTest extends TestCase
     {
         parent::setup();
 
-        $this->authenticate();
+        $this->login();
     }
 
     /** @test */

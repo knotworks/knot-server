@@ -22,7 +22,7 @@ class ReactionsController extends Controller
     {
         $this->authorize('can_view_post', $post);
 
-        $this->validate($request, [
+        $reactionType = $request->validate([
             'type' => [
                 'required',
                 Rule::in(array_values(Reaction::REACTIONS)),
@@ -32,10 +32,7 @@ class ReactionsController extends Controller
         $reaction = Reaction::where('post_id', $post->id)->where('user_id', auth()->id())->first();
 
         if ($reaction) {
-            $reaction->fill([
-                'type' => $request->input('type'),
-            ]);
-            $reaction->save();
+            $reaction->update($reactionType);
         } else {
             $reaction = $post->addReaction([
                 'user_id' => auth()->id(),

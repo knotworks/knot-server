@@ -17,7 +17,7 @@ class LocationTest extends TestCase
         parent::setup();
 
         $this->faker = Faker::create();
-        $this->authenticate();
+        $this->login();
     }
 
     /** @test */
@@ -43,8 +43,6 @@ class LocationTest extends TestCase
     /** @test */
     public function a_location_must_have_a_valid_latitude_and_longitude()
     {
-        $this->withExceptionHandling();
-
         $postContent = [
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'location' => [
@@ -54,6 +52,8 @@ class LocationTest extends TestCase
             ],
         ];
 
-        $this->postJson('api/posts', $postContent)->assertStatus(422);
+        $this->postJson('api/posts', $postContent)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['location.lat', 'location.long']);
     }
 }

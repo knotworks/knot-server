@@ -15,7 +15,7 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
     }
 
-    protected function authenticate($user = null)
+    protected function login($user = null)
     {
         $user = $user ?: create(User::class);
         Sanctum::actingAs($user, ['*'], 'web');

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Knot\Models\Post;
 use Knot\Notifications\AddedPost;
-use Knot\Services\MediaUploadService;
 use Knot\Traits\AddsAccompaniments;
 use Knot\Traits\AddsLocation;
 use Notification;
@@ -16,18 +15,11 @@ class PostsController extends Controller
 {
     use AddsLocation, AddsAccompaniments;
 
-    protected $uploadService;
-
-    public function __construct(MediaUploadService $uploadService)
-    {
-        $this->uploadService = $uploadService;
-    }
-
     public function store(Request $request)
     {
         $request->validate([
             'body' => [
-                Rule::requiredIf(! $request->hasFile('media')),
+                Rule::requiredIf(! ($request->has('media') && count($request->input('media')))),
                 'nullable',
                 'string',
             ],
@@ -37,51 +29,47 @@ class PostsController extends Controller
             'body' => $request->input('body'),
         ]);
 
-        if ($request->hasFile('media')) {
+        if ($request->has('media')) {
             $validator = Validator::make($request->all(), [
                 'media' => 'present|array|min:0|max:5',
-                'media.*' => 'max:'.config('image.max_size').'|mimes:jpeg,png,mp4,qt',
+                'media.*.path' => 'required|string',
+                'media.*.width' => 'required|integer',
+                'media.*.height' => 'required|integer',
+                'media.*.type' => 'required|in:image,video',
             ]);
 
             if ($validator->fails()) {
                 $post->delete();
 
-                return response($validator->errors(), 422);
+                return response(['errors' => $validator->errors()], 422);
             }
 
-            foreach ($request->file('media') as $media) {
-                $type = $media->clientExtension() == 'mp4' || $media->clientExtension() == 'qt' ? 'video' : 'image';
-                if ($type == 'video') {
-                    $upload = $this->uploadService->uploadVideo($media);
-                } else {
-                    $upload = $this->uploadService->uploadImage($media);
-                }
-
+            foreach ($request->input('media') as $media) {
                 $post->media()->create([
-                    'path' => $upload['publicId'],
-                    'width' => $upload['width'],
-                    'height' => $upload['height'],
-                    'type' => $type,
+                    'path' => $media['path'],
+                    'width' => $media['width'],
+                    'height' => $media['height'],
+                    'type' => $media['type'],
                 ]);
             }
         }
 
         if ($request->filled('location')) {
             $location = $this->setLocation($request, $post);
-            if ($location instanceof \Illuminate\Http\Response) {
-                return response($location->getOriginalContent(), 422);
+            if ($location instanceof \Illuminate\Validation\Validator) {
+                return response(['errors' => $location->errors()], 422);
             }
         }
         if ($request->filled('accompaniments')) {
             $accompaniments = $this->setAccompaniments($request, $post);
-            if ($accompaniments instanceof \Illuminate\Http\Response) {
-                return response($accompaniments->getOriginalContent(), 422);
+            if ($accompaniments instanceof \Illuminate\Validation\Validator) {
+                return response(['errors' => $accompaniments->errors()], 422);
             }
         }
 
         $friendsToNotify = auth()->user()->getFriends();
 
-        if (count($friendsToNotify->all())) {
+        if ($friendsToNotify->isNotEmpty()) {
             Notification::send($friendsToNotify, new AddedPost($post));
         }
 

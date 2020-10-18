@@ -16,7 +16,7 @@ class FriendshipsTest extends TestCase
     {
         parent::setup();
         Notification::fake();
-        $this->authenticate();
+        $this->login();
     }
 
     /** @test */
