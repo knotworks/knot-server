@@ -16,9 +16,9 @@ jobs:
         os: [ubuntu-latest]
         include:
           - php: 7.4
-            phpunit: 8.*
+            phpunit: 9.*
           - php: 7.3
-            phpunit: 8.*
+            phpunit: 9.*
 
     name: P${{ matrix.php }} - PU${{ matrix.phpunit }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
@@ -36,11 +36,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, mysql, mysqli, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
-          coverage: none
-
-      - name: Fix Imagick Policy
-        run: sudo sed -i 's/none/read|write/g' /etc/ImageMagick-6/policy.xml
 
       - name: Install dependencies
         run: |
