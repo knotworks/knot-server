@@ -12,7 +12,7 @@ class ImportLegacyDataCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'import:legacy-data';
+    protected $signature = 'import:legacy-data {--migrate: Perform a fresh migration prior to importing the data}';
 
     /**
      * The console command description.
@@ -88,6 +88,8 @@ class ImportLegacyDataCommand extends Command
                     'post_id' => $id,
                     'type' => 'image',
                     'path' => str_replace('photo-posts/', "{$this->env}/media/", $mediaPost->image_path),
+                    'width' => $mediaPost->width,
+                    'height' => $mediaPost->height,
                     'created_at' => $mediaPost->created_at,
                     'updated_at' => $mediaPost->updated_at,
                 ]);
@@ -144,23 +146,29 @@ class ImportLegacyDataCommand extends Command
      */
     public function handle()
     {
-        $this->info("Beginning data import...");
+        $this->info('Beginning data import...');
+
+        if ($this->option('migrate')) {
+            $this->info('Performing a fresh migration...');
+            $this->call('migrate:fresh');
+        }
+
         DB::transaction(function () {
-            $this->info("Importing users...");
+            $this->info('Importing users...');
             $this->importUsers();
-            $this->info("Importing friendships...");
+            $this->info('Importing friendships...');
             $this->importFriendships();
-            $this->info("Importing posts...");
+            $this->info('Importing posts...');
             $this->importPosts();
-            $this->info("Importing comments...");
+            $this->info('Importing comments...');
             $this->importComments();
-            $this->info("Importing reactions...");
+            $this->info('Importing reactions...');
             $this->importReactions();
-            $this->info("Importing accompaniments...");
+            $this->info('Importing accompaniments...');
             $this->importAccompaniments();
-            $this->info("Importing locations...");
+            $this->info('Importing locations...');
             $this->importLocations();
-            $this->info("All done!");
+            $this->info('All done!');
         });
 
     }
