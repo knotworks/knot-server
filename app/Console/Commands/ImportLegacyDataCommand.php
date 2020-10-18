@@ -12,7 +12,7 @@ class ImportLegacyDataCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'import:legacy-data {--migrate: Perform a fresh migration prior to importing the data}';
+    protected $signature = 'import:legacy-data {--m|migrate : Perform a fresh migration prior to importing the data}';
 
     /**
      * The console command description.
