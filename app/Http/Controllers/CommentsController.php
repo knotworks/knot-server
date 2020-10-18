@@ -49,8 +49,8 @@ class CommentsController extends Controller
 
         if ($request->filled('location')) {
             $location = $this->setLocation($request, $comment);
-            if ($location instanceof \Illuminate\Http\Response) {
-                return response($location->getOriginalContent(), 422);
+            if ($location instanceof \Illuminate\Validation\Validator) {
+                return response(['errors' => $location->errors()], 422);
             }
         }
 

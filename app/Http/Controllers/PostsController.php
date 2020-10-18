@@ -19,7 +19,7 @@ class PostsController extends Controller
     {
         $request->validate([
             'body' => [
-                Rule::requiredIf(! $request->hasFile('media')),
+                Rule::requiredIf(! ($request->has('media') && count($request->input('media')))),
                 'nullable',
                 'string',
             ],
@@ -41,7 +41,7 @@ class PostsController extends Controller
             if ($validator->fails()) {
                 $post->delete();
 
-                return response($validator->errors(), 422);
+                return response(['errors' => $validator->errors()], 422);
             }
 
             foreach ($request->input('media') as $media) {
@@ -56,14 +56,14 @@ class PostsController extends Controller
 
         if ($request->filled('location')) {
             $location = $this->setLocation($request, $post);
-            if ($location instanceof \Illuminate\Http\Response) {
-                return response($location->getOriginalContent(), 422);
+            if ($location instanceof \Illuminate\Validation\Validator) {
+                return response(['errors' => $location->errors()], 422);
             }
         }
         if ($request->filled('accompaniments')) {
             $accompaniments = $this->setAccompaniments($request, $post);
-            if ($accompaniments instanceof \Illuminate\Http\Response) {
-                return response($accompaniments->getOriginalContent(), 422);
+            if ($accompaniments instanceof \Illuminate\Validation\Validator) {
+                return response(['errors' => $accompaniments->errors()], 422);
             }
         }
 

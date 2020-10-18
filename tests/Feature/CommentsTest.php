@@ -77,7 +77,6 @@ class CommentsTest extends TestCase
     /** @test */
     public function a_user_cannot_delete_a_comment_that_does_not_belong_to_them()
     {
-        $this->withExceptionHandling();
         $comment = create('Knot\Models\Comment');
 
         $this->deleteJson('api/comments/'.$comment->id)->assertStatus(403);

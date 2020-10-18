@@ -22,7 +22,7 @@ trait AddsAccompaniments
         if ($validator->fails()) {
             $model->delete();
 
-            return response($validator->errors(), 422);
+            return $validator;
         }
 
         $model->addAccompaniments(collect($request->accompaniments)->map(function ($user_id) {
