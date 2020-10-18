@@ -34,6 +34,11 @@ class ImportLegacyDataCommand extends Command
         $this->env = app()->environment();
     }
 
+    private function toArrayDeep($data = [])
+    {
+        return json_decode(json_encode($data), true);
+    }
+
     protected function importUsers()
     {
         DB::connection('legacy')->table('users')->get()->each(function ($user) {
@@ -53,7 +58,7 @@ class ImportLegacyDataCommand extends Command
 
     protected function importFriendships()
     {
-        $friendships = DB::connection('legacy')->table('friendships')->get()->toArray();
+        $friendships = $this->toArrayDeep(DB::connection('legacy')->table('friendships')->get()->toArray());
         DB::table('friendships')->insert($friendships);
     }
 
@@ -92,13 +97,13 @@ class ImportLegacyDataCommand extends Command
 
     protected function importComments()
     {
-        $comments = DB::connection('legacy')->table('comments')->get()->toArray();
+        $comments = $this->toArrayDeep(DB::connection('legacy')->table('comments')->get()->toArray());
         DB::table('comments')->insert($comments);
     }
 
     protected function importReactions()
     {
-        $reactions = DB::connection('legacy')->table('reactions')->get()->toArray();
+        $reactions = $this->toArrayDeep(DB::connection('legacy')->table('reactions')->get()->toArray());
         DB::table('reactions')->insert($reactions);
     }
 
@@ -139,20 +144,24 @@ class ImportLegacyDataCommand extends Command
      */
     public function handle()
     {
-        $this->info("Importing users...");
-        $this->importUsers();
-        $this->info("Importing friendships...");
-        $this->importFriendships();
-        $this->info("Importing posts...");
-        $this->importPosts();
-        $this->info("Importing comments...");
-        $this->importComments();
-        $this->info("Importing reactions...");
-        $this->importReactions();
-        $this->info("Importing accompaniments...");
-        $this->importAccompaniments();
-        $this->info("Importing locations...");
-        $this->importLocations();
-        $this->info("All done!");
+        $this->info("Beginning data import...");
+        DB::transaction(function () {
+            $this->info("Importing users...");
+            $this->importUsers();
+            $this->info("Importing friendships...");
+            $this->importFriendships();
+            $this->info("Importing posts...");
+            $this->importPosts();
+            $this->info("Importing comments...");
+            $this->importComments();
+            $this->info("Importing reactions...");
+            $this->importReactions();
+            $this->info("Importing accompaniments...");
+            $this->importAccompaniments();
+            $this->info("Importing locations...");
+            $this->importLocations();
+            $this->info("All done!");
+        });
+
     }
 }
