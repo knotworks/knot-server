@@ -43,6 +43,9 @@ jobs:
           composer require "phpunit/phpunit:${{ matrix.phpunit }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
+      - name: Create env file
+        run: cp .env.example .env
+
       - name: Generate application key
         run: php artisan key:generate
 
