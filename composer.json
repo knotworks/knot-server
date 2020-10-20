@@ -10,14 +10,15 @@
   "type": "project",
   "require": {
     "php": "^7.3",
+    "cloudinary/cloudinary_php": "2.0.0-beta7",
     "doctrine/dbal": "^2.9",
     "fideloper/proxy": "^4.2",
     "fruitcake/laravel-cors": "^2.0",
     "hootlex/laravel-friendships": "^1.0",
     "laravel-notification-channels/telegram": "^0.0.5",
     "laravel/framework": "^8.0",
-    "laravel/tinker": "^2.0",
-    "laravel/sanctum": "^2.6"
+    "laravel/sanctum": "^2.6",
+    "laravel/tinker": "^2.0"
   },
   "require-dev": {
     "facade/ignition": "^2.3.6",

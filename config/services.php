@@ -38,4 +38,9 @@ return [
     'telegram-bot-api' => [
         'token' => env('TELEGRAM_BOT_TOKEN'),
     ],
+
+    'cloudinary' => [
+        'key' => env('CLOUDINARY_API_KEY'),
+        'secret' => env('CLOUDINARY_API_SECRET'),
+    ]
 ];

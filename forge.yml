@@ -1,0 +1,21 @@
+production:
+  id: 1076231
+  name: api.knot.works
+  server: 120720
+  quick-deploy: true
+  deployment:
+    - 'cd /home/forge/api.knot.works'
+    - 'git fetch origin'
+    - 'git reset --hard origin/v2'
+    - 'composer install --no-interaction --prefer-dist --optimize-autoloader'
+    - ''
+    - '( flock -w 10 9 || exit 1'
+    - '    echo ''Restarting FPM...''; sudo -S service php7.3-fpm reload ) 9>/tmp/fpmlock'
+    - ''
+    - 'if [ -f artisan ]; then'
+    - '    php artisan route:cache'
+    - '    php artisan config:cache'
+    - '    php artisan migrate --force'
+    - fi
+  webhooks: []
+  daemons: []

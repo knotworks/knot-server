@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Http\Request;
+use Cloudinary\Api\ApiUtils;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,4 +37,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/friendships/accept/{sender}', 'FriendshipsController@acceptFriendship');
     Route::post('/friendships/deny/{sender}', 'FriendshipsController@denyFriendship');
     Route::post('/friendships/unfriend/{friend}', 'FriendshipsController@unfriend');
+
+    Route::post('/generate-cloudinary-signature', function (Request $request) {
+        return ApiUtils::signParameters(config('services.cloudinary.secret'), $request->only('timestamp', 'upload_preset'));
+    });
 });
