@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Cloudinary\Api\ApiUtils;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
