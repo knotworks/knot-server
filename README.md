@@ -12,13 +12,13 @@ Thanks for checking out Knot!
 
 ## Features
 
-### Token-based OAuth authentication
+### Secure cross-site cookie authentication
 
-Knot's authentication system is powered by JWT. Users sign in with a simple email and password, and the server will send back an authentication token to use for all subsequent requests.
+Knot's authentication system is powered by [Laravel Sanctum](https://laravel.com/docs/8.x/sanctum). Users sign in with a simple email and password, and the server will send back a cookie to authorize all subsequent requests.
 
-### Posts with multi-image support
+### Photo and video posts
 
-Create a post and attach up to 5 images
+Attach up to 5 photos or videos to a single post.
 
 ### Post meta attachments
 
@@ -62,7 +62,7 @@ All notifications are currently stored in the database, but can be easily update
 
 ### Cloud Upload Support
 
-Knot uses [Cloudinary](https://cloudinary.com/) for all of its image uploads. They have a generous free tier, and a really powerful suite of image management and manipulation tools. Check them out!
+Knot supports [Cloudinary](https://cloudinary.com/) secure signature generation for for all media uploads. Cloudinary has a generous free tier, and a really powerful suite of media management and manipulation tools. Check them out!
 
 ## Installation
 
