@@ -39,6 +39,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/friendships/unfriend/{friend}', 'FriendshipsController@unfriend');
 
     Route::post('/generate-cloudinary-signature', function (Request $request) {
-        return ApiUtils::signParameters(config('services.cloudinary.secret'), $request->only('timestamp', 'upload_preset'));
+
+        $request->validate([
+            'timestamp' => 'required',
+        ]);
+
+        return ApiUtils::signParameters(config('services.cloudinary.secret'), $request->only('timestamp', 'upload_preset', 'folder'));
     });
 });

@@ -4,6 +4,7 @@ namespace Knot\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Knot\Models\User;
 
 class ProfileController extends Controller
@@ -40,14 +41,18 @@ class ProfileController extends Controller
 
         $request->validate([
             'first_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'current_password' => 'required_with:password',
-            'password' => 'confirmed',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore(auth()->id()),
+            ],
+            'current_password' => 'nullable|required_with:password',
+            'password' => 'nullable|confirmed',
         ]);
 
         $user->update($request->only('first_name', 'last_name', 'email'));
 
-        if ($request->has('current_password')) {
+        if ($request->filled('current_password')) {
             if (Hash::check($request->current_password, $user->password)) {
                 $user->update(['password' => $request->password]);
             } else {

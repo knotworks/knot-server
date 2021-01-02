@@ -17,7 +17,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }
 
-        return response()->json([], 204);
+        return response()->noContent();
     }
 
     public function destroy()

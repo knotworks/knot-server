@@ -21,6 +21,7 @@ return [
         'logout',
         'register',
         'api/*',
+        'forgot-password',
     ],
 
     'allowed_methods' => ['*'],
