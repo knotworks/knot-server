@@ -39,7 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/friendships/unfriend/{friend}', 'FriendshipsController@unfriend');
 
     Route::post('/generate-cloudinary-signature', function (Request $request) {
-
         $request->validate([
             'timestamp' => 'required',
         ]);
