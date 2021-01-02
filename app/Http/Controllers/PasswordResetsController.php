@@ -4,7 +4,6 @@ namespace Knot\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 
@@ -26,7 +25,7 @@ class PasswordResetsController extends Controller
         );
 
         if ($status === Password::RESET_LINK_SENT) {
-            response()->noContent();
+            return response()->noContent();
         }
 
         return response(['email' => $status], 500);
