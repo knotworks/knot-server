@@ -13,7 +13,7 @@ class NotificationsController extends Controller
      */
     public function index()
     {
-        return auth()->user()->notifications;
+        return auth()->user()->notifications()->latest()->paginate(10);
     }
 
     /**
@@ -23,6 +23,6 @@ class NotificationsController extends Controller
     {
         auth()->user()->unreadNotifications()->update(['read_at' => Carbon::now()]);
 
-        return response([], 204);
+        return response()->noContent();
     }
 }

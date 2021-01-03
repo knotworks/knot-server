@@ -110,7 +110,7 @@ class CommentsTest extends TestCase
 
         $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
 
-        $commenters = $this->post->comments->slice(0, -1)->map(function ($comment, $key) {
+        $commenters = $this->post->comments->slice(0, -1)->map(function ($comment) {
             return $comment->user;
         });
 
