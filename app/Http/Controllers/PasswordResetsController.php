@@ -2,10 +2,10 @@
 
 namespace Knot\Http\Controllers;
 
-use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Str;
 
 class PasswordResetsController extends Controller
 {
@@ -43,7 +43,7 @@ class PasswordResetsController extends Controller
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 $user->forceFill([
-                    'password' => $password
+                    'password' => $password,
                 ])->save();
 
                 $user->setRememberToken(Str::random(60));
