@@ -43,6 +43,7 @@
       border: 2px solid #e5e7eb;
       border-radius: 0.25rem;
       color: #374151;
+      font-size: 1rem;
       height: 3rem;
       margin-top: 16px;
       outline: none;
@@ -60,6 +61,7 @@
       border: none;
       color: #fff;
       cursor: pointer;
+      font-size: 1rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       margin-top: 16px;
