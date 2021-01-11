@@ -17,6 +17,8 @@ class AuthController extends Controller
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }
 
+        $request->session()->regenerate();
+
         return response()->noContent();
     }
 
