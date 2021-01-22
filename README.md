@@ -1,6 +1,6 @@
 # Knot Server
 
-![](https://github.com/knotworks/knot-server/workflows/run-tests/badge.svg?branch=v2)
+![](https://github.com/knotworks/knot-server/workflows/run-tests/badge.svg?branch=master)
 
 A decentralized server to build private social networks from.
 
