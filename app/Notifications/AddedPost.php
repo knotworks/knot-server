@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notification;
 use Knot\Models\Post;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
+use Cloudinary\Cloudinary;
 
 class AddedPost extends Notification
 {
@@ -58,7 +59,18 @@ class AddedPost extends Notification
         $messageBody = '*'.$postAuthor."* added a post. \n _".$postBody.'_';
 
         if ($isPhotoPost) {
-            $postMedia = $this->post->media->map->path->join("\n");
+            $cloudinary = new Cloudinary([
+                account => [
+                    'cloud_name' => config('services.cloudinary.cloud_name'),
+                    'api_key' => config('services.cloudinary.key'),
+                    'api_secret' => config('services.cloudinary.secret'),
+                ]
+            ]);
+
+            $postMedia = $this->post->media->map(function ($media) use($cloudinary) {
+                return $cloudinary->image($media->path)->toUrl();
+            })->join("\n");
+
             $messageBody = '*'.$postAuthor."* added a photo. \n _".$postBody."_ \n".$postMedia;
         }
 
