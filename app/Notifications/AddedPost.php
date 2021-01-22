@@ -2,11 +2,11 @@
 
 namespace Knot\Notifications;
 
+use Cloudinary\Cloudinary;
 use Illuminate\Notifications\Notification;
 use Knot\Models\Post;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
-use Cloudinary\Cloudinary;
 
 class AddedPost extends Notification
 {
@@ -64,10 +64,10 @@ class AddedPost extends Notification
                     'cloud_name' => config('services.cloudinary.cloud_name'),
                     'api_key' => config('services.cloudinary.key'),
                     'api_secret' => config('services.cloudinary.secret'),
-                ]
+                ],
             ]);
 
-            $postMedia = $this->post->media->map(function ($media) use($cloudinary) {
+            $postMedia = $this->post->media->map(function ($media) use ($cloudinary) {
                 return $cloudinary->image($media->path)->toUrl();
             })->join("\n");
 
