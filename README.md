@@ -2,11 +2,11 @@
 
 ![](https://github.com/knotworks/knot-server/workflows/run-tests/badge.svg?branch=master)
 
-A decentralized server to build private social networks from.
+A self-hosted social network for families and other small groups.
 
 ## Background
 
-My Family and I used an app called [Path](https://path.com) to share private photos and moments for a number of years. It served us well, but unfortunately went the way of the dinosaur unexpectedly. I wanted to build something similar as a contingency plan, and Knot was the result. This repository represents the server-side component that one would self-host to act as the API for their private network, and it's up to you to design and write a client that interfaces with it. Down the road I may release a sample client to get you started as well. Many of the currently supported features exist to mimic much of the functionality of Path, and that's generally the _Path_ (hehe) I'll take. As this project is fully open source, you are more than welcome to add, remove or modify any functionality you wish!
+My Family and I used an app called [Path](https://path.com) to share private photos and moments for a number of years. It served us well, but unfortunately went the way of the dinosaur unexpectedly. I wanted to build something similar as a contingency plan, and Knot was the result. This repository represents the server-side component that one would self-host to act as the API for their private network, and it's up to you to design and write a client that interfaces with it. If you would like an opinionated starting point for a client application, feel free to check out the [sample client](https://github.com/knotworks/knot-client). Many of the currently supported features exist to mimic much of the functionality of Path, and that's generally the _Path_ (hehe) I'll take. As this project is fully open source, you are more than welcome to add, remove or modify any functionality you wish.
 
 Thanks for checking out Knot!
 
@@ -62,7 +62,7 @@ All notifications are currently stored in the database, but can be easily update
 
 ### Cloud Upload Support
 
-Knot supports [Cloudinary](https://cloudinary.com/) secure signature generation for for all media uploads. Cloudinary has a generous free tier, and a really powerful suite of media management and manipulation tools. Check them out!
+Knot supports [Cloudinary](https://cloudinary.com/) secure signature generation for all media uploads. Cloudinary has a generous free tier, and a really powerful suite of media management and manipulation tools. Check them out!
 
 ## Installation
 
