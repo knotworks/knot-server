@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Notifications\DatabaseNotification;
+use Database\Factories\DatabaseNotificationFactory;
 use Tests\TestCase;
 
 class NotificationsTest extends TestCase
@@ -16,10 +16,6 @@ class NotificationsTest extends TestCase
     {
         parent::setup();
 
-        $this->markTestSkipped(
-            'Fix me later'
-        );
-
         $this->post = create('Knot\Models\Post');
         $this->login();
     }
@@ -27,18 +23,18 @@ class NotificationsTest extends TestCase
     /** @test */
     public function a_user_can_fetch_their_notifications()
     {
-        create(DatabaseNotification::class);
+        DatabaseNotificationFactory::new()->create();
 
         $this->assertCount(
             1,
-            $this->getJson('/api/notifications')->json()
+            $this->getJson('/api/notifications')->json()['data']
         );
     }
 
     /** @test */
     public function a_user_can_mark_their_notifications_as_read()
     {
-        create(DatabaseNotification::class);
+        DatabaseNotificationFactory::new()->create();
 
         $this->assertCount(1, auth()->user()->unreadNotifications);
         $this->deleteJson('/api/notifications')->assertStatus(204);
