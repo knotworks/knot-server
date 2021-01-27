@@ -69,7 +69,7 @@ class AddedPost extends Notification
 
             $postMedia = $this->post->media->map(function ($media) use ($cloudinary) {
                 return $cloudinary->image($media->path)->toUrl();
-            })->join("\n");
+            })->join("\n\n");
 
             $messageBody = '*'.$postAuthor."* added a photo. \n _".$postBody."_ \n".$postMedia;
         }
