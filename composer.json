@@ -1,6 +1,6 @@
 {
   "name": "knotworks/knot-server",
-  "description": "A decentralized server to build private social networks from..",
+  "description": "A self-hosted social network for families and other small groups",
   "keywords": [
     "decentralized",
     "social",
@@ -9,7 +9,7 @@
   "license": "BSD-3-Clause",
   "type": "project",
   "require": {
-    "php": "^7.3",
+    "php": "^7.4",
     "cloudinary/cloudinary_php": "2.0.0-beta7",
     "doctrine/dbal": "^2.9",
     "fideloper/proxy": "^4.2",
@@ -21,6 +21,7 @@
     "laravel/tinker": "^2.0"
   },
   "require-dev": {
+    "brianium/paratest": "^6.1",
     "facade/ignition": "^2.3.6",
     "filp/whoops": "~2.0",
     "fzaninotto/faker": "^1.9.1",
