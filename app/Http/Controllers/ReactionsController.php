@@ -39,7 +39,9 @@ class ReactionsController extends Controller
                 'type' => $request->input('type'),
             ]);
 
-            $post->user->notify(new PostReactedTo($reaction));
+            if (auth()->id() !== $post->user_id) {
+                $post->user->notify(new PostReactedTo($reaction));
+            }
         }
 
         return $post->load('reactions.user');

@@ -55,4 +55,13 @@ class ReactionsTest extends TestCase
 
         Notification::assertSentTo($this->user, PostReactedTo::class);
     }
+
+    /** @test */
+    public function a_post_author_does_not_get_a_notification_if_they_react_to_their_own_post()
+    {
+        $post = create('Knot\Models\Post', ['user_id' => auth()->id()]);
+        $this->postJson('api/posts/'.$post->id.'/reactions', ['type' => 'smile']);
+
+        Notification::assertNotSentTo($this->user, PostReactedTo::class);
+    }
 }
