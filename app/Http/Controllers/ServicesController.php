@@ -2,11 +2,11 @@
 
 namespace Knot\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Cloudinary\Api\ApiUtils;
-use Knot\Contracts\NearbyService;
-use Knot\Contracts\LinkMetaService;
+use Illuminate\Http\Request;
 use Knot\Contracts\CurrentLocationService;
+use Knot\Contracts\LinkMetaService;
+use Knot\Contracts\NearbyService;
 
 class ServicesController extends Controller
 {

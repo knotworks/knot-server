@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Mockery;
-use Mockery\MockInterface;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Knot\Contracts\LinkMetaService;
 use Knot\Services\OpenGraphLinkMetaService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery;
+use Mockery\MockInterface;
+use Tests\TestCase;
 
 class OpenGraphLinkMetaServiceTest extends TestCase
 {
@@ -24,7 +24,7 @@ class OpenGraphLinkMetaServiceTest extends TestCase
 
         $this->instance(
             LinkMetaService::class,
-            Mockery::mock(OpenGraphLinkMetaService::class, function(MockInterface $mock) {
+            Mockery::mock(OpenGraphLinkMetaService::class, function (MockInterface $mock) {
                 $mock->shouldReceive('fetch')->andReturn($this->fakeResponse);
             }),
         );

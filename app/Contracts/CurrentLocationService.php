@@ -2,6 +2,7 @@
 
 namespace Knot\Contracts;
 
-interface CurrentLocationService {
+interface CurrentLocationService
+{
     public function fetch($lat, $lon);
 }

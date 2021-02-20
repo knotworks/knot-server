@@ -2,6 +2,7 @@
 
 namespace Knot\Contracts;
 
-interface NearbyService {
+interface NearbyService
+{
     public function fetch($lat, $lon, $query = '');
 }

@@ -2,6 +2,7 @@
 
 namespace Knot\Contracts;
 
-interface LinkMetaService {
+interface LinkMetaService
+{
     public function fetch($url);
 }
