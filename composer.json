@@ -10,15 +10,17 @@
   "type": "project",
   "require": {
     "php": "^7.4",
-    "cloudinary/cloudinary_php": "2.0.0-beta7",
+    "cloudinary/cloudinary_php": "^2.0.2",
     "doctrine/dbal": "^2.9",
     "fideloper/proxy": "^4.2",
     "fruitcake/laravel-cors": "^2.0",
+    "guzzlehttp/guzzle": "^7.2",
     "hootlex/laravel-friendships": "^1.0",
-    "laravel-notification-channels/telegram": "^0.0.5",
+    "laravel-notification-channels/telegram": "^0.5.1",
     "laravel/framework": "^8.0",
     "laravel/sanctum": "^2.6",
-    "laravel/tinker": "^2.0"
+    "laravel/tinker": "^2.0",
+    "shweshi/opengraph": "^1.1"
   },
   "require-dev": {
     "brianium/paratest": "^6.1",

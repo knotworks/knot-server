@@ -1,6 +1,5 @@
 <?php
 
-use Cloudinary\Api\ApiUtils;
 use Illuminate\Http\Request;
 
 /*
@@ -38,11 +37,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/friendships/deny/{sender}', 'FriendshipsController@denyFriendship');
     Route::post('/friendships/unfriend/{friend}', 'FriendshipsController@unfriend');
 
-    Route::post('/generate-cloudinary-signature', function (Request $request) {
-        $request->validate([
-            'timestamp' => 'required',
-        ]);
+    Route::post('/services/nearby', 'ServicesController@fetchNearby');
 
-        return ApiUtils::signParameters(config('services.cloudinary.secret'), $request->only('timestamp', 'upload_preset', 'folder'));
-    });
+    Route::post('/services/current-location', 'ServicesController@fetchCurrentLocation');
+
+    Route::post('/services/link-meta', 'ServicesController@fetchLinkMeta');
+
+    Route::post('/services/generate-cloudinary-signature', 'ServicesController@generateCloudinarySignature');
 });
