@@ -2,13 +2,15 @@
 
 namespace Knot\Services;
 
-use Knot\Contracts\NearbyService;
 use Illuminate\Support\Facades\Http;
+use Knot\Contracts\NearbyService;
 
-class FoursquareNearbyService implements NearbyService {
+class FoursquareNearbyService implements NearbyService
+{
     protected $baseUrl = 'https://api.foursquare.com/v2/venues/search';
 
-    public function fetch($lat, $lon, $query = '') {
+    public function fetch($lat, $lon, $query = '')
+    {
         $params = [
             'v' => '20200829',
             'll' => "{$lat},{$lon}",
@@ -23,6 +25,5 @@ class FoursquareNearbyService implements NearbyService {
         $response = Http::get($this->baseUrl, $params);
 
         return $response->json();
-
     }
 }

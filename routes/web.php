@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Knot\Contracts\NearbyService;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
