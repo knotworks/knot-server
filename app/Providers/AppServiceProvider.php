@@ -5,9 +5,9 @@ namespace Knot\Providers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Knot\Contracts\NearbyService;
 use Knot\Contracts\CurrentLocationService;
 use Knot\Contracts\LinkMetaService;
+use Knot\Contracts\NearbyService;
 
 class AppServiceProvider extends ServiceProvider
 {
