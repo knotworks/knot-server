@@ -26,6 +26,6 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response([], 204);
+        return response()->noContent();
     }
 }

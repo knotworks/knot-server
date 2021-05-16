@@ -18,6 +18,12 @@ return [
 
     'disable_new_signups' => env('DISABLE_NEW_SIGNUPS', false),
 
+    'nearby_service_class' => Knot\Services\FoursquareNearbyService::class,
+
+    'current_location_service_class' => Knot\Services\OpenCageCurrentLocationService::class,
+
+    'link_meta_service_class' => Knot\Services\OpenGraphLinkMetaService::class,
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

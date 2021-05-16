@@ -44,4 +44,13 @@ return [
         'key' => env('CLOUDINARY_API_KEY'),
         'secret' => env('CLOUDINARY_API_SECRET'),
     ],
+
+    'foursquare' => [
+        'api_key' => env('FOURSQUARE_CLIENT_ID'),
+        'api_secret' => env('FOURSQUARE_CLIENT_SECRET'),
+    ],
+
+    'opencage' => [
+        'api_key' => env('OPENCAGE_API_KEY'),
+    ],
 ];
