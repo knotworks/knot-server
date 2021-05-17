@@ -38,8 +38,8 @@ class LocationTest extends TestCase
                 'body' => $postContent['body'],
                 'location' => [
                     'name' => $postContent['location']['name'],
-                    'lat' => (string)$postContent['location']['lat'],
-                    'long' => (string)$postContent['location']['lon'],
+                    'lat' => (string) $postContent['location']['lat'],
+                    'long' => (string) $postContent['location']['lon'],
                 ],
             ]);
     }
