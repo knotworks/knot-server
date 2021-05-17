@@ -14,7 +14,7 @@ trait AddsLocation
                 'required',
                 'regex:/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/',
             ],
-            'location.long' => [
+            'location.lon' => [
                 'required',
                 'regex:/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/',
             ],
@@ -28,7 +28,7 @@ trait AddsLocation
 
         $model->addLocation([
             'lat' => $request->input('location.lat'),
-            'long' => $request->input('location.long'),
+            'long' => $request->input('location.lon'),
             'name' => $request->input('location.name', null),
             'city' => $request->input('location.city', null),
         ]);
