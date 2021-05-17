@@ -27,8 +27,8 @@ class LocationTest extends TestCase
             'body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             'location' => [
                 'name' => $this->faker->company,
-                'lat' => $this->faker->latitude,
-                'long' => $this->faker->longitude,
+                'lat' => $this->faker->latitude.'',
+                'lon' => $this->faker->longitude.'',
             ],
         ];
 
@@ -36,7 +36,11 @@ class LocationTest extends TestCase
             ->assertStatus(201)
             ->assertJson([
                 'body' => $postContent['body'],
-                'location' => $postContent['location'],
+                'location' => [
+                    'name' => $postContent['location']['name'],
+                    'lat' => (string)$postContent['location']['lat'],
+                    'long' => (string)$postContent['location']['lon'],
+                ],
             ]);
     }
 
@@ -48,12 +52,12 @@ class LocationTest extends TestCase
             'location' => [
                 'name' => $this->faker->company,
                 'lat' => 'cdsfew',
-                'long' => '3jdjdsjasd',
+                'lon' => '3jdjdsjasd',
             ],
         ];
 
         $this->postJson('api/posts', $postContent)
             ->assertStatus(422)
-            ->assertJsonValidationErrors(['location.lat', 'location.long']);
+            ->assertJsonValidationErrors(['location.lat', 'location.lon']);
     }
 }
