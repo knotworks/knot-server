@@ -60,7 +60,7 @@ class AddedPost extends Notification
 
         if ($isPhotoPost) {
             $cloudinary = new Cloudinary([
-                'account' => [
+                'cloud' => [
                     'cloud_name' => config('services.cloudinary.cloud_name'),
                     'api_key' => config('services.cloudinary.key'),
                     'api_secret' => config('services.cloudinary.secret'),
