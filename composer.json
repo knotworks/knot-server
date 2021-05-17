@@ -10,7 +10,7 @@
   "type": "project",
   "require": {
     "php": "^7.4",
-    "cloudinary/cloudinary_php": "^2.0.2",
+    "cloudinary/cloudinary_php": "^2.2.0",
     "doctrine/dbal": "^2.9",
     "fideloper/proxy": "^4.2",
     "fruitcake/laravel-cors": "^2.0",

@@ -45,6 +45,6 @@ class ServicesController extends Controller
             'timestamp' => 'required',
         ]);
 
-        return ApiUtils::signParameters(config('services.cloudinary.secret'), $request->only('timestamp', 'upload_preset', 'folder'));
+        return ApiUtils::signParameters($request->only('timestamp', 'upload_preset', 'folder'), config('services.cloudinary.secret'));
     }
 }
