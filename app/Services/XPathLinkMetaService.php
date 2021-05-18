@@ -23,19 +23,19 @@ class XPathLinkMetaService implements LinkMetaService
 
         $html = file_get_contents($url);
 
-        if (!$html) {
+        if (! $html) {
             return $metaFields;
         }
 
         $crawler = new Crawler($html);
 
         tap($crawler->filterXPath('//title'), function (Crawler $titleNode) use (&$metaFields) {
-            $metaFields['title'] = (bool)$titleNode->text("") ?
+            $metaFields['title'] = (bool) $titleNode->text('') ?
                 $titleNode->text() :
                 null;
         });
 
-        $crawler->filterXPath('//meta')->each(function(Crawler $node) use (&$metaFields) {
+        $crawler->filterXPath('//meta')->each(function (Crawler $node) use (&$metaFields) {
             $key = strtolower($node->attr('name') ?? $node->attr('property'));
 
             if (in_array($key, array_keys($metaFields))) {
@@ -46,7 +46,8 @@ class XPathLinkMetaService implements LinkMetaService
         return $metaFields;
     }
 
-    protected function getImageForMetaHash($hash) {
+    protected function getImageForMetaHash($hash)
+    {
         return $hash['og:image'] ?: $hash['twitter:image'];
     }
 
