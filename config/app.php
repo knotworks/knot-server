@@ -22,7 +22,7 @@ return [
 
     'current_location_service_class' => Knot\Services\OpenCageCurrentLocationService::class,
 
-    'link_meta_service_class' => Knot\Services\OpenGraphLinkMetaService::class,
+    'link_meta_service_class' => Knot\Services\XPathLinkMetaService::class,
 
     /*
     |--------------------------------------------------------------------------

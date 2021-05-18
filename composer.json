@@ -20,7 +20,9 @@
     "laravel/framework": "^8.0",
     "laravel/sanctum": "^2.6",
     "laravel/tinker": "^2.0",
-    "shweshi/opengraph": "^1.1"
+    "masterminds/html5": "^2.7",
+    "shweshi/opengraph": "^1.1",
+    "symfony/dom-crawler": "^5.2"
   },
   "require-dev": {
     "brianium/paratest": "^6.1",
