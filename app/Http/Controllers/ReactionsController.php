@@ -29,7 +29,7 @@ class ReactionsController extends Controller
             ],
         ]);
 
-        $reaction = Reaction::where('post_id', $post->id)->where('user_id', auth()->id())->first();
+        $reaction = $post->reactions()->where('user_id', auth()->id())->first();
 
         if ($reaction) {
             $reaction->update($reactionType);

@@ -16,12 +16,10 @@ class ViewProfilePolicy
         if ($user->id == $profile->id) {
             return true;
         }
-        if (! count($friends->all())) {
+        if (! $friends->count()) {
             return false;
         }
 
-        $ids = $user->getFriends()->map->id->push($user->id);
-
-        return $ids->contains($profile->id);
+        return $user->getFriends()->map->id->push($user->id)->contains($profile->id);
     }
 }
