@@ -3,6 +3,7 @@
 namespace Knot\Console\Commands;
 
 use Illuminate\Console\Command;
+use Knot\Models\User;
 use Knot\Models\PostMedia;
 use Cloudinary\Cloudinary;
 use Cloudinary\Api\Admin\AdminApi;
@@ -53,7 +54,7 @@ class PurgeUnusedPhotosCommand extends Command
 
         $api = new AdminApi($cloudinary->configuration);
 
-        $existingPaths = PostMedia::all()->map->path;
+        $existingPaths = PostMedia::all()->map->path->concat(User::all()->map->avatar);
 
         $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 1]);
 
