@@ -4,7 +4,6 @@ namespace Knot\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Knot\Console\Commands\PurgeUnusedPhotosCommand;
 
 class Kernel extends ConsoleKernel
 {
