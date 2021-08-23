@@ -8,7 +8,7 @@ use Cloudinary\Cloudinary;
 use Cloudinary\Api\Admin\AdminApi;
 use Cloudinary\Configuration\Configuration;
 
-class DeleteUnusedPhotosCommand extends Command
+class PurgeUnusedPhotosCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -71,7 +71,7 @@ class DeleteUnusedPhotosCommand extends Command
         $idCount = count($idsToDelete);
 
         if ($idCount > 0) {
-            $this->info("Found {$idCount} image(s) to delete");
+            $this->info("Found {$idCount} photo(s) to delete");
             $this->output->newLine();
 
             $bar = $this->output->createProgressBar($idCount);
@@ -90,7 +90,7 @@ class DeleteUnusedPhotosCommand extends Command
 
             $this->info("All done.");
         } else {
-            $this->info("No stray images found!");
+            $this->info("No stray photos found!");
         }
 
     }
