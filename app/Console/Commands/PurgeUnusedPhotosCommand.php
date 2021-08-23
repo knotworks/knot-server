@@ -56,12 +56,12 @@ class PurgeUnusedPhotosCommand extends Command
 
         $existingPaths = PostMedia::all()->map->path->concat(User::all()->map->avatar);
 
-        $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 1]);
+        $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 500]);
 
         $assets = collect($res['resources']);
 
         while(array_key_exists('next_cursor', $res)) {
-            $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 1, 'next_cursor' => $res['next_cursor']]);
+            $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 500, 'next_cursor' => $res['next_cursor']]);
             $assets = $assets->concat($res['resources']);
         };
 
