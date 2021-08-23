@@ -2,11 +2,10 @@
 
 namespace Knot\Console\Commands;
 
+use Cloudinary\Api\Admin\AdminApi;
+use Cloudinary\Cloudinary;
 use Illuminate\Console\Command;
 use Knot\Models\PostMedia;
-use Cloudinary\Cloudinary;
-use Cloudinary\Api\Admin\AdminApi;
-use Cloudinary\Configuration\Configuration;
 
 class PurgeUnusedPhotosCommand extends Command
 {
@@ -29,7 +28,6 @@ class PurgeUnusedPhotosCommand extends Command
      *
      * @return void
      */
-
     public function __construct()
     {
         parent::__construct();
@@ -55,14 +53,14 @@ class PurgeUnusedPhotosCommand extends Command
 
         $existingPaths = PostMedia::all()->map->path;
 
-        $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 1]);
+        $res = (array) $api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 1]);
 
         $assets = collect($res['resources']);
 
-        while(array_key_exists('next_cursor', $res)) {
-            $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 1, 'next_cursor' => $res['next_cursor']]);
+        while (array_key_exists('next_cursor', $res)) {
+            $res = (array) $api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 1, 'next_cursor' => $res['next_cursor']]);
             $assets = $assets->concat($res['resources']);
-        };
+        }
 
         $idsToDelete = ($assets->reject(function ($value) use ($existingPaths) {
             return $existingPaths->contains($value['public_id']);
@@ -77,7 +75,7 @@ class PurgeUnusedPhotosCommand extends Command
             $bar = $this->output->createProgressBar($idCount);
             $bar->start();
 
-            foreach($idsToDelete as $publicId ) {
+            foreach ($idsToDelete as $publicId) {
                 $this->info("Deleting {$publicId}...");
                 $cloudinary->uploadApi()->destroy($publicId);
                 $bar->advance();
@@ -88,10 +86,9 @@ class PurgeUnusedPhotosCommand extends Command
             $this->output->newLine();
             $this->output->newLine();
 
-            $this->info("All done.");
+            $this->info('All done.');
         } else {
-            $this->info("No stray photos found!");
+            $this->info('No stray photos found!');
         }
-
     }
 }
