@@ -38,11 +38,22 @@ class User extends Authenticatable
 
     protected $appends = [
         'full_name',
+        'is_admin',
     ];
 
     public function routeNotificationForTelegram()
     {
         return $this->telegram_user_id;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->email === config('app.admin_email');
     }
 
     /**
@@ -58,6 +69,11 @@ class User extends Authenticatable
     public function getFullNameAttribute($value)
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getIsAdminAttribute($value)
+    {
+        return $this->isAdmin();
     }
 
     /**
@@ -96,10 +112,5 @@ class User extends Authenticatable
         $idsToExclude = collect($ids)->unique()->values()->all();
 
         return self::whereNotIn('id', $idsToExclude)->get();
-    }
-
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
     }
 }

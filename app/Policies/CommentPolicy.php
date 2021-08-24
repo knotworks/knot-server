@@ -12,6 +12,6 @@ class CommentPolicy
 
     public function can_modify_or_delete(User $user, Comment $comment)
     {
-        return $user->id == $comment->user_id;
+        return $user->isAdmin() || $user->id == $comment->user_id;
     }
 }

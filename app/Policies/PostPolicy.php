@@ -17,6 +17,6 @@ class PostPolicy
 
     public function can_modify_or_delete_post(User $user, Post $post)
     {
-        return $user->id == $post->user_id;
+        return $user->isAdmin() || $user->id == $post->user_id;
     }
 }

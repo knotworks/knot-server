@@ -14,6 +14,8 @@ return [
 
     'name' => env('APP_NAME', 'Knot'),
 
+    'admin_email' => env('ADMIN_EMAIL'),
+
     'posts_per_page' => 10,
 
     'disable_new_signups' => env('DISABLE_NEW_SIGNUPS', false),
