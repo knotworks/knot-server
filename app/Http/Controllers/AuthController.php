@@ -22,9 +22,13 @@ class AuthController extends Controller
         return response()->noContent();
     }
 
-    public function destroy()
+    public function destroy(Request $request)
     {
+        auth()->user()->tokens()->delete();
         auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return response()->noContent();
     }

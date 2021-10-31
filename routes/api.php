@@ -5,16 +5,23 @@
 | API Routes
 |--------------------------------------------------------------------------
  */
+Route::post('login', 'AuthController@store')->name('login');
+Route::post('tokens/create', 'TokensController@store')->name('tokens.create');
+Route::post('register', 'UserController@store')->name('register');
+
+Route::post('forgot-password', 'PasswordResetsController@store')->name('password.forgot');
+Route::get('reset-password/{token}', 'PasswordResetsController@show')->name('password.reset');
+Route::post('reset-password', 'PasswordResetsController@update')->name('password.update');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', 'UserController@show');
+    Route::get('/user', 'UserController@show')->name('user');
 
-    Route::put('/profile/avatar', 'ProfileController@updateAvatar');
-    Route::put('/profile/update', 'ProfileController@updateInfo');
-    Route::get('/profile/{user}', 'ProfileController@show');
+    Route::put('/profile/avatar', 'ProfileController@updateAvatar')->name('profile.avatar');
+    Route::put('/profile/update', 'ProfileController@updateInfo')->name('profile.update');
+    Route::get('/profile/{user}', 'ProfileController@show')->name('profile.show');
 
-    Route::get('/notifications', 'NotificationsController@index');
-    Route::delete('/notifications', 'NotificationsController@destroy');
+    Route::get('/notifications', 'NotificationsController@index')->name('notifications.index');
+    Route::delete('/notifications', 'NotificationsController@destroy')->name('notifications.destroy');
 
     Route::post('/posts', 'PostsController@store');
     Route::get('/posts/{post}', 'PostsController@show');
@@ -42,4 +49,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/services/link-meta', 'ServicesController@fetchLinkMeta');
 
     Route::post('/services/generate-cloudinary-signature', 'ServicesController@generateCloudinarySignature');
+
+    Route::post('logout', 'AuthController@destroy');
 });

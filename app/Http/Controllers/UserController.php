@@ -26,9 +26,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (config('app.disable_new_signups')) {
-            return response('Signups have been disabled.', 403);
-        }
+        abort_if(config('app.disable_new_signups'), 403, 'New signups have been disabled.');
 
         $user = $request->validate([
             'first_name' => 'required|string',
