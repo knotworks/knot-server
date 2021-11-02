@@ -7,9 +7,8 @@ use Knot\Models\User;
 use Knot\Models\PostMedia;
 use Cloudinary\Cloudinary;
 use Cloudinary\Api\Admin\AdminApi;
-use Cloudinary\Configuration\Configuration;
 
-class PurgeUnusedPhotosCommand extends Command
+class PurgeUnusedMediaCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -23,7 +22,7 @@ class PurgeUnusedPhotosCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Purges unused photos from Cloudinary';
+    protected $description = 'Purges unused media files from Cloudinary';
 
     /**
      * Create a new command instance.
@@ -44,6 +43,7 @@ class PurgeUnusedPhotosCommand extends Command
     public function handle()
     {
         $env = app()->environment();
+
         $cloudinary = new Cloudinary([
             'cloud' => [
                 'cloud_name' => config('services.cloudinary.cloud_name'),
@@ -54,7 +54,7 @@ class PurgeUnusedPhotosCommand extends Command
 
         $api = new AdminApi($cloudinary->configuration);
 
-        $existingPaths = PostMedia::all()->map->path->concat(User::all()->map->avatar);
+        $existingPaths = collect(PostMedia::all()->map->path->concat(User::all()->map->avatar));
 
         $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 500]);
 
