@@ -20,8 +20,7 @@ class UserController extends Controller
     /**
      * Register a new user.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)

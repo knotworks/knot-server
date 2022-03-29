@@ -50,8 +50,7 @@ class InstallCommand extends Command
     /**
      * Update the .env file from an array of $key => $value pairs.
      *
-     * @param array $updatedValues
-     *
+     * @param  array  $updatedValues
      * @return void
      */
     protected function updateEnvironmentFile($updatedValues)
@@ -113,8 +112,7 @@ class InstallCommand extends Command
     /**
      * Migrate the db with the new credentials.
      *
-     * @param array $credentials
-     *
+     * @param  array  $credentials
      * @return void
      */
     protected function migrateDatabaseWithFreshCredentials($credentials)
@@ -137,9 +135,8 @@ class InstallCommand extends Command
     /**
      * Prompt the user for optional input but hide the answer from the console.
      *
-     * @param string $question
-     * @param bool   $fallback
-     *
+     * @param  string  $question
+     * @param  bool  $fallback
      * @return string
      */
     public function askHiddenWithDefault($question, $fallback = true)
