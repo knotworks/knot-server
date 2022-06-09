@@ -13,9 +13,8 @@ class ReactionsController extends Controller
     /**
      * Add a new reaction to a post.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\Post        $post
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Knot\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Post $post)
