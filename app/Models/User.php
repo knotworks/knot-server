@@ -59,7 +59,7 @@ class User extends Authenticatable
     /**
      * Hash the user's password.
      *
-     * @param string $value
+     * @param  string  $value
      */
     public function setPasswordAttribute($value)
     {
@@ -79,8 +79,7 @@ class User extends Authenticatable
     /**
      * Fetch an activity feed for the given user.
      *
-     * @param User $user
-     *
+     * @param  User  $user
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function timeline()
