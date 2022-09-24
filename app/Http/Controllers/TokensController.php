@@ -5,6 +5,7 @@ namespace Knot\Http\Controllers;
 use Knot\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class TokensController extends Controller
 {
@@ -13,13 +14,18 @@ class TokensController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'device_name' => 'required',
         ]);
 
         $user = User::whereEmail($credentials['email'])->firstOrFail();
 
-        abort_if(!$user || !Hash::check($credentials['password'], $user->password), 401, 'Invalid credentials');
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
 
-        $token = $user->createToken('Personal Access Token');
+        $token = $user->createToken($credentials['device_name']);
 
         return ['token' => $token->plainTextToken];
     }
