@@ -13,7 +13,7 @@ trait KnotFriendable
     use Friendable;
 
     /**
-     * @param Model $recipient
+     * @param  Model  $recipient
      * @return bool|Friendship
      */
     public function befriend(Model $recipient)
@@ -34,7 +34,7 @@ trait KnotFriendable
     }
 
     /**
-     * @param Model $recipient
+     * @param  Model  $recipient
      * @return mixed
      */
     public function unfriend(Model $recipient)
@@ -47,7 +47,7 @@ trait KnotFriendable
     }
 
     /**
-     * @param Model $recipient
+     * @param  Model  $recipient
      * @return mixed
      */
     public function acceptFriendRequest(Model $recipient)
@@ -62,7 +62,7 @@ trait KnotFriendable
     }
 
     /**
-     * @param Model $recipient
+     * @param  Model  $recipient
      * @return mixed
      */
     public function denyFriendRequest(Model $recipient)
@@ -77,7 +77,7 @@ trait KnotFriendable
     }
 
     /**
-     * @param Model $recipient
+     * @param  Model  $recipient
      * @return Friendship
      */
     public function blockFriend(Model $recipient)
@@ -100,7 +100,7 @@ trait KnotFriendable
     }
 
     /**
-     * @param Model $recipient
+     * @param  Model  $recipient
      * @return mixed
      */
     public function unblockFriend(Model $recipient)
