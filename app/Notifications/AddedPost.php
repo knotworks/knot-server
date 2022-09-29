@@ -15,7 +15,7 @@ class AddedPost extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param Post $post
+     * @param  Post  $post
      */
     public function __construct(Post $post)
     {

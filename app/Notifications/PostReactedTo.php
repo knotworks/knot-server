@@ -14,7 +14,7 @@ class PostReactedTo extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param Reaction $reaction
+     * @param  Reaction  $reaction
      */
     public function __construct(Reaction $reaction)
     {
@@ -24,8 +24,7 @@ class PostReactedTo extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)

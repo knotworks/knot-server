@@ -12,7 +12,7 @@ class CommentRepliedTo extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param Comment $comment
+     * @param  Comment  $comment
      */
     public function __construct(Comment $comment)
     {
@@ -22,8 +22,7 @@ class CommentRepliedTo extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
