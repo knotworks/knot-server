@@ -22,9 +22,8 @@ class FriendshipsController extends Controller
     /**
      * Send a friend request to another user.
      *
-     * @param Request $request
-     * @param User    $recipient
-     *
+     * @param  Request  $request
+     * @param  User  $recipient
      * @return \Illuminate\Http\Response
      */
     public function addFriend(Request $request, User $recipient)
@@ -39,9 +38,8 @@ class FriendshipsController extends Controller
     /**
      * Accept a friend request from another user.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\User        $sender
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Knot\Models\User  $sender
      * @return \Illuminate\Http\Response
      */
     public function acceptFriendship(Request $request, User $sender)
@@ -56,9 +54,8 @@ class FriendshipsController extends Controller
     /**
      * Deny a friend request from another user.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\User        $sender
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Knot\Models\User  $sender
      * @return \Illuminate\Http\Response
      */
     public function denyFriendship(Request $request, User $sender)
@@ -71,9 +68,8 @@ class FriendshipsController extends Controller
     /**
      * Unfriend a user.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\User        $friend
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Knot\Models\User  $friend
      * @return \Illuminate\Http\Response
      */
     public function unfriend(Request $request, User $friend)

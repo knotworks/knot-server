@@ -44,6 +44,6 @@ return [
         'encrypt_cookies' => Knot\Http\Middleware\EncryptCookies::class,
     ],
 
-    'prefix' => 'api/sanctum'
+    'prefix' => 'api/sanctum',
 
 ];
