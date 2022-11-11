@@ -2,10 +2,10 @@
 
 namespace Knot\Http\Controllers;
 
-use Knot\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Knot\Models\User;
 
 class TokensController extends Controller
 {
@@ -19,7 +19,7 @@ class TokensController extends Controller
 
         $user = User::whereEmail($credentials['email'])->firstOrFail();
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+        if (! $user || ! Hash::check($credentials['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
