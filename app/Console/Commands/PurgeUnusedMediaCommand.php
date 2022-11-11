@@ -2,11 +2,11 @@
 
 namespace Knot\Console\Commands;
 
-use Illuminate\Console\Command;
-use Knot\Models\User;
-use Knot\Models\PostMedia;
-use Cloudinary\Cloudinary;
 use Cloudinary\Api\Admin\AdminApi;
+use Cloudinary\Cloudinary;
+use Illuminate\Console\Command;
+use Knot\Models\PostMedia;
+use Knot\Models\User;
 
 class PurgeUnusedMediaCommand extends Command
 {
@@ -29,7 +29,6 @@ class PurgeUnusedMediaCommand extends Command
      *
      * @return void
      */
-
     public function __construct()
     {
         parent::__construct();
@@ -56,14 +55,14 @@ class PurgeUnusedMediaCommand extends Command
 
         $existingPaths = collect(PostMedia::all()->map->path->concat(User::all()->map->avatar));
 
-        $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 500]);
+        $res = (array) $api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 500]);
 
         $assets = collect($res['resources']);
 
         while (array_key_exists('next_cursor', $res)) {
-            $res = (array)$api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 500, 'next_cursor' => $res['next_cursor']]);
+            $res = (array) $api->assets(['prefix' => $env, 'type' => 'upload', 'max_results' => 500, 'next_cursor' => $res['next_cursor']]);
             $assets = $assets->concat($res['resources']);
-        };
+        }
 
         $idsToDelete = ($assets->reject(function ($value) use ($existingPaths) {
             return $existingPaths->contains($value['public_id']);
@@ -89,9 +88,9 @@ class PurgeUnusedMediaCommand extends Command
             $this->output->newLine();
             $this->output->newLine();
 
-            $this->info("All done.");
+            $this->info('All done.');
         } else {
-            $this->info("No stray photos found!");
+            $this->info('No stray photos found!');
         }
     }
 }
