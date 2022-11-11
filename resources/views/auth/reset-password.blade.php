@@ -78,7 +78,7 @@
 <body>
   <div class="container">
     <h1>Reset Your Password</h1>
-    <form action="/reset-password" method="POST">
+    <form action="/api/reset-password" method="POST">
       @csrf
       <input type="hidden" name="token" value="{{ $token }}">
       <input type="hidden" name="email" value="{{ request('email') }}">
