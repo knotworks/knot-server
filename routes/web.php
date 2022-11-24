@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return 'This is an API, go away! >:-(';
 });
+
+Route::post('login', 'AuthController@store')->name('login');
+Route::post('logout', 'AuthController@destroy')->middleware('auth:sanctum')->name('logout');

@@ -13,7 +13,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (! auth()->attempt($credentials, true)) {
+        if (!auth()->attempt($credentials, true)) {
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }
 
@@ -25,7 +25,7 @@ class AuthController extends Controller
     public function destroy(Request $request)
     {
         auth()->user()->tokens()->delete();
-        auth()->logout();
+        auth()->guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

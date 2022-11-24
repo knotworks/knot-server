@@ -5,7 +5,6 @@
 | API Routes
 |--------------------------------------------------------------------------
  */
-Route::post('login', 'AuthController@store')->name('login');
 Route::post('tokens/create', 'TokensController@store')->name('tokens.create');
 Route::post('register', 'UserController@store')->name('register');
 
@@ -49,6 +48,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/services/link-meta', 'ServicesController@fetchLinkMeta');
 
     Route::post('/services/generate-cloudinary-signature', 'ServicesController@generateCloudinarySignature');
-
-    Route::post('logout', 'AuthController@destroy');
 });

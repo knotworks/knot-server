@@ -19,7 +19,7 @@ class AuthenticationTest extends TestCase
             'password' => 'password',
         ];
 
-        $this->postJson('login', $credentials)->assertStatus(204);
+        $this->post('login', $credentials)->assertStatus(204);
 
         $this->assertTrue(auth()->user()->is($user));
     }
@@ -29,8 +29,8 @@ class AuthenticationTest extends TestCase
     {
         $this->login();
 
-        $this->postJson('logout')->assertStatus(204);
+        $this->post('logout')->assertStatus(204);
 
-        $this->assertGuest();
+        $this->assertGuest('web');
     }
 }
