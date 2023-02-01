@@ -22,8 +22,7 @@ class ProfileController extends Controller
     /**
      * Set the user's avatar.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function updateAvatar(Request $request)
