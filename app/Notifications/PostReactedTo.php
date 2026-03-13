@@ -1,9 +1,11 @@
 <?php
 
-namespace Knot\Notifications;
+declare(strict_types=1);
 
+namespace App\Notifications;
+
+use App\Models\Reaction;
 use Illuminate\Notifications\Notification;
-use Knot\Models\Reaction;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
@@ -13,8 +15,6 @@ class PostReactedTo extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param Reaction $reaction
      */
     public function __construct(Reaction $reaction)
     {
@@ -24,8 +24,7 @@ class PostReactedTo extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -62,6 +61,6 @@ class PostReactedTo extends Notification
         ];
 
         return TelegramMessage::create()
-            ->content('*'.$this->reaction->user->first_name.'* '.$reactions[$this->reaction->type].' at your post.');
+            ->content('*' . $this->reaction->user->first_name . '* ' . $reactions[$this->reaction->type] . ' at your post.');
     }
 }

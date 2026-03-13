@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Knot\Models\User;
 use Laravel\Sanctum\Sanctum;
 
 abstract class TestCase extends BaseTestCase

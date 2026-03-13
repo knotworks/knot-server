@@ -1,35 +1,25 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Knot\Models\User;
-use Tests\TestCase;
+use App\Models\User;
 
-class UserTest extends TestCase
-{
-    use RefreshDatabase;
+it('can register a new user', function (): void {
+    $userData = [
+        'first_name' => 'Jane',
+        'last_name' => 'Doe',
+        'email' => 'jane@janedoe.com',
+        'password' => 'foobar',
+        'password_confirmation' => 'foobar',
+    ];
 
-    /** @test */
-    public function can_register_a_new_user()
-    {
-        $userData = [
-            'first_name' => 'Jane',
-            'last_name' => 'Doe',
-            'email' => 'jane@janedoe.com',
-            'password' => 'foobar',
-            'password_confirmation' => 'foobar',
-        ];
+    $this->postJson('api/register', $userData)->assertStatus(201);
 
-        $this->postJson('api/register', $userData)->assertStatus(201);
-        $this->assertCount(1, User::all());
-    }
+    expect(User::count())->toBe(1);
+});
 
-    /** @test */
-    public function can_fetch_an_authenticated_user()
-    {
-        $this->login();
+it('can fetch an authenticated user', function (): void {
+    $this->login();
 
-        $this->getJson('api/user')->assertStatus(200);
-    }
-}
+    $this->getJson('api/user')->assertStatus(200);
+});

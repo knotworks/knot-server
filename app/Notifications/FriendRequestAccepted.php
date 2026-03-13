@@ -1,9 +1,11 @@
 <?php
 
-namespace Knot\Notifications;
+declare(strict_types=1);
 
+namespace App\Notifications;
+
+use App\Models\User;
 use Illuminate\Notifications\Notification;
-use Knot\Models\User;
 
 class FriendRequestAccepted extends Notification
 {
@@ -11,8 +13,6 @@ class FriendRequestAccepted extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param User $recipient
      */
     public function __construct(User $recipient)
     {
@@ -22,8 +22,7 @@ class FriendRequestAccepted extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)

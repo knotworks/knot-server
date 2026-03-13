@@ -1,9 +1,12 @@
 <?php
 
-namespace Knot\Models;
+declare(strict_types=1);
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Location extends Model
 {
@@ -14,7 +17,7 @@ class Location extends Model
     /**
      * Fetch the associated subject for the location.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function locatable()
     {

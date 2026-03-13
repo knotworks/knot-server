@@ -1,18 +1,21 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
 
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use App\Notifications\AddedAsFriend;
+use App\Notifications\FriendRequestAccepted;
 use Illuminate\Http\Request;
-use Knot\Models\User;
-use Knot\Notifications\AddedAsFriend;
-use Knot\Notifications\FriendRequestAccepted;
+use Illuminate\Http\Response;
 
 class FriendshipsController extends Controller
 {
     /**
      * Return a user's friendship data.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -22,10 +25,8 @@ class FriendshipsController extends Controller
     /**
      * Send a friend request to another user.
      *
-     * @param Request $request
-     * @param User    $recipient
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function addFriend(Request $request, User $recipient)
     {
@@ -39,10 +40,8 @@ class FriendshipsController extends Controller
     /**
      * Accept a friend request from another user.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\User        $sender
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function acceptFriendship(Request $request, User $sender)
     {
@@ -56,10 +55,8 @@ class FriendshipsController extends Controller
     /**
      * Deny a friend request from another user.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\User        $sender
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function denyFriendship(Request $request, User $sender)
     {
@@ -71,10 +68,8 @@ class FriendshipsController extends Controller
     /**
      * Unfriend a user.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\User        $friend
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function unfriend(Request $request, User $friend)
     {

@@ -1,22 +1,23 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
 
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use App\Models\Reaction;
+use App\Notifications\PostReactedTo;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
-use Knot\Models\Post;
-use Knot\Models\Reaction;
-use Knot\Notifications\PostReactedTo;
 
 class ReactionsController extends Controller
 {
     /**
      * Add a new reaction to a post.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\Post        $post
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request, Post $post)
     {

@@ -1,36 +1,25 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Knot\Models\User;
-use Tests\TestCase;
+use App\Models\User;
 
-class AuthenticationTest extends TestCase
-{
-    use RefreshDatabase;
+it('allows a user to log in', function (): void {
+    $user = create(User::class, ['password' => 'password']);
+    $credentials = [
+        'email' => $user->email,
+        'password' => 'password',
+    ];
 
-    /** @test */
-    public function a_user_can_login()
-    {
-        $user = create(User::class, ['password' => 'password']);
-        $credentials = [
-            'email' => $user->email,
-            'password' => 'password',
-        ];
+    $this->post('login', $credentials)->assertStatus(204);
 
-        $this->post('login', $credentials)->assertStatus(204);
+    expect(auth()->user()->is($user))->toBeTrue();
+});
 
-        $this->assertTrue(auth()->user()->is($user));
-    }
+it('allows a user to log out', function (): void {
+    $this->login();
 
-    /** @test */
-    public function a_user_can_logout()
-    {
-        $this->login();
+    $this->post('logout')->assertStatus(204);
 
-        $this->post('logout')->assertStatus(204);
-
-        $this->assertGuest('web');
-    }
-}
+    $this->assertGuest('web');
+});

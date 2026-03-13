@@ -1,43 +1,26 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
 use Database\Factories\DatabaseNotificationFactory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class NotificationsTest extends TestCase
-{
-    use RefreshDatabase;
+beforeEach(function (): void {
+    $this->post = create('App\Models\Post');
+    $this->login();
+});
 
-    protected $post;
+it('allows a user to fetch their notifications', function (): void {
+    DatabaseNotificationFactory::new()->create();
 
-    public function setup(): void
-    {
-        parent::setup();
+    expect($this->getJson('/api/notifications')->json()['data'])->toHaveCount(1);
+});
 
-        $this->post = create('Knot\Models\Post');
-        $this->login();
-    }
+it('allows a user to mark their notifications as read', function (): void {
+    DatabaseNotificationFactory::new()->create();
 
-    /** @test */
-    public function a_user_can_fetch_their_notifications()
-    {
-        DatabaseNotificationFactory::new()->create();
+    expect(auth()->user()->unreadNotifications)->toHaveCount(1);
 
-        $this->assertCount(
-            1,
-            $this->getJson('/api/notifications')->json()['data']
-        );
-    }
+    $this->deleteJson('/api/notifications')->assertStatus(204);
 
-    /** @test */
-    public function a_user_can_mark_their_notifications_as_read()
-    {
-        DatabaseNotificationFactory::new()->create();
-
-        $this->assertCount(1, auth()->user()->unreadNotifications);
-        $this->deleteJson('/api/notifications')->assertStatus(204);
-        $this->assertCount(0, auth()->user()->fresh()->unreadNotifications);
-    }
-}
+    expect(auth()->user()->fresh()->unreadNotifications)->toHaveCount(0);
+});

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Location;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Knot\Models\Location;
-use Knot\Models\Post;
 
 class LocationFactory extends Factory
 {

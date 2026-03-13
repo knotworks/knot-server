@@ -1,121 +1,89 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Notifications\CommentRepliedTo;
+use App\Notifications\PostCommentedOn;
 use Illuminate\Support\Facades\Notification;
-use Knot\Notifications\CommentRepliedTo;
-use Knot\Notifications\PostCommentedOn;
-use Tests\TestCase;
 
-class CommentsTest extends TestCase
-{
-    use RefreshDatabase;
+beforeEach(function (): void {
+    Notification::fake();
+    $this->user = create('App\Models\User');
+    $this->post = create('App\Models\Post', ['user_id' => $this->user->id]);
+    $this->login();
+});
 
-    protected $user;
-    protected $post;
+it('prevents a user from seeing comments on a post that does not belong to a friend', function (): void {
+    $this->getJson('api/posts/' . $this->post->id . '/comments')->assertStatus(403);
+});
 
-    public function setup(): void
-    {
-        parent::setup();
+it('allows a user to see comments on a post that belongs to a friend', function (): void {
+    $this->createFriendship(auth()->user(), $this->user);
 
-        Notification::fake();
-        $this->user = create('Knot\Models\User');
-        $this->post = create('Knot\Models\Post', ['user_id' => $this->user->id]);
-        $this->login();
-    }
+    $this->getJson('api/posts/' . $this->post->id . '/comments')->assertStatus(200);
+});
 
-    /** @test */
-    public function a_user_cannot_see_comments_on_a_post_that_does_not_belong_to_a_friend()
-    {
-        $this->getJson('api/posts/'.$this->post->id.'/comments')->assertStatus(403);
-    }
+it('prevents a user from commenting on a post that does not belong to a friend', function (): void {
+    $this->withExceptionHandling();
 
-    /** @test */
-    public function a_user_can_see_comments_on_a_post_that_belongs_to_a_friend()
-    {
-        $this->createFriendship(auth()->user(), $this->user);
+    $this->postJson('api/posts/' . $this->post->id . '/comments', ['body' => 'This is a comment'])->assertStatus(403);
+});
 
-        $this->getJson('api/posts/'.$this->post->id.'/comments')->assertStatus(200);
-    }
+it('allows a user to comment on a post that belongs to a friend', function (): void {
+    $this->createFriendship(auth()->user(), $this->user);
 
-    /** @test */
-    public function a_user_cannot_comment_on_a_post_that_does_not_belong_to_a_friend()
-    {
-        $this->withExceptionHandling();
+    $this->postJson('api/posts/' . $this->post->id . '/comments', ['body' => 'This is a comment'])->assertStatus(201);
 
-        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment'])->assertStatus(403);
-    }
+    $this->assertDatabaseHas('comments', ['post_id' => $this->post->id]);
+});
 
-    /** @test */
-    public function a_user_can_comment_on_a_post_if_it_does_belong_to_a_friend()
-    {
-        $this->createFriendship(auth()->user(), $this->user);
+it('prevents a user from updating a comment that does not belong to them', function (): void {
+    $this->withExceptionHandling();
 
-        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment'])->assertStatus(201);
-        $this->assertDatabaseHas('comments', ['post_id' => $this->post->id]);
-    }
+    $comment = create('App\Models\Comment');
 
-    /** @test */
-    public function a_user_cannot_update_a_comment_that_does_not_belong_to_them()
-    {
-        $this->withExceptionHandling();
+    $this->putJson('api/comments/' . $comment->id, ['body' => 'Updating comment'])->assertStatus(403);
+});
 
-        $comment = create('Knot\Models\Comment');
+it('allows a user to update their own comments', function (): void {
+    $comment = create('App\Models\Comment', ['user_id' => auth()->id()]);
 
-        $this->putJson('api/comments/'.$comment->id, ['body' => 'Updating comment'])->assertStatus(403);
-    }
+    $this->putJson('api/comments/' . $comment->id, ['body' => 'Updating comment'])->assertStatus(200);
+});
 
-    /** @test */
-    public function a_user_can_update_their_own_comments()
-    {
-        $comment = create('Knot\Models\Comment', ['user_id' => auth()->id()]);
+it('prevents a user from deleting a comment that does not belong to them', function (): void {
+    $comment = create('App\Models\Comment');
 
-        $this->putJson('api/comments/'.$comment->id, ['body' => 'Updating comment'])->assertStatus(200);
-    }
+    $this->deleteJson('api/comments/' . $comment->id)->assertStatus(403);
+});
 
-    /** @test */
-    public function a_user_cannot_delete_a_comment_that_does_not_belong_to_them()
-    {
-        $comment = create('Knot\Models\Comment');
+it('allows a user to delete their own comments', function (): void {
+    $comment = create('App\Models\Comment', ['user_id' => auth()->id()]);
 
-        $this->deleteJson('api/comments/'.$comment->id)->assertStatus(403);
-    }
+    $this->deleteJson('/api/comments/' . $comment->id)->assertStatus(204);
+});
 
-    /** @test */
-    public function a_user_can_delete_their_own_comments()
-    {
-        $comment = create('Knot\Models\Comment', ['user_id' => auth()->id()]);
+it('notifies the post author when a user comments on their post', function (): void {
+    $author = $this->post->user;
+    $this->createFriendship(auth()->user(), $author);
 
-        $this->deleteJson('/api/comments/'.$comment->id)->assertStatus(204);
-    }
+    $this->postJson('api/posts/' . $this->post->id . '/comments', ['body' => 'This is a comment']);
 
-    /** @test */
-    public function a_post_author_is_notified_when_a_user_comments_on_their_post()
-    {
-        $author = $this->post->user;
-        $this->createFriendship(auth()->user(), $author);
+    Notification::assertSentTo($author, PostCommentedOn::class);
+});
 
-        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
+it('notifies thread participants except for the post author and comment author', function (): void {
+    $author = $this->post->user;
+    $this->createFriendship(auth()->user(), $author);
+    create('App\Models\Comment', ['post_id' => $this->post->id], 4);
 
-        Notification::assertSentTo($author, PostCommentedOn::class);
-    }
+    $this->postJson('api/posts/' . $this->post->id . '/comments', ['body' => 'This is a comment']);
 
-    /** @test */
-    public function participants_in_a_comments_thread_are_notified_except_for_the_post_author_and_comment_author()
-    {
-        $author = $this->post->user;
-        $this->createFriendship(auth()->user(), $author);
-        create('Knot\Models\Comment', ['post_id' => $this->post->id], 4);
+    $commenters = $this->post->comments->slice(0, -1)->map(function ($comment) {
+        return $comment->user;
+    });
 
-        $this->postJson('api/posts/'.$this->post->id.'/comments', ['body' => 'This is a comment']);
-
-        $commenters = $this->post->comments->slice(0, -1)->map(function ($comment) {
-            return $comment->user;
-        });
-
-        Notification::assertSentTo($commenters, CommentRepliedTo::class);
-        Notification::assertNotSentTo($author, CommentRepliedTo::class);
-        Notification::assertSentTo($author, PostCommentedOn::class);
-    }
-}
+    Notification::assertSentTo($commenters, CommentRepliedTo::class);
+    Notification::assertNotSentTo($author, CommentRepliedTo::class);
+    Notification::assertSentTo($author, PostCommentedOn::class);
+});

@@ -1,6 +1,8 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
+
+namespace App\Http\Controllers;
 
 class TimelineController extends Controller
 {

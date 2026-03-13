@@ -1,9 +1,12 @@
 <?php
 
-namespace Knot\Models;
+declare(strict_types=1);
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reaction extends Model
 {
@@ -23,7 +26,7 @@ class Reaction extends Model
     /**
      * Fetch the associated post for the reaction.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function post()
     {
@@ -33,7 +36,7 @@ class Reaction extends Model
     /**
      * Fetch the associated user for the reaction.
      *
-     * @return \Knot\Models\User
+     * @return User
      */
     public function user()
     {

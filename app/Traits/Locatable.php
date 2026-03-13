@@ -1,6 +1,10 @@
 <?php
 
-namespace Knot\Traits;
+declare(strict_types=1);
+
+namespace App\Traits;
+
+use App\Models\Location;
 
 trait Locatable
 {
@@ -15,7 +19,7 @@ trait Locatable
 
     public function location()
     {
-        return $this->morphOne(\Knot\Models\Location::class, 'locatable');
+        return $this->morphOne(Location::class, 'locatable');
     }
 
     public function addLocation($location)

@@ -1,12 +1,13 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
 
-use Cloudinary\Api\ApiUtils;
+namespace App\Http\Controllers;
+
+use App\Contracts\CurrentLocationService;
+use App\Contracts\LinkMetaService;
+use App\Contracts\NearbyService;
 use Illuminate\Http\Request;
-use Knot\Contracts\CurrentLocationService;
-use Knot\Contracts\LinkMetaService;
-use Knot\Contracts\NearbyService;
 
 class ServicesController extends Controller
 {
@@ -37,14 +38,5 @@ class ServicesController extends Controller
         ]);
 
         return $linkMeta->fetch($request->input('url'));
-    }
-
-    public function generateCloudinarySignature(Request $request)
-    {
-        $request->validate([
-            'timestamp' => 'required',
-        ]);
-
-        return ApiUtils::signParameters($request->only('timestamp', 'upload_preset', 'folder'), config('services.cloudinary.secret'));
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
-namespace Knot\Notifications;
+declare(strict_types=1);
 
+namespace App\Notifications;
+
+use App\Models\Comment;
 use Illuminate\Notifications\Notification;
-use Knot\Models\Comment;
 
 class CommentRepliedTo extends Notification
 {
@@ -11,8 +13,6 @@ class CommentRepliedTo extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param Comment $comment
      */
     public function __construct(Comment $comment)
     {
@@ -22,8 +22,7 @@ class CommentRepliedTo extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)

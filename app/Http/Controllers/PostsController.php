@@ -1,68 +1,65 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Knot\Models\Post;
-use Knot\Notifications\AddedPost;
-use Knot\Traits\AddsAccompaniments;
-use Knot\Traits\AddsLocation;
-use Notification;
+namespace App\Http\Controllers;
+
+use App\Http\Requests\StorePostRequest;
+use App\Jobs\ProcessPostMedia;
+use App\Models\Post;
+use App\Notifications\AddedPost;
+use App\Services\MediaPathGenerator;
+use App\Traits\AddsAccompaniments;
+use App\Traits\AddsLocation;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Validation\Validator;
 
 class PostsController extends Controller
 {
-    use AddsLocation, AddsAccompaniments;
+    use AddsAccompaniments, AddsLocation;
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request, MediaPathGenerator $mediaPathGenerator)
     {
-        $request->validate([
-            'body' => [
-                Rule::requiredIf(! ($request->has('media') && count($request->input('media')))),
-                'nullable',
-                'string',
-            ],
-        ]);
-
         $post = auth()->user()->posts()->create([
             'body' => $request->input('body'),
         ]);
 
-        if ($request->has('media')) {
-            $validator = Validator::make($request->all(), [
-                'media' => 'present|array|min:0|max:5',
-                'media.*.path' => 'required|string',
-                'media.*.width' => 'required|integer',
-                'media.*.height' => 'required|integer',
-                'media.*.type' => 'required|in:image,video',
-            ]);
-
-            if ($validator->fails()) {
-                $post->delete();
-
-                return response(['errors' => $validator->errors()], 422);
-            }
-
-            foreach ($request->input('media') as $media) {
-                $post->media()->create([
-                    'path' => $media['path'],
-                    'width' => $media['width'],
-                    'height' => $media['height'],
-                    'type' => $media['type'],
+        if ($request->hasFile('media')) {
+            foreach ($request->file('media') as $index => $mediaFile) {
+                $media = $post->media()->create([
+                    'type' => str_starts_with((string) $mediaFile->getMimeType(), 'video/') ? 'video' : 'image',
+                    'disk' => config('media.disk'),
+                    'status' => 'pending',
+                    'sort_order' => $index,
+                    'mime_type' => $mediaFile->getMimeType(),
+                    'bytes' => $mediaFile->getSize(),
                 ]);
+
+                $temporaryPath = $mediaPathGenerator->temporaryPostMediaPath($media, $mediaFile);
+
+                $mediaFile->storeAs(
+                    dirname($temporaryPath),
+                    basename($temporaryPath),
+                    config('media.temporary_disk'),
+                );
+
+                $media->forceFill([
+                    'temporary_path' => $temporaryPath,
+                ])->save();
+
+                ProcessPostMedia::dispatch($media->id)->afterCommit();
             }
         }
 
         if ($request->filled('location')) {
             $location = $this->setLocation($request, $post);
-            if ($location instanceof \Illuminate\Validation\Validator) {
+            if ($location instanceof Validator) {
                 return response(['errors' => $location->errors()], 422);
             }
         }
         if ($request->filled('accompaniments')) {
             $accompaniments = $this->setAccompaniments($request, $post);
-            if ($accompaniments instanceof \Illuminate\Validation\Validator) {
+            if ($accompaniments instanceof Validator) {
                 return response(['errors' => $accompaniments->errors()], 422);
             }
         }
@@ -73,14 +70,14 @@ class PostsController extends Controller
             Notification::send($friendsToNotify, new AddedPost($post));
         }
 
-        return $post->load('location', 'user', 'comments', 'reactions.user', 'accompaniments', 'media');
+        return $post->load(Post::relationsForViewer(auth()->user()));
     }
 
     public function show(Post $post)
     {
         $this->authorize('can_view_post', $post);
 
-        return $post->load(['location', 'user', 'comments', 'reactions.user', 'accompaniments']);
+        return $post->load(Post::relationsForViewer(auth()->user()));
     }
 
     public function destroy(Post $post)

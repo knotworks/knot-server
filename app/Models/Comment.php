@@ -1,22 +1,26 @@
 <?php
 
-namespace Knot\Models;
+declare(strict_types=1);
 
+namespace App\Models;
+
+use App\Traits\Locatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Knot\Traits\Locatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
-    use Locatable, HasFactory;
+    use HasFactory, Locatable;
 
     protected $guarded = [];
+
     protected $with = ['user', 'location'];
 
     /**
      * Fetch the associated post for the reaction.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function post()
     {
@@ -26,7 +30,7 @@ class Comment extends Model
     /**
      * Fetch the associated user for the reaction.
      *
-     * @return \Knot\Models\User
+     * @return User
      */
     public function user()
     {

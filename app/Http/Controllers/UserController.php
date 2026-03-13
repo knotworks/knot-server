@@ -1,16 +1,19 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
 
+namespace App\Http\Controllers;
+
+use App\Models\User;
 use Illuminate\Http\Request;
-use Knot\Models\User;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
     /**
      * Return the authenticated user.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show()
     {
@@ -20,9 +23,8 @@ class UserController extends Controller
     /**
      * Register a new user.
      *
-     * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {

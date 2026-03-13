@@ -1,11 +1,17 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
 
+namespace App\Http\Controllers;
+
+use App\Http\Requests\UpdateAvatarRequest;
+use App\Jobs\ProcessAvatarUpload;
+use App\Models\User;
+use App\Services\MediaPathGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Knot\Models\User;
 
 class ProfileController extends Controller
 {
@@ -22,17 +28,37 @@ class ProfileController extends Controller
     /**
      * Set the user's avatar.
      *
-     * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function updateAvatar(Request $request)
+    public function updateAvatar(UpdateAvatarRequest $request, MediaPathGenerator $mediaPathGenerator)
     {
-        $avatar = $request->validate(['avatar' => 'required|string']);
+        $user = auth()->user();
+        $avatar = $request->file('avatar');
+        $temporaryPath = $mediaPathGenerator->temporaryAvatarPath($user, $avatar);
 
-        auth()->user()->update($avatar);
+        $avatar->storeAs(
+            dirname($temporaryPath),
+            basename($temporaryPath),
+            config('media.temporary_disk'),
+        );
 
-        return auth()->user();
+        $user->forceFill([
+            'avatar_status' => 'pending',
+            'avatar_disk' => config('media.disk'),
+            'avatar_temporary_path' => $temporaryPath,
+            'avatar_mime_type' => $avatar->getMimeType(),
+            'avatar_bytes' => $avatar->getSize(),
+            'avatar_failure_code' => null,
+            'avatar_failure_message' => null,
+            'avatar_processing_started_at' => null,
+            'avatar_processed_at' => null,
+            'avatar_failed_at' => null,
+        ])->save();
+
+        ProcessAvatarUpload::dispatch($user->id)->afterCommit();
+
+        return $user->fresh();
     }
 
     public function updateInfo(Request $request)

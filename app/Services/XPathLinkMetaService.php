@@ -1,8 +1,10 @@
 <?php
 
-namespace Knot\Services;
+declare(strict_types=1);
 
-use Knot\Contracts\LinkMetaService;
+namespace App\Services;
+
+use App\Contracts\LinkMetaService;
 use Symfony\Component\DomCrawler\Crawler;
 
 class XPathLinkMetaService implements LinkMetaService

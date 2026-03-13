@@ -1,48 +1,30 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Knot\Contracts\LinkMetaService;
-use Knot\Services\OpenGraphLinkMetaService;
-use Mockery;
+use App\Contracts\LinkMetaService;
+use App\Services\OpenGraphLinkMetaService;
 use Mockery\MockInterface;
-use Tests\TestCase;
 
-class OpenGraphLinkMetaServiceTest extends TestCase
-{
-    use RefreshDatabase;
+beforeEach(function (): void {
+    $this->login();
+    $this->fakeResponse = ['title' => 'Syropia', 'description' => 'An on-line website', 'image' => 'foo.jpg'];
 
-    protected $fakeResponse;
+    $this->instance(
+        LinkMetaService::class,
+        Mockery::mock(OpenGraphLinkMetaService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('fetch')->andReturn($this->fakeResponse);
+        }),
+    );
+});
 
-    public function setup(): void
-    {
-        parent::setup();
+it('can use the opengraph service to fetch a links meta info', function (): void {
+    $this->postJson('api/services/link-meta', [
+        'url' => 'https://format.com',
+    ])->assertStatus(200)->assertJson($this->fakeResponse);
+});
 
-        $this->login();
-        $this->fakeResponse = ['title' => 'Syropia', 'description' => 'An on-line website', 'image' => 'foo.jpg'];
-
-        $this->instance(
-            LinkMetaService::class,
-            Mockery::mock(OpenGraphLinkMetaService::class, function (MockInterface $mock) {
-                $mock->shouldReceive('fetch')->andReturn($this->fakeResponse);
-            }),
-        );
-    }
-
-    /** @test */
-    public function can_use_the_opengraph_service_to_fetch_a_links_meta_info()
-    {
-        $this->postJson('api/services/link-meta', [
-            'url' => 'https://format.com',
-        ])->assertStatus(200)->assertJson($this->fakeResponse);
-    }
-
-    /** @test */
-    public function a_valid_url_is_required()
-    {
-        $this->postJson('api/services/link-meta', [])->assertStatus(422);
-
-        $this->postJson('api/services/link-meta', ['url' => 'htf:/bad.url'])->assertStatus(422);
-    }
-}
+it('requires a valid url', function (): void {
+    $this->postJson('api/services/link-meta', [])->assertStatus(422);
+    $this->postJson('api/services/link-meta', ['url' => 'htf:/bad.url'])->assertStatus(422);
+});

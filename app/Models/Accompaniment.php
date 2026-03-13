@@ -1,9 +1,12 @@
 <?php
 
-namespace Knot\Models;
+declare(strict_types=1);
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Accompaniment extends Model
 {
@@ -14,7 +17,7 @@ class Accompaniment extends Model
     /**
      * Fetch the associated post for the accompaniment.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function post()
     {
@@ -24,7 +27,7 @@ class Accompaniment extends Model
     /**
      * Fetch the associated user for the accompaniment.
      *
-     * @return \Knot\Models\User
+     * @return User
      */
     public function user()
     {

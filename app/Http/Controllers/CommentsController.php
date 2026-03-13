@@ -1,14 +1,18 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
 
+namespace App\Http\Controllers;
+
+use App\Models\Comment;
+use App\Models\Post;
+use App\Notifications\CommentRepliedTo;
+use App\Notifications\PostCommentedOn;
+use App\Traits\AddsLocation;
 use Illuminate\Http\Request;
-use Knot\Models\Comment;
-use Knot\Models\Post;
-use Knot\Notifications\CommentRepliedTo;
-use Knot\Notifications\PostCommentedOn;
-use Knot\Traits\AddsLocation;
-use Notification;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Validation\Validator;
 
 class CommentsController extends Controller
 {
@@ -17,9 +21,8 @@ class CommentsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Knot\Models\Post $post
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Post $post)
     {
@@ -31,10 +34,8 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\Post        $post
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request, Post $post)
     {
@@ -49,7 +50,7 @@ class CommentsController extends Controller
 
         if ($request->filled('location')) {
             $location = $this->setLocation($request, $comment);
-            if ($location instanceof \Illuminate\Validation\Validator) {
+            if ($location instanceof Validator) {
                 return response(['errors' => $location->errors()], 422);
             }
         }
@@ -75,10 +76,8 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Knot\Models\Comment     $comment
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, Comment $comment)
     {
@@ -94,9 +93,8 @@ class CommentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Knot\Models\Comment $comment
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Comment $comment)
     {

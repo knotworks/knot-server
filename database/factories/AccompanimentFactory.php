@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Accompaniment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Knot\Models\Accompaniment;
-use Knot\Models\Post;
-use Knot\Models\User;
 
 class AccompanimentFactory extends Factory
 {

@@ -1,0 +1,28 @@
+services:
+  app:
+    environment:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/html/storage/database.sqlite
+    depends_on:
+      redis:
+        condition: service_started
+
+  queue:
+    environment:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/html/storage/database.sqlite
+    depends_on:
+      redis:
+        condition: service_started
+
+  scheduler:
+    environment:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/html/storage/database.sqlite
+    depends_on:
+      redis:
+        condition: service_started
+
+  db:
+    profiles:
+      - mysql

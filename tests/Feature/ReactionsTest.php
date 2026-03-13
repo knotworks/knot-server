@@ -1,67 +1,45 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Notifications\PostReactedTo;
 use Illuminate\Support\Facades\Notification;
-use Knot\Notifications\PostReactedTo;
-use Tests\TestCase;
 
-class ReactionsTest extends TestCase
-{
-    use RefreshDatabase;
+beforeEach(function (): void {
+    Notification::fake();
+    $this->user = create('App\Models\User');
+    $this->post = create('App\Models\Post', ['user_id' => $this->user->id]);
+    $this->login();
+});
 
-    protected $user;
-    protected $post;
+it('prevents a user from reacting to a post that does not belong to a friend', function (): void {
+    $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile'])->assertStatus(403);
+});
 
-    public function setup(): void
-    {
-        parent::setup();
+it('allows a user to react to a friends post', function (): void {
+    $this->createFriendship(auth()->user(), $this->user);
 
-        Notification::fake();
-        $this->user = create('Knot\Models\User');
-        $this->post = create('Knot\Models\Post', ['user_id' => $this->user->id]);
-        $this->login();
-    }
+    $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile'])->assertStatus(200);
 
-    /** @test */
-    public function a_user_cannot_react_to_a_post_that_does_not_belong_to_a_friend()
-    {
-        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(403);
-    }
+    $this->assertDatabaseHas('reactions', ['post_id' => $this->post->id]);
+});
 
-    /** @test */
-    public function a_user_can_react_to_a_post_if_it_does_belong_to_a_friend()
-    {
-        $this->createFriendship(auth()->user(), $this->user);
+it('requires the reaction type to be one of the supported reactions', function (): void {
+    $this->createFriendship(auth()->user(), $this->user);
 
-        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile'])->assertStatus(200);
-        $this->assertDatabaseHas('reactions', ['post_id' => $this->post->id]);
-    }
+    $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'cringe'])->assertStatus(422);
+});
 
-    /** @test */
-    public function a_reaction_type_must_be_one_of_the_set_reactions()
-    {
-        $this->createFriendship(auth()->user(), $this->user);
+it('notifies a post author when someone reacts to their post', function (): void {
+    $this->createFriendship(auth()->user(), $this->user);
+    $this->postJson('api/posts/' . $this->post->id . '/reactions', ['type' => 'smile']);
 
-        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'cringe'])->assertStatus(422);
-    }
+    Notification::assertSentTo($this->user, PostReactedTo::class);
+});
 
-    /** @test */
-    public function a_post_author_receives_a_notification_when_someone_reacts_to_their_post()
-    {
-        $this->createFriendship(auth()->user(), $this->user);
-        $this->postJson('api/posts/'.$this->post->id.'/reactions', ['type' => 'smile']);
+it('does not notify the post author when they react to their own post', function (): void {
+    $post = create('App\Models\Post', ['user_id' => auth()->id()]);
+    $this->postJson('api/posts/' . $post->id . '/reactions', ['type' => 'smile']);
 
-        Notification::assertSentTo($this->user, PostReactedTo::class);
-    }
-
-    /** @test */
-    public function a_post_author_does_not_get_a_notification_if_they_react_to_their_own_post()
-    {
-        $post = create('Knot\Models\Post', ['user_id' => auth()->id()]);
-        $this->postJson('api/posts/'.$post->id.'/reactions', ['type' => 'smile']);
-
-        Notification::assertNotSentTo($this->user, PostReactedTo::class);
-    }
-}
+    Notification::assertNotSentTo($this->user, PostReactedTo::class);
+});

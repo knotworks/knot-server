@@ -1,9 +1,11 @@
 <?php
 
-namespace Knot\Policies;
+declare(strict_types=1);
 
+namespace App\Policies;
+
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Knot\Models\User;
 
 class ViewProfilePolicy
 {

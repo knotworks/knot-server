@@ -1,65 +1,48 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use App\Models\Post;
 
-class PostsTest extends TestCase
-{
-    use RefreshDatabase;
+beforeEach(function (): void {
+    $this->login();
+});
 
-    public function setup(): void
-    {
-        parent::setup();
+it('allows a user to view their own post', function (): void {
+    $post = create('App\Models\Post', ['user_id' => auth()->id()]);
 
-        $this->login();
-    }
+    $this->getJson('/api/posts/' . $post->id)->assertStatus(200);
+});
 
-    /** @test */
-    public function a_user_can_view_their_own_post()
-    {
-        $post = create('Knot\Models\Post', ['user_id' => auth()->id()]);
+it('allows a user to view their friends post', function (): void {
+    $user = create('App\Models\User');
+    $this->createFriendship(auth()->user(), $user);
 
-        $this->getJson('/api/posts/'.$post->id)->assertStatus(200);
-    }
+    $post = create('App\Models\Post', ['user_id' => $user->id]);
 
-    /** @test */
-    public function a_user_can_view_their_friends_post()
-    {
-        $user = create('Knot\Models\User');
-        $this->createFriendship(auth()->user(), $user);
+    $this->getJson('/api/posts/' . $post->id)->assertStatus(200);
+});
 
-        $post = create('Knot\Models\Post', ['user_id' => $user->id]);
+it('prevents a user from viewing a non-friends post', function (): void {
+    $user = create('App\Models\User');
+    $post = create('App\Models\Post', ['user_id' => $user->id]);
 
-        $this->getJson('/api/posts/'.$post->id)->assertStatus(200);
-    }
+    $this->getJson('/api/posts/' . $post->id)->assertStatus(403);
+});
 
-    /** @test */
-    public function a_user_cannot_view_non_friends_post()
-    {
-        $user = create('Knot\Models\User');
-        $post = create('Knot\Models\Post', ['user_id' => $user->id]);
+it('allows a user to delete their own post', function (): void {
+    $this->withoutExceptionHandling();
 
-        $this->getJson('/api/posts/'.$post->id)->assertStatus(403);
-    }
+    $post = create('App\Models\Post', ['user_id' => auth()->id()]);
 
-    /** @test */
-    public function a_user_can_delete_their_own_post()
-    {
-        $this->withoutExceptionHandling();
-        $post = create('Knot\Models\Post', ['user_id' => auth()->id()]);
+    $this->deleteJson('/api/posts/' . $post->id)->assertStatus(204);
 
-        $this->deleteJson('/api/posts/'.$post->id)->assertStatus(204);
-        $this->assertEquals(0, \Knot\Models\Post::count());
-    }
+    expect(Post::count())->toBe(0);
+});
 
-    /** @test */
-    public function a_user_cannot_delete_someone_elses_post()
-    {
-        $user = create('Knot\Models\User');
-        $post = create('Knot\Models\Post', ['user_id' => $user->id]);
+it('prevents a user from deleting someone elses post', function (): void {
+    $user = create('App\Models\User');
+    $post = create('App\Models\Post', ['user_id' => $user->id]);
 
-        $this->deleteJson('/api/posts/'.$post->id)->assertStatus(403);
-    }
-}
+    $this->deleteJson('/api/posts/' . $post->id)->assertStatus(403);
+});

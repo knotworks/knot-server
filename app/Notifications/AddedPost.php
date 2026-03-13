@@ -1,10 +1,11 @@
 <?php
 
-namespace Knot\Notifications;
+declare(strict_types=1);
 
-use Cloudinary\Cloudinary;
+namespace App\Notifications;
+
+use App\Models\Post;
 use Illuminate\Notifications\Notification;
-use Knot\Models\Post;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
@@ -14,8 +15,6 @@ class AddedPost extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param Post $post
      */
     public function __construct(Post $post)
     {
@@ -53,25 +52,21 @@ class AddedPost extends Notification
 
     public function toTelegram($notifiable)
     {
-        $isPhotoPost = $this->post->media()->exists();
+        $isPhotoPost = $this->post->media()->where('status', 'ready')->exists();
         $postAuthor = $this->post->user->first_name;
         $postBody = $this->post->body;
-        $messageBody = '*'.$postAuthor."* added a post. \n _".$postBody.'_';
+        $messageBody = '*' . $postAuthor . "* added a post. \n _" . $postBody . '_';
 
         if ($isPhotoPost) {
-            $cloudinary = new Cloudinary([
-                'cloud' => [
-                    'cloud_name' => config('services.cloudinary.cloud_name'),
-                    'api_key' => config('services.cloudinary.key'),
-                    'api_secret' => config('services.cloudinary.secret'),
-                ],
-            ]);
+            $postMedia = $this->post->media
+                ->where('status', 'ready')
+                ->map(function ($media) {
+                    return $media->url;
+                })
+                ->filter()
+                ->join("\n\n");
 
-            $postMedia = $this->post->media->map(function ($media) use ($cloudinary) {
-                return $cloudinary->image($media->path)->toUrl();
-            })->join("\n\n");
-
-            $messageBody = '*'.$postAuthor."* added a photo. \n _".$postBody."_ \n".$postMedia;
+            $messageBody = '*' . $postAuthor . "* added a photo. \n _" . $postBody . "_ \n" . $postMedia;
         }
 
         return TelegramMessage::create()->content($messageBody);

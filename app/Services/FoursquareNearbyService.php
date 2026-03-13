@@ -1,9 +1,11 @@
 <?php
 
-namespace Knot\Services;
+declare(strict_types=1);
 
+namespace App\Services;
+
+use App\Contracts\NearbyService;
 use Illuminate\Support\Facades\Http;
-use Knot\Contracts\NearbyService;
 
 class FoursquareNearbyService implements NearbyService
 {

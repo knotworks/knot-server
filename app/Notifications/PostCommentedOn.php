@@ -1,9 +1,11 @@
 <?php
 
-namespace Knot\Notifications;
+declare(strict_types=1);
 
+namespace App\Notifications;
+
+use App\Models\Comment;
 use Illuminate\Notifications\Notification;
-use Knot\Models\Comment;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
@@ -13,8 +15,6 @@ class PostCommentedOn extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param Comment $comment
      */
     public function __construct(Comment $comment)
     {
@@ -24,8 +24,7 @@ class PostCommentedOn extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     *
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -53,6 +52,6 @@ class PostCommentedOn extends Notification
     public function toTelegram($notifiable)
     {
         return TelegramMessage::create()
-            ->content('*'.$this->comment->user->first_name."* commented on your post: \n _".$this->comment->body.'_');
+            ->content('*' . $this->comment->user->first_name . "* commented on your post: \n _" . $this->comment->body . '_');
     }
 }

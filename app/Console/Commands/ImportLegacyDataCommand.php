@@ -1,6 +1,8 @@
 <?php
 
-namespace Knot\Console\Commands;
+declare(strict_types=1);
+
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -67,7 +69,7 @@ class ImportLegacyDataCommand extends Command
     {
         DB::connection('legacy')->table('posts')->get()->each(function ($post) {
             $type = $post->postable_type;
-            if ($type === "Knot\Models\TextPost") {
+            if ($type === 'Knot\Models\TextPost') {
                 $textPost = DB::connection('legacy')->table('text_posts')->find($post->postable_id);
                 DB::table('posts')->insert([
                     'id' => $post->id,

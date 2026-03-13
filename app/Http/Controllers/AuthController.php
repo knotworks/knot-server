@@ -1,6 +1,8 @@
 <?php
 
-namespace Knot\Http\Controllers;
+declare(strict_types=1);
+
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +15,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (!auth()->attempt($credentials, true)) {
+        if (! auth()->attempt($credentials, true)) {
             return response()->json(['error' => 'Invalid Credentials'], 401);
         }
 

@@ -1,33 +1,20 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
-use Tests\TestCase;
 
-class FoursquareNearbyServiceTest extends TestCase
-{
-    use RefreshDatabase;
+beforeEach(function (): void {
+    $this->login();
+    $this->fakeResponse = ['venues' => ['Venue A', 'Venue B', 'Venue C']];
 
-    protected $fakeResponse;
+    Http::fake(['api.foursquare.com/*' => Http::response($this->fakeResponse, 200)]);
+});
 
-    public function setup(): void
-    {
-        parent::setup();
-
-        $this->login();
-        $this->fakeResponse = ['venues' => ['Venue A', 'Venue B', 'Venue C']];
-        Http::fake(['api.foursquare.com/*' => Http::response($this->fakeResponse, 200)]);
-    }
-
-    /** @test */
-    public function can_use_the_foursquare_service_to_fetch_nearby_locations()
-    {
-        $this->postJson('api/services/nearby', [
-            'lat' => 'fakeLat',
-            'lon' => 'fakeLon',
-            'query' => 'Fake Query',
-        ])->assertStatus(200)->assertJson($this->fakeResponse);
-    }
-}
+it('can use the foursquare service to fetch nearby locations', function (): void {
+    $this->postJson('api/services/nearby', [
+        'lat' => 'fakeLat',
+        'lon' => 'fakeLon',
+        'query' => 'Fake Query',
+    ])->assertStatus(200)->assertJson($this->fakeResponse);
+});
