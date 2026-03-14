@@ -19,12 +19,15 @@
         "laravel/sanctum": "4.x-dev",
         "laravel/tinker": "^3.0",
         "masterminds/html5": "^2.10",
+        "pbmedia/laravel-ffmpeg": "^8.9",
+        "spatie/image": "^3.9",
         "symfony/dom-crawler": "^8.0",
         "symfony/http-client": "^8.0",
         "symfony/mailgun-mailer": "^8.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
+        "knuckleswtf/scribe": "^5.8",
         "larastan/larastan": "^3.9",
         "laravel/boost": "^2.3",
         "laravel/pint": "^1.28",

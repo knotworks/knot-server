@@ -14,10 +14,28 @@ use App\Traits\AddsLocation;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Validator;
 
+/**
+ * @group Posts
+ *
+ * Create, fetch, and delete posts.
+ *
+ * @authenticated
+ */
 class PostsController extends Controller
 {
     use AddsAccompaniments, AddsLocation;
 
+    /**
+     * Create a new post.
+     *
+     * Accepts text-only posts or posts with uploaded images/videos.
+     *
+     * @bodyParam location object Optional location data to attach to the post.
+     * @bodyParam accompaniments array Optional accompaniment entries to attach to the post.
+     *
+     * @response 201 {"id":1,"body":"A new family update","user_id":1,"media":[]}
+     * @response 422 {"message":"The given data was invalid.","errors":{"body":["A post body is required when no media files are attached."]}}
+     */
     public function store(StorePostRequest $request, MediaPathGenerator $mediaPathGenerator)
     {
         $post = auth()->user()->posts()->create([
@@ -73,6 +91,14 @@ class PostsController extends Controller
         return $post->load(Post::relationsForViewer(auth()->user()));
     }
 
+    /**
+     * Fetch a single post.
+     *
+     * @urlParam post integer required The post ID. Example: 1
+     *
+     * @response 200 {"id":1,"body":"A new family update","user_id":1,"comments":[],"reactions":[]}
+     * @response 403 {"message":"This action is unauthorized."}
+     */
     public function show(Post $post)
     {
         $this->authorize('can_view_post', $post);
@@ -80,6 +106,14 @@ class PostsController extends Controller
         return $post->load(Post::relationsForViewer(auth()->user()));
     }
 
+    /**
+     * Delete one of the current user's posts.
+     *
+     * @urlParam post integer required The post ID. Example: 1
+     *
+     * @response 204 {}
+     * @response 403 {"message":"This action is unauthorized."}
+     */
     public function destroy(Post $post)
     {
         $this->authorize('can_modify_or_delete_post', $post);

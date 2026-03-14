@@ -14,15 +14,24 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Validator;
 
+/**
+ * @group Comments
+ *
+ * Create and manage post comments.
+ *
+ * @authenticated
+ */
 class CommentsController extends Controller
 {
     use AddsLocation;
 
     /**
-     * Display a listing of the resource.
+     * List a post's comments.
      *
+     * @urlParam post integer required The post ID. Example: 1
      *
-     * @return Response
+     * @response 200 [{"id":1,"body":"Looking good!","user_id":2,"post_id":1}]
+     * @response 403 {"message":"This action is unauthorized."}
      */
     public function index(Post $post)
     {
@@ -32,10 +41,15 @@ class CommentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Add a comment to a post.
      *
+     * @urlParam post integer required The post ID. Example: 1
      *
-     * @return Response
+     * @bodyParam body string required The comment text. Example: Looking good!
+     * @bodyParam location object A location payload to attach to the comment.
+     *
+     * @response 201 {"id":1,"body":"Looking good!","user":{"id":2,"first_name":"Jane"}}
+     * @response 403 {"message":"This action is unauthorized."}
      */
     public function store(Request $request, Post $post)
     {
@@ -74,10 +88,14 @@ class CommentsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update one of the current user's comments.
      *
+     * @urlParam comment integer required The comment ID. Example: 1
      *
-     * @return Response
+     * @bodyParam body string required The updated comment text. Example: Updated comment
+     *
+     * @response 200 {"id":1,"body":"Updated comment","user_id":2,"post_id":1}
+     * @response 403 {"message":"This action is unauthorized."}
      */
     public function update(Request $request, Comment $comment)
     {
@@ -91,10 +109,12 @@ class CommentsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete one of the current user's comments.
      *
+     * @urlParam comment integer required The comment ID. Example: 1
      *
-     * @return Response
+     * @response 204 {}
+     * @response 403 {"message":"This action is unauthorized."}
      */
     public function destroy(Comment $comment)
     {

@@ -8,27 +8,17 @@ RUN composer install \
     --no-dev \
     --no-interaction \
     --no-progress \
+    --no-scripts \
+    --ignore-platform-req=ext-exif \
     --prefer-dist \
     --optimize-autoloader
-
-FROM node:22-alpine AS frontend_assets
-
-WORKDIR /var/www/html
-
-COPY package.json pnpm-lock.yaml ./
-RUN corepack enable && pnpm install --frozen-lockfile
-
-COPY resources ./resources
-COPY public ./public
-COPY vite.config.ts tsconfig.json tailwind.config.ts ./
-
-RUN pnpm run build
 
 FROM php:8.4-fpm-alpine AS app
 
 WORKDIR /var/www/html
 
 RUN apk add --no-cache \
+        $PHPIZE_DEPS \
         bash \
         curl \
         ffmpeg \
@@ -38,6 +28,7 @@ RUN apk add --no-cache \
         libjpeg-turbo-dev \
         libpng-dev \
         libwebp-dev \
+        sqlite-dev \
         libzip-dev \
         oniguruma-dev \
         unzip \
@@ -49,20 +40,23 @@ RUN apk add --no-cache \
         bcmath \
         exif \
         gd \
+        intl \
         mbstring \
         pdo_mysql \
+        pdo_sqlite \
         pcntl \
         zip \
     && pecl install redis \
     && docker-php-ext-enable redis \
     && rm -rf /tmp/pear
 
+COPY --from=composer_deps /usr/bin/composer /usr/local/bin/composer
 COPY --from=composer_deps /var/www/html/vendor ./vendor
 COPY . .
-COPY --from=frontend_assets /var/www/html/public/build ./public/build
 
 COPY docker-entrypoint.sh /usr/local/bin/start-container
 RUN chmod +x /usr/local/bin/start-container \
+    && php artisan package:discover --ansi \
     && chown -R www-data:www-data storage bootstrap/cache
 
 ENV CONTAINER_ROLE=app

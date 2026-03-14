@@ -10,12 +10,19 @@ use App\Notifications\FriendRequestAccepted;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+/**
+ * @group Friendships
+ *
+ * Send, accept, deny, and inspect friendship relationships.
+ *
+ * @authenticated
+ */
 class FriendshipsController extends Controller
 {
     /**
-     * Return a user's friendship data.
+     * Fetch the current user's friendship data.
      *
-     * @return Response
+     * @response 200 {"friends":[],"requests":[],"outgoing":[],"suggested":[]}
      */
     public function index()
     {
@@ -23,10 +30,11 @@ class FriendshipsController extends Controller
     }
 
     /**
-     * Send a friend request to another user.
+     * Send a friend request.
      *
+     * @urlParam recipient integer required The recipient user ID. Example: 2
      *
-     * @return Response
+     * @response 200 {"friends":[],"requests":[],"outgoing":[{"recipient_id":2}],"suggested":[]}
      */
     public function addFriend(Request $request, User $recipient)
     {
@@ -38,10 +46,11 @@ class FriendshipsController extends Controller
     }
 
     /**
-     * Accept a friend request from another user.
+     * Accept a friend request.
      *
+     * @urlParam sender integer required The sender user ID. Example: 2
      *
-     * @return Response
+     * @response 200 {"friends":[{"id":2}],"requests":[],"outgoing":[],"suggested":[]}
      */
     public function acceptFriendship(Request $request, User $sender)
     {
@@ -53,10 +62,11 @@ class FriendshipsController extends Controller
     }
 
     /**
-     * Deny a friend request from another user.
+     * Deny a friend request.
      *
+     * @urlParam sender integer required The sender user ID. Example: 2
      *
-     * @return Response
+     * @response 200 {"friends":[],"requests":[],"outgoing":[],"suggested":[]}
      */
     public function denyFriendship(Request $request, User $sender)
     {
@@ -66,10 +76,11 @@ class FriendshipsController extends Controller
     }
 
     /**
-     * Unfriend a user.
+     * Remove an existing friend.
      *
+     * @urlParam friend integer required The friend user ID. Example: 2
      *
-     * @return Response
+     * @response 200 {"friends":[],"requests":[],"outgoing":[],"suggested":[]}
      */
     public function unfriend(Request $request, User $friend)
     {

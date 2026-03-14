@@ -8,12 +8,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+/**
+ * @group Users
+ *
+ * Endpoints for registration and retrieving the authenticated user.
+ */
 class UserController extends Controller
 {
     /**
-     * Return the authenticated user.
+     * Fetch the authenticated user.
      *
-     * @return Response
+     * @authenticated
+     *
+     * @response 200 {"id":1,"first_name":"Jane","last_name":"Doe","email":"jane@example.com"}
      */
     public function show()
     {
@@ -23,8 +30,16 @@ class UserController extends Controller
     /**
      * Register a new user.
      *
+     * @unauthenticated
      *
-     * @return Response
+     * @bodyParam first_name string required The user's first name. Example: Jane
+     * @bodyParam last_name string The user's last name. Example: Doe
+     * @bodyParam email string required A unique email address. Example: jane@example.com
+     * @bodyParam password string required The desired password. Example: password
+     * @bodyParam password_confirmation string required Must match `password`. Example: password
+     *
+     * @response 201 {"id":1,"first_name":"Jane","last_name":"Doe","email":"jane@example.com"}
+     * @response 403 {"message":"New signups have been disabled."}
      */
     public function store(Request $request)
     {

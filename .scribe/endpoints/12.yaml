@@ -1,0 +1,117 @@
+name: 'Session Authentication'
+description: |-
+
+  Session-based authentication endpoints for first-party clients.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: login
+    metadata:
+      custom: []
+      groupName: 'Session Authentication'
+      groupDescription: |-
+
+        Session-based authentication endpoints for first-party clients.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Log in with an email address and password.'
+      description: 'Creates a session-backed authenticated state for clients using cookies instead of bearer tokens.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: "The user's email address."
+        required: true
+        example: jane@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: "The user's password."
+        required: true
+        example: password
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: jane@example.com
+      password: password
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: '{}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"error":"Invalid Credentials"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: logout
+    metadata:
+      custom: []
+      groupName: 'Session Authentication'
+      groupDescription: |-
+
+        Session-based authentication endpoints for first-party clients.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Log out the current session.'
+      description: "Revokes the current user's API tokens and clears their authenticated web session."
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: '{}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

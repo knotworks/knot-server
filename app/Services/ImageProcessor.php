@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use RuntimeException;
+use Spatie\Image\Enums\Constraint;
+use Spatie\Image\Image;
 
 class ImageProcessor
 {
@@ -13,74 +15,29 @@ class ImageProcessor
      */
     public function process(string $sourcePath): array
     {
-        [$width, $height, $imageType] = $this->imageSize($sourcePath);
-        $orientation = $this->readOrientation($sourcePath);
-        $sourceImage = $this->createImage($sourcePath, $imageType);
+        [, , $imageType] = $this->imageSize($sourcePath);
+        $extension = $this->outputExtension($imageType);
+        $image = Image::load($sourcePath)->orientation();
+        [$targetWidth, $targetHeight] = $this->scaledDimensions(
+            $image->getWidth(),
+            $image->getHeight(),
+            (int) config('media.max_image_dimension'),
+        );
 
-        [$sourceImage, $width, $height] = $this->orientImage($sourceImage, $orientation, $width, $height);
-        [$targetWidth, $targetHeight] = $this->scaledDimensions($width, $height, (int) config('media.max_image_dimension'));
+        $image->resize($targetWidth, $targetHeight, [
+            Constraint::PreserveAspectRatio,
+            Constraint::DoNotUpsize,
+        ]);
 
-        $outputImage = $sourceImage;
+        $this->applyQuality($image, $extension);
 
-        if ($targetWidth !== $width || $targetHeight !== $height) {
-            $outputImage = imagecreatetruecolor($targetWidth, $targetHeight);
-            if ($outputImage === false) {
-                imagedestroy($sourceImage);
-
-                throw new RuntimeException('Unable to resize image.');
-            }
-
-            imagealphablending($outputImage, false);
-            imagesavealpha($outputImage, true);
-
-            $wasResampled = imagecopyresampled(
-                $outputImage,
-                $sourceImage,
-                0,
-                0,
-                0,
-                0,
-                $targetWidth,
-                $targetHeight,
-                $width,
-                $height,
-            );
-
-            if ($wasResampled === false) {
-                imagedestroy($outputImage);
-                imagedestroy($sourceImage);
-
-                throw new RuntimeException('Unable to resize image.');
-            }
-        }
-
-        $mimeType = image_type_to_mime_type($imageType);
-        $extension = match ($mimeType) {
-            'image/png' => 'png',
-            'image/webp' => 'webp',
-            default => 'jpg',
-        };
-
-        $outputPath = tempnam(sys_get_temp_dir(), 'knot-image-');
-        if ($outputPath === false) {
-            throw new RuntimeException('Unable to create temporary image.');
-        }
-
-        $finalOutputPath = $outputPath . '.' . $extension;
-        rename($outputPath, $finalOutputPath);
-
-        $this->writeImage($outputImage, $finalOutputPath, $extension);
-
-        if ($outputImage !== $sourceImage) {
-            imagedestroy($outputImage);
-        }
-
-        imagedestroy($sourceImage);
+        $finalOutputPath = $this->temporaryFilePath('knot-image-', $extension);
+        $image->format($extension)->save($finalOutputPath);
 
         return [
             'path' => $finalOutputPath,
-            'width' => $targetWidth,
-            'height' => $targetHeight,
+            'width' => $image->getWidth(),
+            'height' => $image->getHeight(),
             'mime_type' => match ($extension) {
                 'png' => 'image/png',
                 'webp' => 'image/webp',
@@ -105,50 +62,14 @@ class ImageProcessor
         return $imageSize;
     }
 
-    /**
-     * @return resource|\GdImage
-     */
-    private function createImage(string $sourcePath, int $imageType)
+    private function outputExtension(int $imageType): string
     {
-        $image = match ($imageType) {
-            IMAGETYPE_JPEG => imagecreatefromjpeg($sourcePath),
-            IMAGETYPE_PNG => imagecreatefrompng($sourcePath),
-            IMAGETYPE_WEBP => imagecreatefromwebp($sourcePath),
-            default => false,
+        return match ($imageType) {
+            IMAGETYPE_JPEG => 'jpg',
+            IMAGETYPE_PNG => 'png',
+            IMAGETYPE_WEBP => 'webp',
+            default => throw new RuntimeException('Unsupported image format.'),
         };
-
-        if ($image === false) {
-            throw new RuntimeException('Unsupported image format.');
-        }
-
-        return $image;
-    }
-
-    /**
-     * @param  resource|\GdImage  $image
-     * @return array{0: resource|\GdImage, 1: int, 2: int}
-     */
-    private function orientImage($image, int $orientation, int $width, int $height): array
-    {
-        if ($orientation === 3) {
-            $rotated = imagerotate($image, 180, 0);
-        } elseif ($orientation === 6) {
-            $rotated = imagerotate($image, -90, 0);
-            [$width, $height] = [$height, $width];
-        } elseif ($orientation === 8) {
-            $rotated = imagerotate($image, 90, 0);
-            [$width, $height] = [$height, $width];
-        } else {
-            return [$image, $width, $height];
-        }
-
-        if ($rotated === false) {
-            throw new RuntimeException('Unable to orient image.');
-        }
-
-        imagedestroy($image);
-
-        return [$rotated, $width, $height];
     }
 
     /**
@@ -169,32 +90,27 @@ class ImageProcessor
         ];
     }
 
-    /**
-     * @param  resource|\GdImage  $image
-     */
-    private function writeImage($image, string $outputPath, string $extension): void
+    private function applyQuality(Image $image, string $extension): void
     {
-        $quality = (int) config('media.image_quality');
-
-        $wasWritten = match ($extension) {
-            'png' => imagepng($image, $outputPath, 9),
-            'webp' => imagewebp($image, $outputPath, $quality),
-            default => imagejpeg($image, $outputPath, $quality),
-        };
-
-        if ($wasWritten === false) {
-            throw new RuntimeException('Unable to write processed image.');
-        }
+        $image->quality($extension === 'png' ? 10 : (int) config('media.image_quality'));
     }
 
-    private function readOrientation(string $sourcePath): int
+    private function temporaryFilePath(string $prefix, string $extension): string
     {
-        if (! function_exists('exif_read_data')) {
-            return 1;
+        $temporaryPath = tempnam(sys_get_temp_dir(), $prefix);
+
+        if ($temporaryPath === false) {
+            throw new RuntimeException('Unable to create temporary image.');
         }
 
-        $exif = @exif_read_data($sourcePath);
+        $finalOutputPath = $temporaryPath . '.' . $extension;
 
-        return (int) ($exif['Orientation'] ?? 1);
+        if (! rename($temporaryPath, $finalOutputPath)) {
+            @unlink($temporaryPath);
+
+            throw new RuntimeException('Unable to create temporary image.');
+        }
+
+        return $finalOutputPath;
     }
 }

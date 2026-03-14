@@ -1,0 +1,200 @@
+name: 'Password Resets'
+description: |-
+
+  Password reset endpoints for account recovery.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/forgot-password
+    metadata:
+      custom: []
+      groupName: 'Password Resets'
+      groupDescription: |-
+
+        Password reset endpoints for account recovery.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Send a password reset link.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: 'The email address for the account.'
+        required: true
+        example: jane@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: jane@example.com
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: '{}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The email field must be a valid email address.","errors":{"email":["The email field must be a valid email address."]}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/reset-password/{token}'
+    metadata:
+      custom: []
+      groupName: 'Password Resets'
+      groupDescription: |-
+
+        Password reset endpoints for account recovery.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Render the password reset page.'
+      description: 'Returns the HTML view used after a user clicks a password reset link.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      token:
+        custom: []
+        name: token
+        description: 'The password reset token from the email link.'
+        required: true
+        example: 6a0ef4e3816d9fb8
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      token: 6a0ef4e3816d9fb8
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '<html><body>Password reset page</body></html>'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/reset-password
+    metadata:
+      custom: []
+      groupName: 'Password Resets'
+      groupDescription: |-
+
+        Password reset endpoints for account recovery.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Reset a password with a valid token.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      token:
+        custom: []
+        name: token
+        description: 'The password reset token from the email link.'
+        required: true
+        example: 6a0ef4e3816d9fb8
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'The email address for the account.'
+        required: true
+        example: jane@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'The new password.'
+        required: true
+        example: new-password
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password_confirmation:
+        custom: []
+        name: password_confirmation
+        description: 'Must match `password`.'
+        required: true
+        example: new-password
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      token: 6a0ef4e3816d9fb8
+      email: jane@example.com
+      password: new-password
+      password_confirmation: new-password
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: 'Your password has been successfully reset. You may now go back to the app and sign in with your new password.'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

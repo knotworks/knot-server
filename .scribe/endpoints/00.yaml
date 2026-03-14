@@ -1,0 +1,86 @@
+name: 'Token Authentication'
+description: |-
+
+  Bearer-token authentication for API clients.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/tokens/create
+    metadata:
+      custom: []
+      groupName: 'Token Authentication'
+      groupDescription: |-
+
+        Bearer-token authentication for API clients.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create a personal access token.'
+      description: 'Exchange valid user credentials for a Sanctum bearer token.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: "The user's email address."
+        required: true
+        example: jane@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: "The user's password."
+        required: true
+        example: password
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      device_name:
+        custom: []
+        name: device_name
+        description: 'A label for the client device or app.'
+        required: true
+        example: 'iPhone 16'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: jane@example.com
+      password: password
+      device_name: 'iPhone 16'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"token":"1|abcdefghijklmnopqrstuvwxyz"}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{"message":"The provided credentials are incorrect.","errors":{"email":["The provided credentials are incorrect."]}}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

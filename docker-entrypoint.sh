@@ -12,6 +12,11 @@ if [ "${DB_CONNECTION:-mysql}" = "sqlite" ]; then
 fi
 
 if [ "${APP_ENV:-production}" = "local" ] && [ ! -f vendor/autoload.php ]; then
+    if ! command -v composer >/dev/null 2>&1; then
+        echo "Composer is required to install PHP dependencies in the app container." >&2
+        exit 1
+    fi
+
     composer install --no-interaction --prefer-dist
 fi
 

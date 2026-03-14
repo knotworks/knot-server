@@ -1,0 +1,316 @@
+name: Friendships
+description: |-
+
+  Send, accept, deny, and inspect friendship relationships.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/friendships
+    metadata:
+      custom: []
+      groupName: Friendships
+      groupDescription: |-
+
+        Send, accept, deny, and inspect friendship relationships.
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Fetch the current user's friendship data."
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"friends":[],"requests":[],"outgoing":[],"suggested":[]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/friendships/add/{recipient_id}'
+    metadata:
+      custom: []
+      groupName: Friendships
+      groupDescription: |-
+
+        Send, accept, deny, and inspect friendship relationships.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Send a friend request.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      recipient_id:
+        custom: []
+        name: recipient_id
+        description: 'The ID of the recipient.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      recipient:
+        custom: []
+        name: recipient
+        description: 'The recipient user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      recipient_id: 16
+      recipient: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"friends":[],"requests":[],"outgoing":[{"recipient_id":2}],"suggested":[]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/friendships/accept/{sender_id}'
+    metadata:
+      custom: []
+      groupName: Friendships
+      groupDescription: |-
+
+        Send, accept, deny, and inspect friendship relationships.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Accept a friend request.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      sender_id:
+        custom: []
+        name: sender_id
+        description: 'The ID of the sender.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sender:
+        custom: []
+        name: sender
+        description: 'The sender user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      sender_id: 16
+      sender: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"friends":[{"id":2}],"requests":[],"outgoing":[],"suggested":[]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/friendships/deny/{sender_id}'
+    metadata:
+      custom: []
+      groupName: Friendships
+      groupDescription: |-
+
+        Send, accept, deny, and inspect friendship relationships.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Deny a friend request.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      sender_id:
+        custom: []
+        name: sender_id
+        description: 'The ID of the sender.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      sender:
+        custom: []
+        name: sender
+        description: 'The sender user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      sender_id: 16
+      sender: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"friends":[],"requests":[],"outgoing":[],"suggested":[]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/friendships/unfriend/{friend_id}'
+    metadata:
+      custom: []
+      groupName: Friendships
+      groupDescription: |-
+
+        Send, accept, deny, and inspect friendship relationships.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove an existing friend.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      friend_id:
+        custom: []
+        name: friend_id
+        description: 'The ID of the friend.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      friend:
+        custom: []
+        name: friend
+        description: 'The friend user ID.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      friend_id: 16
+      friend: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"friends":[],"requests":[],"outgoing":[],"suggested":[]}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

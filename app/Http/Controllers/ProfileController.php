@@ -13,8 +13,23 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
+/**
+ * @group Profile
+ *
+ * View and update user profiles.
+ *
+ * @authenticated
+ */
 class ProfileController extends Controller
 {
+    /**
+     * Fetch a user's profile.
+     *
+     * @urlParam user integer required The user ID. Example: 1
+     *
+     * @response 200 {"user":{"id":1,"first_name":"Jane"},"posts":[]}
+     * @response 403 {"message":"This action is unauthorized."}
+     */
     public function show(User $user)
     {
         $this->authorize('can_view_profile', $user);
@@ -26,10 +41,10 @@ class ProfileController extends Controller
     }
 
     /**
-     * Set the user's avatar.
+     * Upload a new avatar.
      *
-     *
-     * @return Response
+     * @response 200 {"id":1,"avatar_status":"pending","avatar_temporary_path":"avatars/temp/avatar.jpg"}
+     * @response 422 {"message":"The given data was invalid.","errors":{"avatar":["An avatar image is required."]}}
      */
     public function updateAvatar(UpdateAvatarRequest $request, MediaPathGenerator $mediaPathGenerator)
     {
@@ -61,6 +76,19 @@ class ProfileController extends Controller
         return $user->fresh();
     }
 
+    /**
+     * Update the authenticated user's profile details.
+     *
+     * @bodyParam first_name string required The user's first name. Example: Jane
+     * @bodyParam last_name string The user's last name. Example: Doe
+     * @bodyParam email string required The user's email address. Example: jane@example.com
+     * @bodyParam current_password string Required when updating the password. Example: old-password
+     * @bodyParam password string The new password. Example: new-password
+     * @bodyParam password_confirmation string Must match `password` when supplied. Example: new-password
+     *
+     * @response 200 {"id":1,"first_name":"Jane","last_name":"Doe","email":"jane@example.com"}
+     * @response 422 {"error":"The provided current password did not match our records."}
+     */
     public function updateInfo(Request $request)
     {
         $user = auth()->user();

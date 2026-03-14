@@ -6,12 +6,19 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 
+/**
+ * @group Notifications
+ *
+ * Read and manage the authenticated user's notifications.
+ *
+ * @authenticated
+ */
 class NotificationsController extends Controller
 {
     /**
-     * Fetch all notifications for the user.
+     * List notifications.
      *
-     * @return mixed
+     * @response 200 {"data":[{"id":"db-notification-id","type":"App\\Notifications\\AddedPost"}],"links":[],"meta":[]}
      */
     public function index()
     {
@@ -20,6 +27,8 @@ class NotificationsController extends Controller
 
     /**
      * Mark all notifications as read.
+     *
+     * @response 204 {}
      */
     public function destroy()
     {

@@ -1,0 +1,48 @@
+name: Timeline
+description: |-
+
+  View the authenticated user's timeline feed.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/timeline
+    metadata:
+      custom: []
+      groupName: Timeline
+      groupDescription: |-
+
+        View the authenticated user's timeline feed.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Fetch the timeline feed.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '[{"id":1,"body":"A new family update","user_id":1}]'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

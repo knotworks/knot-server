@@ -14,6 +14,4 @@ return [
     'image_quality' => (int) env('MEDIA_IMAGE_QUALITY', 82),
     'cleanup_after_hours' => (int) env('MEDIA_CLEANUP_AFTER_HOURS', 24),
     'video_crf' => (int) env('MEDIA_VIDEO_CRF', 23),
-    'ffmpeg_binary' => env('FFMPEG_BINARY', 'ffmpeg'),
-    'ffprobe_binary' => env('FFPROBE_BINARY', 'ffprobe'),
 ];

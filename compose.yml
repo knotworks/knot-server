@@ -11,6 +11,8 @@ services:
     env_file:
       - .env
     environment:
+      DB_HOST: db
+      REDIS_HOST: redis
       REVERB_HOST: reverb
       REVERB_PORT: 8080
       REVERB_SCHEME: http
@@ -34,12 +36,18 @@ services:
       - ./public:/var/www/html/public:ro
 
   queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
     image: knot/app:local
     restart: unless-stopped
     env_file:
       - .env
     environment:
       CONTAINER_ROLE: queue
+      DB_HOST: db
+      REDIS_HOST: redis
       REVERB_HOST: reverb
       REVERB_PORT: 8080
       REVERB_SCHEME: http
@@ -52,12 +60,18 @@ services:
       - app-storage:/var/www/html/storage
 
   scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
     image: knot/app:local
     restart: unless-stopped
     env_file:
       - .env
     environment:
       CONTAINER_ROLE: scheduler
+      DB_HOST: db
+      REDIS_HOST: redis
       REVERB_HOST: reverb
       REVERB_PORT: 8080
       REVERB_SCHEME: http
@@ -70,12 +84,18 @@ services:
       - app-storage:/var/www/html/storage
 
   reverb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
     image: knot/app:local
     restart: unless-stopped
     env_file:
       - .env
     environment:
       CONTAINER_ROLE: reverb
+      DB_HOST: db
+      REDIS_HOST: redis
       REVERB_HOST: reverb
       REVERB_PORT: 8080
       REVERB_SCHEME: http

@@ -1,0 +1,206 @@
+name: Services
+description: |-
+
+  Utility endpoints for nearby places, reverse geocoding, and link previews.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/services/nearby
+    metadata:
+      custom: []
+      groupName: Services
+      groupDescription: |-
+
+        Utility endpoints for nearby places, reverse geocoding, and link previews.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Fetch nearby places.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      lat:
+        custom: []
+        name: lat
+        description: Latitude.
+        required: true
+        example: 43.6532
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      lon:
+        custom: []
+        name: lon
+        description: Longitude.
+        required: true
+        example: -79.3832
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      query:
+        custom: []
+        name: query
+        description: 'Optional search text to narrow the nearby results.'
+        required: false
+        example: coffee
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      lat: 43.6532
+      lon: -79.3832
+      query: coffee
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '[{"name":"Coffee Shop","lat":43.6532,"lon":-79.3832}]'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/services/current-location
+    metadata:
+      custom: []
+      groupName: Services
+      groupDescription: |-
+
+        Utility endpoints for nearby places, reverse geocoding, and link previews.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Reverse geocode a coordinate.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      lat:
+        custom: []
+        name: lat
+        description: Latitude.
+        required: true
+        example: 43.6532
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      lon:
+        custom: []
+        name: lon
+        description: Longitude.
+        required: true
+        example: -79.3832
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      lat: 43.6532
+      lon: -79.3832
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"formatted":"Toronto, ON, Canada"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/services/link-meta
+    metadata:
+      custom: []
+      groupName: Services
+      groupDescription: |-
+
+        Utility endpoints for nearby places, reverse geocoding, and link previews.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Fetch link metadata.'
+      description: ''
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_BEARER_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      url:
+        custom: []
+        name: url
+        description: 'A fully-qualified URL.'
+        required: true
+        example: 'https://example.com/story'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      url: 'https://example.com/story'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"title":"Example Story","description":"A useful preview.","image":"https://example.com/preview.jpg"}'
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

@@ -11,13 +11,25 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 
+/**
+ * @group Reactions
+ *
+ * Add or update reactions on posts.
+ *
+ * @authenticated
+ */
 class ReactionsController extends Controller
 {
     /**
-     * Add a new reaction to a post.
+     * Add or update a reaction on a post.
      *
+     * @urlParam post integer required The post ID. Example: 1
      *
-     * @return Response
+     * @bodyParam type string required The reaction type. Example: smile
+     *
+     * @response 200 {"id":1,"body":"A new family update","reactions":[{"user_id":2,"type":"smile"}]}
+     * @response 403 {"message":"This action is unauthorized."}
+     * @response 422 {"message":"The given data was invalid.","errors":{"type":["The selected type is invalid."]}}
      */
     public function store(Request $request, Post $post)
     {
